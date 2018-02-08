@@ -47,6 +47,12 @@ public interface IMainAPI {
             @Field("product_id") String product_id);
 
 
+    @FormUrlEncoded
+    @POST("api/get-business-details.php")
+    Observable<Response<ResponseBody>> businessdetails(
+            @Field("product_id") String product_id, @Field("user_id") String user_id);
+
+
     @POST("api/get-cities.php")
     Observable<CityResponse> city();
 

@@ -230,7 +230,14 @@ public class FaviouriteFragment extends Fragment implements View.OnClickListener
                         JSONArray jsonArray = new JSONArray(jsonObject.getString("result"));
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                            FaviouriteItem faviouriteItem = new FaviouriteItem(jsonObject1.getString("name"), jsonObject1.getString("image"));
+                             String product_id = (jsonObject1.getString("product_id"));
+                             String name= (jsonObject1.getString("name"));
+                             String address1= (jsonObject1.getString("address1"));
+                             String address2= (jsonObject1.getString("address2"));
+                             String phonenumber1= (jsonObject1.getString("phonenumber1"));
+                             String phonenumber2= (jsonObject1.getString("phonenumber2"));
+                            String image= (jsonObject1.getString("image"));
+                            FaviouriteItem faviouriteItem = new FaviouriteItem(product_id, name,address1,address2,phonenumber1,phonenumber2,image);
                             faviouriteItems.add(faviouriteItem);
                         }
                         faviouriteViewAdapter.notifyDataSetChanged();

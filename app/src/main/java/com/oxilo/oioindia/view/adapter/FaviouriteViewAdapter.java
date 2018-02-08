@@ -15,77 +15,79 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.oxilo.oioindia.R;
 import com.oxilo.oioindia.viewmodal.FaviouriteItem;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class FaviouriteViewAdapter extends RecyclerView.Adapter {
+public class FaviouriteViewAdapter extends RecyclerView.Adapter<FaviouriteViewAdapter.MyViewHolder> {
 
-    ArrayList<FaviouriteItem> faviouriteItems;
-    Context mContext;
-//    protected ItemListener mListener;
-    public FaviouriteViewAdapter(Context context, ArrayList<FaviouriteItem> faviouriteItems) {
-        this.faviouriteItems =faviouriteItems;
-        mContext = context;
-//        mListener=itemListener;
-    }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+     private Context mContext;
+     private ArrayList<FaviouriteItem> faviouriteItems;
 
-        public TextView textView;
-        public ImageView imageView;
-        public RelativeLayout relativeLayout;
-//        DataModel item;
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        public TextView name;
+        public ImageView imageView2;
 
-        public ViewHolder(View v) {
-
+        public MyViewHolder(View v) {
             super(v);
-//
-//            v.setOnClickListener(this);
-//            textView = (TextView) v.findViewById(R.id.textView);
-//            imageView = (ImageView) v.findViewById(R.id.imageView);
-//            relativeLayout = (RelativeLayout) v.findViewById(R.id.relativeLayout);
-
+            name = (TextView) v.findViewById(R.id.name);
+            imageView2 = (ImageView) v.findViewById(R.id.imageView2);
         }
-
-        public void setData(FaviouriteItem faviouriteItems) {//DataModel item
-//            this.item = item;
-//            textView.setText(item.text);
-//            imageView.setImageResource(item.drawable);
-//            relativeLayout.setBackgroundColor(Color.parseColor(item.color));
-
-        }
+    }
 
 
-        @Override
-        public void onClick(View view) {
-//            if (mListener != null) {
-//                mListener.onItemClick(item);
-//            }
-        }
+    public FaviouriteViewAdapter(Context mContext,ArrayList<FaviouriteItem> faviouriteItems) {
+        this.faviouriteItems = faviouriteItems;
+        this.mContext = mContext;
     }
 
     @Override
-    public FaviouriteViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.recycler_faviourite_item, parent, false);
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout.recycler_faviourite_item, parent, false);
-
-        return new ViewHolder(view);
+        return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.setData(faviouriteItems.get(position));
-    }
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        FaviouriteItem item = faviouriteItems.get(position);
+        holder.name.setText(item.getName());
+        String image = item.getImage();
+        Picasso.with(mContext)
+                .load(item.getImage())
+                .error(R.drawable.ic_launcher)
+                .into(holder.imageView2);
 
+    }
 
     @Override
     public int getItemCount() {
-
         return faviouriteItems.size();
     }
 
-//    public interface ItemListener {
-////        void onItemClick(DataModel item);
-//    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

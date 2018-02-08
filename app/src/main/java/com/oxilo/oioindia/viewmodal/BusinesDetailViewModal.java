@@ -27,8 +27,8 @@ public class BusinesDetailViewModal extends AndroidViewModel {
         this.application = application;
         enable.set(true);
     }
-    public Observable<Response<ResponseBody>> getBusinessDetail(String product_id){
-        return MainRequestManager.getInstance(application.getApplicationContext()).getBusinessDetails(product_id);
+    public Observable<Response<ResponseBody>> getBusinessDetail(String product_id, String user_id){
+        return MainRequestManager.getInstance(application.getApplicationContext()).getBusinessDetails(product_id, user_id);
     }
 
     /**

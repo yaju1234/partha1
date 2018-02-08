@@ -3,6 +3,7 @@ package com.oxilo.oioindia.view.fragments;
 
 import android.app.ProgressDialog;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,6 +27,7 @@ import com.oxilo.oioindia.databinding.FragmentBusinessDetailBinding;
 import com.oxilo.oioindia.modal.BusinessDetails;
 import com.oxilo.oioindia.modal.Details;
 import com.oxilo.oioindia.retrofit.restservice.RestService;
+import com.oxilo.oioindia.view.activity.LoginActivity;
 import com.oxilo.oioindia.viewmodal.BusinesDetailViewModal;
 import com.oxilo.oioindia.viewmodal.MainViewModal;
 import com.squareup.picasso.Picasso;
@@ -60,10 +62,10 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
     RecyclerView reviews_rating_list;
     FragmentBusinessDetailBinding binding;
     private ImageView iv_favorites;
-    boolean b_Is_Favorites = false;
     private Map<String, String> param = new HashMap<>();
     public ProgressDialog prsDlg;
     String user_id="";
+    private boolean b_Is_Favorites = false;
     public BusinessDetailFragment() {
         // Required empty public constructor
     }
@@ -111,14 +113,30 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
             }
         });
 
+        View v = binding.getRoot();
+        iv_favorites = (ImageView) v.findViewById(R.id.iv_favorites);
+        iv_favorites.setOnClickListener(this);
+        user_id = AppController.getInstance().getAppPrefs().getObject("USER_ID", String.class);
+        prsDlg = new ProgressDialog(getContext());
 
-        viewModal.getBusinessDetail(mParam1).subscribe(new Consumer<Response<ResponseBody>>() {
+        String userid = "0";
+                if(AppController.getInstance().getAppPrefs().getObject("LOGIN", String.class).equalsIgnoreCase("1")){
+            userid = AppController.getInstance().getAppPrefs().getObject("USER_ID", String.class);;
+                }
+        viewModal.getBusinessDetail(mParam1,userid).subscribe(new Consumer<Response<ResponseBody>>() {
             @Override
             public void accept(Response<ResponseBody> responseBodyResponse) throws Exception {
                 viewModal.enable.set(false);
                 try {
                     String sd = new String(responseBodyResponse.body().bytes());
                     JSONObject mapping = new JSONObject(sd);
+                    b_Is_Favorites = mapping.getString("isfav").equalsIgnoreCase("false")?false:true;
+
+                    if (b_Is_Favorites) {
+                        iv_favorites.setImageResource(R.drawable.favorite);
+                    } else {
+                        iv_favorites.setImageResource(R.drawable.un_favorite);
+                    }
                     ObjectMapper mapper = new ObjectMapper();
                     mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
                     List<BusinessDetails> businessDetailsList = mapper.readValue(mapping.getString("result1"), new TypeReference<List<BusinessDetails>>() {
@@ -150,22 +168,11 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
                 throwable.printStackTrace();
             }
         });
-        View v = binding.getRoot();
-        iv_favorites = (ImageView) v.findViewById(R.id.iv_favorites);
-        user_id = AppController.getInstance().getAppPrefs().getObject("USER_ID", String.class);
-        prsDlg = new ProgressDialog(getContext());
-        if (user_id != null && user_id.trim().length() > 0) {
-            iv_favorites.setVisibility(View.VISIBLE);
-            iv_favorites.setOnClickListener(this);
-            if (b_Is_Favorites) {
-                iv_favorites.setImageResource(R.drawable.favorite);
-            } else {
-                iv_favorites.setImageResource(R.drawable.un_favorite);
-            }
 
-        } else {
-            iv_favorites.setVisibility(View.INVISIBLE);
-        }
+
+
+
+
         return v;
     }
 
@@ -174,20 +181,25 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         switch (v.getId()) {
             case R.id.iv_favorites:
                 // "11031"
-                param.clear();
-                param.put("userid",user_id);
-                param.put("businessid", getArguments().getString(ARG_PARAM1));
-                if (b_Is_Favorites) {
-                    param.put("action", "delete");
-                    iv_favorites.setImageResource(R.drawable.un_favorite);
-                    b_Is_Favorites = false;
-                } else {
-                    param.put("action", "add");
-                    iv_favorites.setImageResource(R.drawable.favorite);
-                    b_Is_Favorites = true;
+                if (user_id != null && user_id.trim().length() > 0) {
+                    param.clear();
+                    param.put("userid", user_id);
+                    param.put("businessid", getArguments().getString(ARG_PARAM1));
+                    if (b_Is_Favorites) {
+                        param.put("action", "delete");
+                        iv_favorites.setImageResource(R.drawable.un_favorite);
+                        b_Is_Favorites = false;
+                    } else {
+                        param.put("action", "add");
+                        iv_favorites.setImageResource(R.drawable.favorite);
+                        b_Is_Favorites = true;
+                    }
+                    showProgressDailog();
+                    feb_Api();
+                }else{
+                    getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+                    getActivity().finish();
                 }
-                showProgressDailog();
-                feb_Api();
                 break;
         }
 

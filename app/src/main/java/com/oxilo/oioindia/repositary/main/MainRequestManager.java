@@ -66,8 +66,8 @@ public class MainRequestManager {
         return mainAPIService.business(cat_id,city_id);
     }
 
-    public Observable<Response<ResponseBody>> getBusinessDetails(String product_id) {
-        return mainAPIService.businessDetails(product_id);
+    public Observable<Response<ResponseBody>> getBusinessDetails(String product_id, String user_id) {
+        return mainAPIService.businessDetails(product_id,user_id);
     }
 
     public Observable<CityResponse> getCity() {

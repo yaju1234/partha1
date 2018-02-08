@@ -116,8 +116,8 @@ public class MainAPIService {
 
     }
 
-    public Observable<Response<ResponseBody>> businessDetails (String product_id) {
-        return mainAPI.businessdetails(product_id)
+    public Observable<Response<ResponseBody>> businessDetails (String product_id,String user_id) {
+        return mainAPI.businessdetails(product_id,user_id)
                 .doOnSubscribe(disposable -> isRequestingLogin = true)
                 .doOnTerminate(() -> isRequestingLogin = false)
                 .subscribeOn(Schedulers.io())
