@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.GridLayoutManager;
+
 import com.oxilo.oioindia.AppController;
 import com.oxilo.oioindia.R;
 import com.oxilo.oioindia.retrofit.restservice.RestService;
@@ -26,6 +27,7 @@ import com.oxilo.oioindia.view.activity.SplashActivity;
 import com.oxilo.oioindia.view.adapter.FaviouriteViewAdapter;
 import com.oxilo.oioindia.viewmodal.FaviouriteItem;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -71,8 +73,9 @@ public class FaviouriteFragment extends Fragment implements View.OnClickListener
     public ProgressDialog prsDlg;
     private String user_id;
     RecyclerView recyclerView;
-    ArrayList<FaviouriteItem> faviouriteItems;
+    ArrayList<FaviouriteItem> faviouriteItems = new ArrayList<FaviouriteItem>();
     FaviouriteViewAdapter faviouriteViewAdapter;
+
     public FaviouriteFragment() {
         // Required empty public constructor
     }
@@ -120,21 +123,9 @@ public class FaviouriteFragment extends Fragment implements View.OnClickListener
         prsDlg = new ProgressDialog(getContext());
 
         recyclerView = (RecyclerView) v.findViewById(R.id.categorylist);
-        FaviouriteItem faviouriteItem = new FaviouriteItem("","");
-        faviouriteItems = new ArrayList<FaviouriteItem>();
-        faviouriteItems.add(faviouriteItem);
-        faviouriteItems.add(faviouriteItem);
-        faviouriteItems.add(faviouriteItem);
-        faviouriteItems.add(faviouriteItem);
-        faviouriteItems.add(faviouriteItem);
-        faviouriteItems.add(faviouriteItem);
-        faviouriteItems.add(faviouriteItem);
-        faviouriteItems.add(faviouriteItem);
-        faviouriteItems.add(faviouriteItem);
-        faviouriteItems.add(faviouriteItem);
-        faviouriteItems.add(faviouriteItem);
-        faviouriteItems.add(faviouriteItem);
-        faviouriteViewAdapter = new FaviouriteViewAdapter(getContext(),faviouriteItems);
+
+        faviouriteItems.clear();
+        faviouriteViewAdapter = new FaviouriteViewAdapter(getContext(), faviouriteItems);
 
         recyclerView.setAdapter(faviouriteViewAdapter);
         GridLayoutManager manager = new GridLayoutManager(getContext(), 3, LinearLayoutManager.VERTICAL, false);
@@ -146,10 +137,10 @@ public class FaviouriteFragment extends Fragment implements View.OnClickListener
 
     }
 
-    private void showPage(){
+    private void showPage() {
         login = AppController.getInstance().getAppPrefs().getObject("LOGIN", String.class);
         user_id = AppController.getInstance().getAppPrefs().getObject("USER_ID", String.class);
-        tv_login.setText("## USER_ID :-" + user_id);
+        tv_login.setText("");
         param.clear();
         param.put("user_id", user_id);
         tv_login.setVisibility(View.GONE);
@@ -199,10 +190,10 @@ public class FaviouriteFragment extends Fragment implements View.OnClickListener
                 try {
 //                    System.out.println("#### login:=  " + response.body().string());
                     JSONObject mapping = new JSONObject(response.body().string().trim());
-                    if (mapping.getString("message").equals("Success Login")){
-                        AppController.getInstance().getAppPrefs().putObject("LOGIN","1");
+                    if (mapping.getString("message").equals("Success Login")) {
+                        AppController.getInstance().getAppPrefs().putObject("LOGIN", "1");
 //                        AppController.getInstance().getAppPrefs().putObject("LOGIN_DETAILS",mapping.toString());
-                        AppController.getInstance().getAppPrefs().putObject("USER_ID",mapping.getString("userid"));
+                        AppController.getInstance().getAppPrefs().putObject("USER_ID", mapping.getString("userid"));
                         AppController.getInstance().getAppPrefs().commit();
                         showPage();
                     }
@@ -221,6 +212,7 @@ public class FaviouriteFragment extends Fragment implements View.OnClickListener
             }
         });
     }
+
     public void getFavorites() {
         Call<ResponseBody> getDepartment = RestService.getInstance().restInterface.get_favorites(param);
         getDepartment.enqueue(new Callback<ResponseBody>() {
@@ -228,13 +220,21 @@ public class FaviouriteFragment extends Fragment implements View.OnClickListener
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
 
-                    System.out.println("#### getFavorites:=  " + response.body().string());
+//                    System.out.println("#### getFavorites:=  " + response.body().string());
                     JSONObject jsonObject = new JSONObject(response.body().string().trim());
-                    if(jsonObject.getString("result").equals("0")){
+                    if (jsonObject.getString("result").equals("0")) {
                         recyclerView.setVisibility(View.GONE);
                         tv_login.setVisibility(View.VISIBLE);
                         tv_login.setText("No favorites Found");
-                    }else {
+                    } else {
+                        JSONArray jsonArray = new JSONArray(jsonObject.getString("result"));
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            FaviouriteItem faviouriteItem = new FaviouriteItem(jsonObject1.getString("name"), jsonObject1.getString("image"));
+                            faviouriteItems.add(faviouriteItem);
+                        }
+                        faviouriteViewAdapter.notifyDataSetChanged();
+
                         recyclerView.setVisibility(View.VISIBLE);
                         tv_login.setVisibility(View.GONE);
                         tv_login.setText("");
