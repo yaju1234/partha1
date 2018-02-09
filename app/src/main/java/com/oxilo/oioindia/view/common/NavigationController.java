@@ -95,6 +95,18 @@ public class NavigationController {
                 .commitAllowingStateLoss();
     }
 
+
+    public void navigateToBusinessDetails1(String product_id) {
+        BusinessDetailFragment fragment = BusinessDetailFragment.newInstance(product_id, "");
+        String tag = "repo" + "/"  + "/" + "detail";
+        String hide = "repo" + "/"  + "/" + "blist";
+        fragmentManager.beginTransaction()
+              //  .hide(fragmentManager.findFragmentByTag(hide))
+                .replace(containerId, fragment, tag)
+                .addToBackStack(null)
+                .commitAllowingStateLoss();
+    }
+
 //    public void navigateToUser(String login) {
 //        String tag = "user" + "/" + login;
 //        UserFragment userFragment = UserFragment.create(login);

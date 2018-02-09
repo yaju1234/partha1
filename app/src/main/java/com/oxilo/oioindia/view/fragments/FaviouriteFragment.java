@@ -125,7 +125,7 @@ public class FaviouriteFragment extends Fragment implements View.OnClickListener
         recyclerView = (RecyclerView) v.findViewById(R.id.categorylist);
 
         faviouriteItems.clear();
-        faviouriteViewAdapter = new FaviouriteViewAdapter(getContext(), faviouriteItems);
+        faviouriteViewAdapter = new FaviouriteViewAdapter(getActivity(), faviouriteItems);
 
         recyclerView.setAdapter(faviouriteViewAdapter);
         GridLayoutManager manager = new GridLayoutManager(getContext(), 3, LinearLayoutManager.VERTICAL, false);
