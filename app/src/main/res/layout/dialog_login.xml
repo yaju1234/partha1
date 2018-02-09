@@ -71,6 +71,7 @@
                 android:background="#fff"
                 android:backgroundTint="@color/white"
                 android:hint="Email"
+                android:singleLine="true"
                 android:inputType="textEmailAddress"
                 android:padding="10dp"
                 android:textColor="@color/colorPrimary"
@@ -100,7 +101,8 @@
             android:background="#fff"
             android:backgroundTint="@color/white"
             android:hint="Password"
-            android:inputType="textEmailAddress|textPassword"
+            android:singleLine="true"
+            android:inputType="textPassword"
             android:padding="10dp"
             android:textColor="@color/colorPrimary"
             android:textColorHint="@color/gray" />

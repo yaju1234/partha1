@@ -51,8 +51,8 @@ public class LoginDlg extends Dialog {
         register_btn = (Button) findViewById(R.id.register_btn);
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
-        llMain.getLayoutParams().height = (int) (height * 1.02);
-        llMain.getLayoutParams().width = (int) (width * 1.02);
+        llMain.getLayoutParams().height = (int) (height * 0.95);
+        llMain.getLayoutParams().width = (int) (width * 0.95);
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

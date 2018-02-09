@@ -117,7 +117,7 @@ public class MainFragment extends Fragment {
                 page.putString("url", "d");
                 fragments.add(AllFragment.newInstance(directoryData.getAllCategory(), ""));
                 fragments.add(TopFragment.newInstance(directoryData.getTopCategory(), ""));
-                fragments.add(FaviouriteFragment.newInstance("", ""));
+                fragments.add(FaviouriteFragment.newInstance("", "",binding.viewpager));
 
                 List<String> strings = new ArrayList<>();
                 strings.add("All       ");

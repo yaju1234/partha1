@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -66,6 +67,7 @@ public class FaviouriteFragment extends Fragment implements View.OnClickListener
     private String mParam1;
     private String mParam2;
     private String login;
+    private static ViewPager mViewPager;
 
     private OnFragmentInteractionListener mListener;
     TextView tv_login;
@@ -95,7 +97,8 @@ public class FaviouriteFragment extends Fragment implements View.OnClickListener
      * @return A new instance of fragment FaviouriteFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FaviouriteFragment newInstance(String param1, String param2) {
+    public static FaviouriteFragment newInstance(String param1, String param2, ViewPager viewPager) {
+        mViewPager = viewPager;
         FaviouriteFragment fragment = new FaviouriteFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -159,7 +162,7 @@ public class FaviouriteFragment extends Fragment implements View.OnClickListener
         login = AppController.getInstance().getAppPrefs().getObject("LOGIN", String.class);
         user_id = AppController.getInstance().getAppPrefs().getObject("USER_ID", String.class);
         tv_login.setVisibility(View.GONE);
-        tv_login.setText("Please login");
+        //tv_login.setText("Please login");
         param.clear();
         param.put("user_id", user_id);
         recyclerView.setVisibility(View.GONE);
@@ -181,6 +184,8 @@ public class FaviouriteFragment extends Fragment implements View.OnClickListener
         if (loginDlg != null) {
             loginDlg.dismiss();
             loginDlg = null;
+            mViewPager.setCurrentItem(0,true);
+
         }
     }
 
