@@ -7,17 +7,19 @@ package com.oxilo.oioindia.view.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 public class BaseActivity extends AppCompatActivity {
     private CompositeDisposable compositeDisposable;
-
+    public int height, width;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         compositeDisposable = new CompositeDisposable();
+
     }
 
     @Override
