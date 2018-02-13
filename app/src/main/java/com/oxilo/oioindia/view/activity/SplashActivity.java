@@ -35,6 +35,8 @@ public class SplashActivity extends BaseLocationActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
+        AppController.getInstance().getAppPrefs().putObject("LOCATION","");
+        AppController.getInstance().getAppPrefs().commit();
         binding.setSplash(new Splash(this));
 
 //        if (Build.VERSION.SDK_INT< Build.VERSION_CODES.M) {

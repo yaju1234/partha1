@@ -1,9 +1,9 @@
 
 
 
-
 package com.oxilo.oioindia.view.fragments;
 
+import com.oxilo.oioindia.constant.Constant;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.res.Resources;
@@ -12,21 +12,30 @@ import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import com.oxilo.oioindia.AppController;
 import com.oxilo.oioindia.R;
 import com.oxilo.oioindia.binding.BindingCity;
 import com.oxilo.oioindia.binding.IDataChangeListener;
 import com.oxilo.oioindia.data.DataManager;
 import com.oxilo.oioindia.databinding.FragmentMainBinding;
+import com.oxilo.oioindia.dialog.LoginDlg;
+import com.oxilo.oioindia.dialog.SearchDlg;
+import com.oxilo.oioindia.interfaces.Search_Interface;
 import com.oxilo.oioindia.modal.City;
 import com.oxilo.oioindia.modal.DirectoryData;
+import com.oxilo.oioindia.modal.search.Result;
 import com.oxilo.oioindia.view.MainSectionsAdapter;
 import com.oxilo.oioindia.view.activity.MainActivity;
 import com.oxilo.oioindia.view.adapter.ImagePagerAdapter;
@@ -50,7 +59,7 @@ import io.reactivex.functions.Consumer;
  * Use the {@link MainFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements Search_Interface {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -63,9 +72,11 @@ public class MainFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     FragmentMainBinding binding;
+    SearchDlg  searchDlg = null;
+//    private static TextView city_name;
 
-
-
+//    EditText et_search;
+    View v_view;
     public MainFragment() {
         // Required empty public constructor
     }
@@ -104,7 +115,7 @@ public class MainFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.bind(inflater.inflate(R.layout.fragment_main, container, false));
         MainViewModal.Factory factory = new MainViewModal.Factory(getActivity().getApplication(), DataManager.getInstance());
-        MainViewModal viewModal = ViewModelProviders.of(this,factory).get(MainViewModal.class);
+        MainViewModal viewModal = ViewModelProviders.of(this, factory).get(MainViewModal.class);
         binding.setVm(viewModal);
 
 
@@ -117,7 +128,7 @@ public class MainFragment extends Fragment {
                 page.putString("url", "d");
                 fragments.add(AllFragment.newInstance(directoryData.getAllCategory(), ""));
                 fragments.add(TopFragment.newInstance(directoryData.getTopCategory(), ""));
-                fragments.add(FaviouriteFragment.newInstance("", "",binding.viewpager));
+                fragments.add(FaviouriteFragment.newInstance("", "", binding.viewpager));
 
                 List<String> strings = new ArrayList<>();
                 strings.add("All       ");
@@ -136,17 +147,52 @@ public class MainFragment extends Fragment {
             }
         });
 
-        viewModal.getSlider().subscribe(slider -> binding.setImageAdapter(new ImagePagerAdapter(getActivity(),slider.getResult())), Throwable::printStackTrace);
+        viewModal.getSlider().subscribe(slider -> binding.setImageAdapter(new ImagePagerAdapter(getActivity(), slider.getResult())), Throwable::printStackTrace);
 
         binding.cityName.setText(city);
         binding.cityName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new NavigationController((MainActivity) getActivity()).navigateToLocation(address,city);
+                new NavigationController((MainActivity) getActivity()).navigateToLocation(address, city);
             }
         });
-        return binding.getRoot();
+        View v = binding.getRoot();
+        Constant.locaTextView = v.findViewById(R.id.city_name);
+        v_view = (View) v.findViewById(R.id.v_view);
+        v_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Display display = getActivity().getWindowManager().getDefaultDisplay();
+                searchDlg  = new SearchDlg(display.getHeight(), display.getWidth(), MainFragment.this, getContext(),address, city);
+                searchDlg.show();
+            }
+        });
+        return v;
     }
+
+
+    @Override
+    public void select(String pogition) {
+
+    }
+
+    @Override
+    public void serarch_details(String s, String s1) {
+
+    }
+
+    @Override
+    public void selectValue(Result result) {
+        if(searchDlg!=null) {
+            searchDlg.dismiss();
+            searchDlg=null;
+//            System.out.println("#### getAddress1:==" + result.getBusinessid());
+            NavigationController navigationController = new NavigationController((MainActivity) getContext());
+            navigationController.navigateToBusinessDetails1(result.getBusinessid());
+        }
+
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -165,6 +211,7 @@ public class MainFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
 
     @Override
     public void onDetach() {
@@ -189,13 +236,12 @@ public class MainFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    private void setupspinner(){
+    private void setupspinner() {
 //        stockArr = strings.toArray(stockArr);
 //        adapter = new SpinnerAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, stockArr);
 //        timeSpinner.setAdapter(adapter);
 //        timeSpinner.setOnItemSelectedListener(l);
     }
-
 
 
     private City loadPlanet(Context context, int resourceId) {

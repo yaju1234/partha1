@@ -18,7 +18,9 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.oxilo.oioindia.AppController;
 import com.oxilo.oioindia.R;
+import com.oxilo.oioindia.constant.Constant;
 import com.oxilo.oioindia.view.adapter.PlaceSearchAutoAdapter;
 import com.oxilo.oioindia.view.common.BaseFragment;
 
@@ -46,6 +48,7 @@ public class LocationFragment extends BaseFragment {
     private RecyclerView recyclerView;
     private TextView header;
 
+
     public LocationFragment() {
         // Required empty public constructor
     }
@@ -53,12 +56,15 @@ public class LocationFragment extends BaseFragment {
     @Override
     public void onConnected(Location location) {
         double lat = location.getLatitude();
-        placeSearchAutoAdapter = new PlaceSearchAutoAdapter(getContext(),mGoogleApiClient,BOUNDS_GREATER_SYDNEY,null);
+        placeSearchAutoAdapter = new PlaceSearchAutoAdapter(getContext(), mGoogleApiClient, BOUNDS_GREATER_SYDNEY, null);
         placeSearchAutoAdapter.setOnItemClickListener(new PlaceSearchAutoAdapter.MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
                 String loc = placeSearchAutoAdapter.mResultList.get(position).getPrimaryText(STYLE_BOLD).toString();
+                AppController.getInstance().getAppPrefs().putObject("LOCATION", loc);
+                AppController.getInstance().getAppPrefs().commit();
                 header.setText(loc);
+                Constant.locaTextView.setText(loc);
             }
         });
         recyclerView.setAdapter(placeSearchAutoAdapter);
@@ -103,7 +109,7 @@ public class LocationFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Toolbar toolbar = (Toolbar)view.findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,13 +117,16 @@ public class LocationFragment extends BaseFragment {
             }
         });
 
-        recyclerView = (RecyclerView)view.findViewById(R.id.recylerview) ;
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+        recyclerView = (RecyclerView) view.findViewById(R.id.recylerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         header = (TextView) view.findViewById(R.id.location);
-        EditText search_location = (EditText)view.findViewById(R.id.search_location);
-
-        header.setText(mParam1);
-
+        EditText search_location = (EditText) view.findViewById(R.id.search_location);
+        String LOCATION = AppController.getInstance().getAppPrefs().getObject("LOCATION", String.class);
+//        System.out.println("#### LOCATION"+LOCATION);
+        if (LOCATION != null && LOCATION.trim().length() > 0)
+            header.setText(LOCATION);
+        else
+            header.setText(mParam1);
 
 
         search_location.addTextChangedListener(new TextWatcher() {
