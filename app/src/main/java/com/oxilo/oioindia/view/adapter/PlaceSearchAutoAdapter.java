@@ -73,7 +73,7 @@ public class PlaceSearchAutoAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public int getItemCount() {
-        if (mResultList.size()!=0)
+        if (mResultList!=null && mResultList.size()!=0)
             return mResultList.size();
         else
         return 0;
