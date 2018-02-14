@@ -21,8 +21,10 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.oxilo.oioindia.AppController;
+import com.oxilo.oioindia.GeoSearchModel;
 import com.oxilo.oioindia.R;
 import com.oxilo.oioindia.constant.Constant;
+import com.oxilo.oioindia.view.activity.SplashActivity;
 import com.oxilo.oioindia.view.adapter.PlaceSearchAutoAdapter;
 import com.oxilo.oioindia.view.common.BaseFragment;
 
@@ -155,8 +157,22 @@ public class LocationFragment extends BaseFragment {
         tv_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                double lat=0.00;
+                double lon=0.00;
+                if (AppController.getInstance().getAppPrefs().getObject("LOCATION_LAT", Double.class) != null) {
+                    lat =AppController.getInstance().getAppPrefs().getObject("LOCATION_LAT", Double.class);
+
+                }
+                if (AppController.getInstance().getAppPrefs().getObject("LOCATION_LON", Double.class) != null) {
+                    lon =AppController.getInstance().getAppPrefs().getObject("LOCATION_LON", Double.class);
+
+                }
+                String loc =  GeoSearchModel.getCityInfo(lat, lon, getContext());
                 AppController.getInstance().getAppPrefs().putObject("LOCATION", loc);
                 AppController.getInstance().getAppPrefs().commit();
+                header.setText(loc);
+                Constant.locaTextView.setText(loc);
+//                getActivity().onBackPressed();
             }
         });
 

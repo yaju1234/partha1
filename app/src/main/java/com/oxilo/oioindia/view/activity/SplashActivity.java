@@ -103,8 +103,11 @@ public class SplashActivity extends BaseLocationActivity {
     public void onConnected(Location location) {
         if (location != null) {
             stopLocationUpdates();
-            Log.e("LAtitude", " " + location.getLatitude());
-            Log.e("longitude", " " + location.getLongitude());
+            Log.e("Latitude", " " + location.getLatitude());
+            Log.e("Longitude", " " + location.getLongitude());
+            AppController.getInstance().getAppPrefs().putObject("LOCATION_LAT", location.getLatitude());
+            AppController.getInstance().getAppPrefs().putObject("LOCATION_LON", location.getLongitude());
+            AppController.getInstance().getAppPrefs().commit();
             String address = GeoSearchModel.addressByLocation(location.getLatitude(), location.getLongitude(), SplashActivity.this);
             String city = GeoSearchModel.getCityInfo(location.getLatitude(), location.getLongitude(), SplashActivity.this);
             Log.e("city", " " + city);
