@@ -40,7 +40,7 @@ public class GeoSearchModel {
         } catch (IOException e) {
             e.printStackTrace();
             try {
-                getStringFromAddress(latitude,longitude);
+                address =  getStringFromAddress(latitude,longitude);
             } catch (IOException e1) {
                 e1.printStackTrace();
             } catch (JSONException e1) {
@@ -62,19 +62,29 @@ public class GeoSearchModel {
             return address;
         } catch (IOException e) {
             e.printStackTrace();
+
+            try {
+                address =  getStringFromCity(latitude,longitude);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
             return address;
         }
 
     }
 
 
-    public static List<Address> getStringFromAddress(double lat, double lng)
+    public static String getStringFromAddress(double lat, double lng)
             throws ClientProtocolException, IOException, JSONException {
 
        // LatLng latLng = new LatLng(lat,lng);
-
-        String address = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&sensor=true&key=AIzaSyAn6vvnWkrRnx96NtUitQ8Ml6KdBx65Y6U";
-        HttpGet httpGet = new HttpGet(address);
+//        System.out.println("### lat:-"+lat);
+//        System.out.println("### lng:-"+lng);
+        String address="";
+        String get_all_address = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&sensor=true&key=AIzaSyAn6vvnWkrRnx96NtUitQ8Ml6KdBx65Y6U";
+        HttpGet httpGet = new HttpGet(get_all_address);
         HttpClient client = new DefaultHttpClient();
         HttpResponse response;
         StringBuilder stringBuilder = new StringBuilder();
@@ -90,28 +100,31 @@ public class GeoSearchModel {
         }
 
         JSONObject jsonObject = new JSONObject(stringBuilder.toString());
-
+        System.out.println("### address:-"+jsonObject.toString());
         retList = new ArrayList<Address>();
-
+//
         if ("OK".equalsIgnoreCase(jsonObject.getString("status"))) {
             JSONArray results = jsonObject.getJSONArray("results");
-            for (int i = 0; i < results.length(); i++) {
-                JSONObject result = results.getJSONObject(i);
-                String indiStr = result.getString("formatted_address");
-                Address addr = new Address(Locale.getDefault());
-                addr.setAddressLine(0, indiStr);
-                retList.add(addr);
+            if(results.length()>0){
+                address=results.getJSONObject(0).getString("formatted_address");
             }
-        }
 
-        return retList;
+        }
+        System.out.println("### address:-"+address);
+
+
+        return address;
     }
 
-    public static List<Address> getStringFromCity(double lat, double lng)
+    public static String getStringFromCity(double lat, double lng)
             throws ClientProtocolException, IOException, JSONException {
 
-        String address = "http://maps.googleapis.com/maps/api/geocode/json?latlng=12&sensor=true&key=AIzaSyAn6vvnWkrRnx96NtUitQ8Ml6KdBx65Y6U";
-        HttpGet httpGet = new HttpGet(address);
+        // LatLng latLng = new LatLng(lat,lng);
+//        System.out.println("### lat:-"+lat);
+//        System.out.println("### lng:-"+lng);
+        String address="";
+        String get_all_address = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&sensor=true&key=AIzaSyAn6vvnWkrRnx96NtUitQ8Ml6KdBx65Y6U";
+        HttpGet httpGet = new HttpGet(get_all_address);
         HttpClient client = new DefaultHttpClient();
         HttpResponse response;
         StringBuilder stringBuilder = new StringBuilder();
@@ -127,21 +140,35 @@ public class GeoSearchModel {
         }
 
         JSONObject jsonObject = new JSONObject(stringBuilder.toString());
-
+        System.out.println("### address:-"+jsonObject.toString());
         retList = new ArrayList<Address>();
-
+//
         if ("OK".equalsIgnoreCase(jsonObject.getString("status"))) {
             JSONArray results = jsonObject.getJSONArray("results");
-            for (int i = 0; i < results.length(); i++) {
-                JSONObject result = results.getJSONObject(i);
-                String indiStr = result.getString("formatted_address");
-                Address addr = new Address(Locale.getDefault());
-                addr.setAddressLine(0, indiStr);
-                retList.add(addr);
+            if(results.length()>0){
+                JSONArray jsonArray =results.getJSONObject(0).getJSONArray("address_components");
+                boolean flag=false;
+                for(int i=0;i<jsonArray.length();i++){
+                    JSONObject jsonObject1=jsonArray.getJSONObject(i);
+                    for(int j=0;j<jsonObject1.getJSONArray("types").length();j++){
+                        if(jsonObject1.getJSONArray("types").getString(j).equals("locality")){
+                            flag=true;
+                            break;
+                        }
+                    }
+                    if(flag){
+                        address=jsonObject1.getString("long_name");
+                        break;
+                    }
+                }
+//                address=results.getJSONObject(0).getString("formatted_address");
             }
-        }
 
-        return retList;
+        }
+        System.out.println("### locality:-"+address);
+
+
+        return address;
     }
 
 

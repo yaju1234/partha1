@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.oxilo.oioindia.AppController;
 import com.oxilo.oioindia.R;
 import com.oxilo.oioindia.modal.City;
 
@@ -30,21 +31,24 @@ public class CityListAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
     private final int VIEW_PROG = 0;
     private Context mContext;
     public ArrayList<T> dataSet;
-    public  ArrayList<T> filteredProductList;
+    public ArrayList<T> filteredProductList;
     private static MyClickListener myClickListener;
 
 //    public static CheckBox lastChecked = null;
 //    public static int lastCheckedPos = 0;
 
     public static int mSelectedItem = -1;
+
     public CityListAdapter(ArrayList<T> productLists, Context mContext) {
         this.mContext = mContext;
         this.dataSet = productLists;
         this.filteredProductList = new ArrayList<>();
     }
+
     public void setOnItemClickListener(MyClickListener myClickListener) {
         this.myClickListener = myClickListener;
     }
+
     public void addItems(@NonNull List<T> newDataSetItems) {
         filteredProductList.addAll(newDataSetItems);
     }
@@ -129,23 +133,22 @@ public class CityListAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        return dataSet.get(position)!=null? VIEW_ITEM: VIEW_PROG;
+        return dataSet.get(position) != null ? VIEW_ITEM : VIEW_PROG;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder vh = null;
-        if (viewType == VIEW_ITEM){
+        if (viewType == VIEW_ITEM) {
             View itemView = LayoutInflater.
                     from(parent.getContext()).
                     inflate(R.layout.city_row, parent, false);
             vh = new ProductViewHolder(itemView);
-        }
-        else if(viewType == VIEW_PROG){
+        } else if (viewType == VIEW_PROG) {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.progress_item, parent, false);
             vh = new ProgressViewHolder(v);
-        }else {
+        } else {
             throw new IllegalStateException("Invalid type, this type ot items " + viewType + " can't be handled");
         }
 
@@ -154,20 +157,25 @@ public class CityListAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if(holder instanceof ProductViewHolder){
+        if (holder instanceof ProductViewHolder) {
             T dataItem = dataSet.get(position);
-            ((ProductViewHolder) holder).name.setText(((City)dataItem).getCityname().toString());
-            ((ProductViewHolder)holder).radioButton.setChecked(position == mSelectedItem);
+            String LOCATION = AppController.getInstance().getAppPrefs().getObject("LOCATION", String.class);
+            if (LOCATION != null && LOCATION.trim().length() > 0) {
+                ((ProductViewHolder) holder).name.setText(LOCATION);
+            } else {
+                ((ProductViewHolder) holder).name.setText(((City) dataItem).getCityname().toString());
+            }
+            ((ProductViewHolder) holder).radioButton.setChecked(position == mSelectedItem);
 
-        }else{
-            ((ProgressViewHolder)holder).progressBar.setIndeterminate(true);
+        } else {
+            ((ProgressViewHolder) holder).progressBar.setIndeterminate(true);
         }
 
     }
 
     @Override
     public int getItemCount() {
-        if (dataSet!=null)
+        if (dataSet != null)
             return dataSet.size();
         else
             return 0;
@@ -178,13 +186,9 @@ public class CityListAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
         dataSet.clear();
         if (charText.length() == 0) {
             dataSet.addAll(filteredProductList);
-        }
-        else
-        {
-            for (T cI : filteredProductList)
-            {
-                if (((City)cI).getCityname().toLowerCase(Locale.getDefault()).contains(charText))
-                {
+        } else {
+            for (T cI : filteredProductList) {
+                if (((City) cI).getCityname().toLowerCase(Locale.getDefault()).contains(charText)) {
                     dataSet.add(cI);
 
                 }
@@ -193,29 +197,30 @@ public class CityListAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
         notifyDataSetChanged();
     }
 
-      // Provide a reference to the views for each data item
+    // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView name;
         RadioButton radioButton;
+
         public ProductViewHolder(View itemView) {
             super(itemView);
             radioButton = (RadioButton) itemView.findViewById(R.id.radio);
-            name = (TextView)itemView.findViewById(R.id.city_name);
+            name = (TextView) itemView.findViewById(R.id.city_name);
             radioButton.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            try{
-                if(myClickListener!=null){
-                myClickListener.onItemClick(getLayoutPosition(), view);
-                }else{
-                    Toast.makeText(view.getContext(),"Click Event Null",Toast.LENGTH_SHORT).show();
+            try {
+                if (myClickListener != null) {
+                    myClickListener.onItemClick(getLayoutPosition(), view);
+                } else {
+                    Toast.makeText(view.getContext(), "Click Event Null", Toast.LENGTH_SHORT).show();
                 }
-            }catch(NullPointerException e){
-                Toast.makeText(view.getContext(),"Click Event Null Ex",Toast.LENGTH_SHORT).show();
+            } catch (NullPointerException e) {
+                Toast.makeText(view.getContext(), "Click Event Null Ex", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -223,9 +228,10 @@ public class CityListAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public static class ProgressViewHolder extends RecyclerView.ViewHolder {
         public ProgressBar progressBar;
+
         public ProgressViewHolder(View v) {
             super(v);
-            progressBar = (ProgressBar)v.findViewById(R.id.progress_bar);
+            progressBar = (ProgressBar) v.findViewById(R.id.progress_bar);
         }
     }
 

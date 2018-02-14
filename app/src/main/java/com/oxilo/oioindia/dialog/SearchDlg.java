@@ -102,7 +102,7 @@ public class SearchDlg extends Dialog implements Search_Interface {
         if (LOCATION != null && LOCATION.trim().length() > 0)
             header.setText(LOCATION);
         else
-            header.setText(mParam1);
+            header.setText(mParam2);
         prsDlg = new ProgressDialog(context);
 
         search_location.addTextChangedListener(new TextWatcher() {

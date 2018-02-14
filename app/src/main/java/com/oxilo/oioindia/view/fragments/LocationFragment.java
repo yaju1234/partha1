@@ -49,6 +49,7 @@ public class LocationFragment extends BaseFragment {
             new LatLng(-34.041458, 150.790100), new LatLng(-33.682247, 151.383362));
     private RecyclerView recyclerView;
     private TextView header;
+    private TextView tv_location;
 
 
     public LocationFragment() {
@@ -125,13 +126,14 @@ public class LocationFragment extends BaseFragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recylerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         header = (TextView) view.findViewById(R.id.location);
+        tv_location = (TextView) view.findViewById(R.id.tv_location);
         EditText search_location = (EditText) view.findViewById(R.id.search_location);
         String LOCATION = AppController.getInstance().getAppPrefs().getObject("LOCATION", String.class);
 //        System.out.println("#### LOCATION"+LOCATION);
         if (LOCATION != null && LOCATION.trim().length() > 0)
             header.setText(LOCATION);
         else
-            header.setText(mParam1);
+            header.setText(mParam2);
 
 
         search_location.addTextChangedListener(new TextWatcher() {
@@ -148,6 +150,13 @@ public class LocationFragment extends BaseFragment {
             @Override
             public void afterTextChanged(Editable editable) {
 
+            }
+        });
+        tv_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppController.getInstance().getAppPrefs().putObject("LOCATION", loc);
+                AppController.getInstance().getAppPrefs().commit();
             }
         });
 

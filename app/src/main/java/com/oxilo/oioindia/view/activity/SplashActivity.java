@@ -39,8 +39,10 @@ public class SplashActivity extends BaseLocationActivity {
 
         StrictMode.setThreadPolicy(policy);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
-        AppController.getInstance().getAppPrefs().putObject("LOCATION","");
-        AppController.getInstance().getAppPrefs().commit();
+        if (AppController.getInstance().getAppPrefs().getObject("LOCATION", String.class) == null) {
+            AppController.getInstance().getAppPrefs().putObject("LOCATION", "");
+            AppController.getInstance().getAppPrefs().commit();
+        }
         binding.setSplash(new Splash(this));
 
 //        if (Build.VERSION.SDK_INT< Build.VERSION_CODES.M) {
@@ -57,7 +59,7 @@ public class SplashActivity extends BaseLocationActivity {
     }
 
 
-    private void validate(String address,String city) {
+    private void validate(String address, String city) {
         String login = AppController.getInstance().getAppPrefs().getObject("LOGIN", String.class);
         if (login != null) {
             Intent i = new Intent(SplashActivity.this, MainActivity.class);
@@ -97,18 +99,17 @@ public class SplashActivity extends BaseLocationActivity {
     }
 
 
-
     @Override
     public void onConnected(Location location) {
-        if (location!=null){
+        if (location != null) {
             stopLocationUpdates();
             Log.e("LAtitude", " " + location.getLatitude());
             Log.e("longitude", " " + location.getLongitude());
-            String address = GeoSearchModel.addressByLocation(location.getLatitude(),location.getLongitude(),SplashActivity.this);
-            String city =    GeoSearchModel.getCityInfo(location.getLatitude(),location.getLongitude(),SplashActivity.this);
+            String address = GeoSearchModel.addressByLocation(location.getLatitude(), location.getLongitude(), SplashActivity.this);
+            String city = GeoSearchModel.getCityInfo(location.getLatitude(), location.getLongitude(), SplashActivity.this);
             Log.e("city", " " + city);
             Log.e("address", " " + address);
-            validate(address,city);
+            validate(address, city);
         }
 
 
