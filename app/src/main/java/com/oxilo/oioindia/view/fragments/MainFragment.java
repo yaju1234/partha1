@@ -132,9 +132,9 @@ public class MainFragment extends Fragment implements Search_Interface {
                 fragments.add(FaviouriteFragment.newInstance("", "", binding.viewpager));
 
                 List<String> strings = new ArrayList<>();
-                strings.add("All       ");
-                strings.add("Top       ");
-                strings.add("Faviourite");
+                strings.add("All");
+                strings.add("Top");
+                strings.add("Favourites");
 
                 binding.setPagerAdapter(new MainSectionsAdapter(getActivity(), getChildFragmentManager(), fragments, strings));
                 binding.setPager(binding.viewpager);

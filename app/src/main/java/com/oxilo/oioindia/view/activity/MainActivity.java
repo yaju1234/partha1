@@ -1,9 +1,12 @@
 package com.oxilo.oioindia.view.activity;
 
+import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -28,11 +31,14 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
                     return true;
                 case R.id.navigation_notifications:
                     return true;
+                case R.id.business_list:
+                    return true;
             }
             return false;
         }
     };
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +53,12 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
             navigationController.navigateToMain(city,address);
         }
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) navigation.getChildAt(0);
+        for (int i = 0; i < menuView.getChildCount(); i++) {
+            BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(i);
+            itemView.setShiftingMode(false);
+            itemView.setChecked(false);
+        }
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
     }
