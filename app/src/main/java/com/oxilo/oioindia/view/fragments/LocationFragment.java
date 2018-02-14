@@ -69,6 +69,7 @@ public class LocationFragment extends BaseFragment {
                 AppController.getInstance().getAppPrefs().commit();
                 header.setText(loc);
                 Constant.locaTextView.setText(loc);
+                getActivity().onBackPressed();
             }
         });
         recyclerView.setAdapter(placeSearchAutoAdapter);
