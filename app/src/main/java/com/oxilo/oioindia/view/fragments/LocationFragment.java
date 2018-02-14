@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.Place;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.oxilo.oioindia.AppController;
@@ -56,7 +58,9 @@ public class LocationFragment extends BaseFragment {
     @Override
     public void onConnected(Location location) {
         double lat = location.getLatitude();
-        placeSearchAutoAdapter = new PlaceSearchAutoAdapter(getContext(), mGoogleApiClient, BOUNDS_GREATER_SYDNEY, null);
+        AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().
+                setTypeFilter(Place.TYPE_COUNTRY).setCountry("IN").build();
+        placeSearchAutoAdapter = new PlaceSearchAutoAdapter(getContext(), mGoogleApiClient, BOUNDS_GREATER_SYDNEY, typeFilter);
         placeSearchAutoAdapter.setOnItemClickListener(new PlaceSearchAutoAdapter.MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
