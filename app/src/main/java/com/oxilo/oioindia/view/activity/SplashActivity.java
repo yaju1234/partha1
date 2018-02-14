@@ -8,6 +8,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -34,6 +35,9 @@ public class SplashActivity extends BaseLocationActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
         AppController.getInstance().getAppPrefs().putObject("LOCATION","");
         AppController.getInstance().getAppPrefs().commit();

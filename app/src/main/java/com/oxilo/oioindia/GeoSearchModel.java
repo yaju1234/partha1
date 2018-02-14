@@ -71,11 +71,9 @@ public class GeoSearchModel {
     public static List<Address> getStringFromAddress(double lat, double lng)
             throws ClientProtocolException, IOException, JSONException {
 
-        LatLng latLng = new LatLng(lat,lng);
+       // LatLng latLng = new LatLng(lat,lng);
 
-        String address = String
-                .format(Locale.ENGLISH,                                 "http://maps.googleapis.com/maps/api/geocode/json?latlng="+latLng+"&sensor=true&language="
-                        + Locale.getDefault().getCountry(), lat, lng);
+        String address = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&sensor=true&key=AIzaSyAn6vvnWkrRnx96NtUitQ8Ml6KdBx65Y6U";
         HttpGet httpGet = new HttpGet(address);
         HttpClient client = new DefaultHttpClient();
         HttpResponse response;
@@ -112,7 +110,7 @@ public class GeoSearchModel {
     public static List<Address> getStringFromCity(double lat, double lng)
             throws ClientProtocolException, IOException, JSONException {
 
-        String address = "http://maps.googleapis.com/maps/api/geocode/json?latlng=12&sensor=true";
+        String address = "http://maps.googleapis.com/maps/api/geocode/json?latlng=12&sensor=true&key=AIzaSyAn6vvnWkrRnx96NtUitQ8Ml6KdBx65Y6U";
         HttpGet httpGet = new HttpGet(address);
         HttpClient client = new DefaultHttpClient();
         HttpResponse response;
