@@ -27,5 +27,9 @@ public interface RestInterface {
     @POST("api/login.php")
     Call<ResponseBody> login(@FieldMap Map<String, String> params);
 
+    @FormUrlEncoded
+    @POST("api/getbusinessbysearch.php")
+    Call<ResponseBody> search(@FieldMap Map<String, String> params);
+
 
 }

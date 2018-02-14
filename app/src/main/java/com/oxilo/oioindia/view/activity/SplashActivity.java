@@ -35,6 +35,8 @@ public class SplashActivity extends BaseLocationActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
+        AppController.getInstance().getAppPrefs().putObject("LOCATION","");
+        AppController.getInstance().getAppPrefs().commit();
         binding.setSplash(new Splash(this));
 
 //        if (Build.VERSION.SDK_INT< Build.VERSION_CODES.M) {
@@ -100,6 +102,8 @@ public class SplashActivity extends BaseLocationActivity {
             Log.e("longitude", " " + location.getLongitude());
             String address = GeoSearchModel.addressByLocation(location.getLatitude(),location.getLongitude(),SplashActivity.this);
             String city =    GeoSearchModel.getCityInfo(location.getLatitude(),location.getLongitude(),SplashActivity.this);
+            Log.e("city", " " + city);
+            Log.e("address", " " + address);
             validate(address,city);
         }
 
