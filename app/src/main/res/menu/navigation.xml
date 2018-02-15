@@ -18,7 +18,7 @@
         android:title="@string/business_list" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_myaccuount"
         android:icon="@drawable/ic_account_circle_black_24dp"
         android:title="@string/title_notifications" />
 

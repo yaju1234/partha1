@@ -22,6 +22,7 @@ import android.support.v4.app.FragmentManager;
 
 import com.oxilo.oioindia.R;
 import com.oxilo.oioindia.view.activity.MainActivity;
+import com.oxilo.oioindia.view.fragments.AccountFragment;
 import com.oxilo.oioindia.view.fragments.BusinessDetailFragment;
 import com.oxilo.oioindia.view.fragments.BusinessListFragment;
 import com.oxilo.oioindia.view.fragments.LocationFragment;
@@ -106,7 +107,13 @@ public class NavigationController {
                 .addToBackStack(null)
                 .commitAllowingStateLoss();
     }
-
+    public void navigateToMyAccout() {
+        String tag = "repo" + "/"  + "/" + "main";
+        AccountFragment accountFragment =  AccountFragment.newInstance("city","adress");
+        fragmentManager.beginTransaction()
+                .replace(containerId, accountFragment,tag)
+                .commitAllowingStateLoss();
+    }
 //    public void navigateToUser(String login) {
 //        String tag = "user" + "/" + login;
 //        UserFragment userFragment = UserFragment.create(login);
