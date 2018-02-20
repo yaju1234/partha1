@@ -20,7 +20,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "phonenumber1",
         "phonenumber2",
         "address1",
-        "address2"
+        "address2",
+        "avgrating",
+        "totalreviews"
 })
 public class BusinessListing implements Parcelable
 {
@@ -41,6 +43,10 @@ public class BusinessListing implements Parcelable
     private String address1;
     @JsonProperty("address2")
     private String address2;
+    @JsonProperty("avgrating")
+    private int avgrating;
+    @JsonProperty("totalreviews")
+    private int totalreviews;
     public final static Parcelable.Creator<BusinessListing> CREATOR = new Creator<BusinessListing>() {
 
 
@@ -67,6 +73,8 @@ public class BusinessListing implements Parcelable
         this.phonenumber2 = ((String) in.readValue((String.class.getClassLoader())));
         this.address1 = ((String) in.readValue((String.class.getClassLoader())));
         this.address2 = ((String) in.readValue((String.class.getClassLoader())));
+        this.avgrating = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.totalreviews = ((Integer) in.readValue((Integer.class.getClassLoader())));
     }
 
     public BusinessListing() {
@@ -152,6 +160,26 @@ public class BusinessListing implements Parcelable
         this.address2 = address2;
     }
 
+    @JsonProperty("avgrating")
+    public void setAvgrating(int avgrating) {
+        this.avgrating = avgrating;
+    }
+
+    @JsonProperty("avgrating")
+    public int getAvgrating() {
+        return avgrating;
+    }
+
+    @JsonProperty("totalreviews")
+    public void setTotalreviews(int totalreviews) {
+        this.totalreviews = totalreviews;
+    }
+
+    @JsonProperty("totalreviews")
+    public int getTotalreviews() {
+        return totalreviews;
+    }
+
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(productID);
         dest.writeValue(name);
@@ -161,6 +189,8 @@ public class BusinessListing implements Parcelable
         dest.writeValue(phonenumber2);
         dest.writeValue(address1);
         dest.writeValue(address2);
+        dest.writeValue(avgrating);
+        dest.writeValue(totalreviews);
     }
 
     public int describeContents() {
