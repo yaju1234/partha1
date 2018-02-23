@@ -39,4 +39,5 @@
 
     <!--<string name="google_maps_key">AIzaSyDfs_EsGYuyK_D2H-gAdOl8uHJoTcCS4Dw</string>-->
     <string name="google_maps_key">AIzaSyDcj3eNOAM_FGxsKHrZatDgnCC6Mz1XVGk</string>
+    <string name="send_to">Send To</string>
 </resources>

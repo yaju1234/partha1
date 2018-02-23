@@ -34,7 +34,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="Details"
+                        android:text="My Account"
                         android:textColor="@color/white" />
                 </RelativeLayout>
 
@@ -70,6 +70,7 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_weight="1"
+                            android:visibility="gone"
                             android:layout_margin="10dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center|top">
@@ -85,12 +86,14 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
                             <TextView
+                                android:id="@+id/tvName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Ajoy Sodhi"
                                 android:paddingLeft="5dp"
                                 android:textColor="#2e2e2e"/>
                             <TextView
+                                android:id="@+id/tvNumber"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="769987644"
@@ -98,6 +101,7 @@
                                 android:paddingLeft="5dp"
                                 android:textColor="#2e2e2e"/>
                             <TextView
+                                android:id="@+id/tvEmail"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="ajoy@sodi.com"
@@ -125,6 +129,7 @@
                         android:layout_height="wrap_content"
                         android:text="Listing"
                         android:textSize="14sp"
+                        android:layout_gravity="center"
                         android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                         android:textColor="#2e2e2e"
                         android:padding="10dp"/>
@@ -133,6 +138,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardElevation="3dp"
+                    android:id="@+id/cardPrivacyPolicy"
                     android:layout_marginBottom="8dp"
                     app:cardBackgroundColor="@color/cardview_light_background"
                     app:cardCornerRadius="0dp"
@@ -150,6 +156,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardElevation="3dp"
+                    android:id="@+id/cardTramsCondition"
                     android:layout_marginBottom="8dp"
                     app:cardBackgroundColor="@color/cardview_light_background"
                     app:cardCornerRadius="0dp"
@@ -158,32 +165,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Terms and Conditions"
+
                         android:textSize="14sp"
                         android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                         android:textColor="#2e2e2e"
                         android:padding="10dp"/>
                 </android.support.v7.widget.CardView>
+
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardElevation="3dp"
-                    android:layout_marginBottom="8dp"
-                    app:cardBackgroundColor="@color/cardview_light_background"
-                    app:cardCornerRadius="0dp"
-                    >
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Help and Support"
-                        android:textSize="14sp"
-                        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
-                        android:textColor="#2e2e2e"
-                        android:padding="10dp"/>
-                </android.support.v7.widget.CardView>
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardElevation="3dp"
+                    android:id="@+id/cardShare"
                     android:layout_marginBottom="8dp"
                     app:cardBackgroundColor="@color/cardview_light_background"
                     app:cardCornerRadius="0dp"
@@ -214,10 +207,31 @@
                         android:textColor="#2e2e2e"
                         android:padding="10dp"/>
                 </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/cardHelpSupport"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        app:cardBackgroundColor="@color/cardview_light_background"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="3dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+
+                            android:padding="10dp"
+                            android:text="Help and Support"
+                            android:textColor="#2e2e2e"
+                            android:textSize="14sp" />
+                    </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardElevation="3dp"
+                    android:id="@+id/cardAboutUs"
                     android:layout_marginBottom="8dp"
                     app:cardBackgroundColor="@color/cardview_light_background"
                     app:cardCornerRadius="0dp"
