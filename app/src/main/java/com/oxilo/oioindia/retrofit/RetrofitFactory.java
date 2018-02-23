@@ -1,5 +1,4 @@
 package com.oxilo.oioindia.retrofit;
-
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.oxilo.oioindia.retrofit.MockInterceptor;
 
@@ -12,10 +11,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-/**
- * Created by ManuelVivo on 03/10/15.
- */
 public class RetrofitFactory {
 
     public static Retrofit getAdapter()  {

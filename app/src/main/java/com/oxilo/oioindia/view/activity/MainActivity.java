@@ -29,7 +29,12 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
                     return true;
                 case R.id.navigation_dashboard:
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_myaccuount:
+                    NavigationController navigationController = new NavigationController(MainActivity.this);
+                    navigationController.navigateToMyAccout();
+
+
+
                     return true;
                 case R.id.business_list:
                     return true;
