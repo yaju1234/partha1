@@ -53,6 +53,7 @@ public class RegitrationViewModal extends AndroidViewModel {
               //launch main landing screen
                 navigator.callActivity(1);
                 AppController.getInstance().getAppPrefs().putObject("LOGIN","1");
+
                 AppController.getInstance().getAppPrefs().commit();
             }
 

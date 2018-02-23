@@ -12,10 +12,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -24,14 +27,19 @@ import com.oxilo.oioindia.AppController;
 import com.oxilo.oioindia.R;
 import com.oxilo.oioindia.data.DataManager;
 import com.oxilo.oioindia.databinding.FragmentBusinessDetailBinding;
+import com.oxilo.oioindia.dialog.LoginDlg;
+import com.oxilo.oioindia.interfaces.Login_Interface;
 import com.oxilo.oioindia.modal.BusinessDetails;
 import com.oxilo.oioindia.modal.Details;
 import com.oxilo.oioindia.retrofit.restservice.RestService;
 import com.oxilo.oioindia.view.activity.LoginActivity;
+import com.oxilo.oioindia.view.activity.MainActivity;
+import com.oxilo.oioindia.view.common.NavigationController;
 import com.oxilo.oioindia.viewmodal.BusinesDetailViewModal;
 import com.oxilo.oioindia.viewmodal.MainViewModal;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -50,7 +58,7 @@ import retrofit2.Response;
  * Use the {@link BusinessDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BusinessDetailFragment extends Fragment implements View.OnClickListener {
+public class BusinessDetailFragment extends Fragment implements View.OnClickListener, Login_Interface {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -66,6 +74,9 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
     public ProgressDialog prsDlg;
     String user_id="";
     private boolean b_Is_Favorites = false;
+    private LinearLayout ll_rate_this;
+    private TextView name;
+    LoginDlg loginDlg;
     public BusinessDetailFragment() {
         // Required empty public constructor
     }
@@ -115,6 +126,9 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
 
         View v = binding.getRoot();
         iv_favorites = (ImageView) v.findViewById(R.id.iv_favorites);
+        ll_rate_this = (LinearLayout) v.findViewById(R.id.ll_rate_this);
+        name = (TextView) v.findViewById(R.id.name);
+        ll_rate_this.setOnClickListener(this);
         iv_favorites.setOnClickListener(this);
         user_id = AppController.getInstance().getAppPrefs().getObject("USER_ID", String.class);
         prsDlg = new ProgressDialog(getContext());
@@ -201,6 +215,21 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
                     getActivity().finish();
                 }
                 break;
+
+            case R.id.ll_rate_this:
+                if (user_id != null && user_id.trim().length() > 0) {
+                    NavigationController navigationController = new NavigationController((MainActivity) getActivity());
+                    navigationController.navigateToRating(getArguments().getString(ARG_PARAM1),name.getText().toString());
+                }else{
+                    Display display = getActivity().getWindowManager().getDefaultDisplay();
+                    loginDlg = new LoginDlg(display.getHeight(), display.getWidth(), BusinessDetailFragment.this, getContext());
+                    loginDlg.show();
+                }
+
+
+
+
+                break;
         }
 
     }
@@ -253,5 +282,69 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         }catch (Exception e){
 
         }
+    }
+
+    @Override
+    public void cancel() {
+        if (loginDlg != null) {
+            loginDlg.dismiss();
+            loginDlg = null;
+
+
+        }
+    }
+
+    @Override
+    public void login_details(String email, String password) {
+        if (loginDlg != null) {
+            loginDlg.dismiss();
+            loginDlg = null;
+        }
+        showProgressDailog();
+        login_api(email, password);
+
+    }
+
+    public void login_api(String email, String password) {
+        param.clear();
+        param.put("email", email);
+        param.put("password", password);
+
+        Call<ResponseBody> getDepartment = RestService.getInstance().restInterface.login(param);
+        getDepartment.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+//                    System.out.println("#### login:=  " + response.body().string());
+                    JSONObject mapping = new JSONObject(response.body().string().trim());
+                    if (mapping.getString("message").equals("Success Login")) {
+                        AppController.getInstance().getAppPrefs().putObject("LOGIN", "1");
+//                        AppController.getInstance().getAppPrefs().putObject("LOGIN_DETAILS",mapping.toString());
+                        AppController.getInstance().getAppPrefs().putObject("USER_ID", mapping.getString("userid"));
+                        AppController.getInstance().getAppPrefs().putObject("FNAME", mapping.getString("first name"));
+                        AppController.getInstance().getAppPrefs().putObject("FNAME", mapping.getString("last nam"));
+                        AppController.getInstance().getAppPrefs().putObject("EMAIL", mapping.getString("email"));
+                        AppController.getInstance().getAppPrefs().putObject("MOBILE", mapping.getString("mobileno"));
+                        AppController.getInstance().getAppPrefs().putObject("ADDRESS", mapping.getString("address"));
+                        AppController.getInstance().getAppPrefs().putObject("PINCODE", mapping.getString("pincode"));
+                        AppController.getInstance().getAppPrefs().putObject("CITY", mapping.getString("city"));
+                        AppController.getInstance().getAppPrefs().putObject("STATE", mapping.getString("state"));
+                        AppController.getInstance().getAppPrefs().commit();
+
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                dismissProgressDialog();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+            }
+        });
     }
 }

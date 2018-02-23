@@ -26,6 +26,7 @@ import com.oxilo.oioindia.view.fragments.BusinessDetailFragment;
 import com.oxilo.oioindia.view.fragments.BusinessListFragment;
 import com.oxilo.oioindia.view.fragments.LocationFragment;
 import com.oxilo.oioindia.view.fragments.MainFragment;
+import com.oxilo.oioindia.view.fragments.RatingFragment;
 import com.oxilo.oioindia.view.fragments.SubCategorieFragment;
 import com.oxilo.oioindia.vo.Category;
 import com.oxilo.oioindia.vo.SubCategory;
@@ -102,6 +103,17 @@ public class NavigationController {
         String hide = "repo" + "/"  + "/" + "blist";
         fragmentManager.beginTransaction()
               //  .hide(fragmentManager.findFragmentByTag(hide))
+                .replace(containerId, fragment, tag)
+                .addToBackStack(null)
+                .commitAllowingStateLoss();
+    }
+
+    public void navigateToRating(String product_id,String product_name) {
+        RatingFragment fragment = RatingFragment.newInstance(product_id,product_name);
+        String tag = "repo" + "/"  + "/" + "detail";
+        String hide = "repo" + "/"  + "/" + "blist";
+        fragmentManager.beginTransaction()
+                //  .hide(fragmentManager.findFragmentByTag(hide))
                 .replace(containerId, fragment, tag)
                 .addToBackStack(null)
                 .commitAllowingStateLoss();

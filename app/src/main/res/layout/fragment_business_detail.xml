@@ -90,6 +90,7 @@
                     android:layout_height="45dp">
 
                     <TextView
+                        android:id="@+id/name"
                         style="@style/Base.TextAppearance.AppCompat.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -290,6 +291,7 @@
 
 
                     <LinearLayout
+                        android:id="@+id/ll_rate_this"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -301,11 +303,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:duplicateParentState="true"
                             app:srcCompat="@drawable/ic_star_border_grey_500_24dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:duplicateParentState="true"
                             android:text="Rate this" />
 
                     </LinearLayout>
