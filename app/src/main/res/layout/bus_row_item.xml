@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="10dp"
-                android:rating="4"
+                android:rating="@{repo.avgrating}"
                 android:layout_below="@+id/phone"
                 android:layout_toRightOf="@+id/imageView2"
                 style="@style/Base.Widget.AppCompat.RatingBar.Small"/>
@@ -92,7 +92,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/rating"
                 android:layout_below="@+id/phone"
-                android:text="12 Review"/>
+                android:text='@{repo.totalreviews+" Reviewes"}'/>
 
 
         </RelativeLayout>

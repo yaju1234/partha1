@@ -27,6 +27,7 @@ public class SplashActivity extends BaseLocationActivity {
     }
 
     ActivitySplashBinding binding;
+
 //    RxGps rxGps;
 
     private static final String BUNDLE_SELECTED_CITY = "bundle_selected_planet";

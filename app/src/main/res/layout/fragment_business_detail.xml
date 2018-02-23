@@ -79,6 +79,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:scaleType="fitXY" />
+                <android.support.v4.view.ViewPager
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:visibility="gone"
+                    android:id="@+id/viewPager"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -184,30 +189,66 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:gravity="center|left"
                     android:weightSum="3">
-
-                    <ImageView
+                    <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
+                        android:orientation="vertical"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/ic_phone_grey_500_24dp" />
-
-                    <ImageView
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                           android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_phone_grey_500_24dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:text="Call"
+                            android:textSize="12sp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/ic_location_on_grey_500_24dp" />
-
-
-                    <ImageView
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_location_on_grey_500_24dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:text="Directions"
+                            android:textSize="12sp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/ic_message_grey_500_24dp" />
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_message_grey_500_24dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:text="Message"
+                            android:textSize="12sp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+
+
+
+
+
 
                 </LinearLayout>
 
@@ -224,7 +265,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:gravity="center|left"
-                    android:weightSum="3">
+                    android:weightSum="2">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -274,6 +315,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
+                        android:visibility="gone"
                         android:gravity="center"
                         android:orientation="vertical">
 

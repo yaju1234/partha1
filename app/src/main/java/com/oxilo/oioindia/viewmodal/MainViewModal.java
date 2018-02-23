@@ -62,7 +62,7 @@ public class MainViewModal extends AndroidViewModel {
     }
 
     public Observable<Slider> getSlider(){
-        return MainRequestManager.getInstance(application.getApplicationContext()).getSliderImage("4");
+        return MainRequestManager.getInstance(application.getApplicationContext()).getSliderImage("1");
     }
 
     public Observable<CategoryResponse> getAllCategory(String pos){

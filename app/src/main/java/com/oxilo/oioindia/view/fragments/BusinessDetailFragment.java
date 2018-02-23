@@ -120,7 +120,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         prsDlg = new ProgressDialog(getContext());
 
         String userid = "0";
-                if(AppController.getInstance().getAppPrefs().getObject("LOGIN", String.class).equalsIgnoreCase("1")){
+                if(AppController.getInstance().getAppPrefs().getObject("LOGIN", String.class)!=null && AppController.getInstance().getAppPrefs().getObject("LOGIN", String.class).equalsIgnoreCase("1")){
             userid = AppController.getInstance().getAppPrefs().getObject("USER_ID", String.class);;
                 }
         viewModal.getBusinessDetail(mParam1,userid).subscribe(new Consumer<Response<ResponseBody>>() {

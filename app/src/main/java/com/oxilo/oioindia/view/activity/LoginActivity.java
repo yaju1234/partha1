@@ -108,6 +108,8 @@ public class LoginActivity extends com.oxilo.oioindia.view.common.BaseActivity i
         }
         else if (k==6){
             Intent i = new Intent(LoginActivity.this,MainActivity.class);
+            i.putExtra("CITY", "" + city);
+            i.putExtra("ADDRESS", "" + address);
             startActivity(i);
             finish();
         }
