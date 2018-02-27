@@ -54,7 +54,9 @@
             android:layout_height="match_parent"
             android:background="#fff"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:gravity="center"
+            >
 
             <TextView
                 android:layout_width="match_parent"
@@ -70,6 +72,7 @@
                 android:textColor="#9b9b9b" />
 
             <EditText
+                android:id="@+id/et_company_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -84,10 +87,12 @@
                 android:textColor="#9b9b9b" />
 
             <EditText
+                android:id="@+id/et_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:textColor="#000"
+
                 android:textColorHint="#9b9b9b" />
 
             <TextView
@@ -98,6 +103,7 @@
                 android:textColor="#9b9b9b" />
 
             <EditText
+                android:id="@+id/et_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -112,6 +118,7 @@
                 android:textColor="#9b9b9b" />
 
             <EditText
+                android:id="@+id/et_address_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -126,6 +133,7 @@
                 android:textColor="#9b9b9b" />
 
             <EditText
+                android:id="@+id/et_address_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -140,6 +148,8 @@
                 android:textColor="#9b9b9b" />
 
             <EditText
+                android:id="@+id/et_zip_code"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -154,6 +164,7 @@
                 android:textColor="#9b9b9b" />
 
             <EditText
+                android:id="@+id/et_landmark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -175,12 +186,15 @@
                 android:textColor="#9b9b9b" />
 
             <Button
+                android:id="@+id/bt_choose_file"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Gallery" />
+                android:text="Choose File"
+                android:capitalize="none"/>
 
             <ImageView
+                android:id="@+id/iv_image"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_marginTop="5dp" />
@@ -200,11 +214,10 @@
                 android:textColor="#9b9b9b" />
 
             <EditText
+                android:id="@+id/et_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:maxLength="4"
-                android:minLines="4"
                 android:textColor="#000"
                 android:textColorHint="#9b9b9b" />
 
@@ -220,9 +233,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:textColor="#000"
+                android:id="@+id/et_phone_1"
                 android:textColorHint="#9b9b9b" />
 
             <TextView
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -230,6 +245,7 @@
                 android:textColor="#9b9b9b" />
 
             <EditText
+                android:id="@+id/et_phone_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -244,6 +260,8 @@
                 android:textColor="#9b9b9b" />
 
             <EditText
+                android:id="@+id/et_landline_number"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -258,6 +276,7 @@
                 android:textColor="#9b9b9b" />
 
             <EditText
+                android:id="@+id/et_conatct_person"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -272,6 +291,7 @@
                 android:textColor="#9b9b9b" />
 
             <EditText
+                android:id="@+id/et_website"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -286,6 +306,7 @@
                 android:textColor="#9b9b9b" />
 
             <EditText
+                android:id="@+id/et_e_mail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -315,7 +336,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:text="Monday Opening Time"
-                        android:textColor="#9b9b9b" />
+                        android:textColor="#9b9b9b"
+                        android:layout_marginLeft="10dp"/>
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -325,6 +347,7 @@
                         android:background="@drawable/button_bg_rounded_corners">
 
                         <Spinner
+                            android:id="@+id/spin_d11"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
@@ -344,7 +367,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:text="Monday Close Time"
-                        android:textColor="#9b9b9b" />
+                        android:textColor="#9b9b9b"
+                        android:layout_marginLeft="10dp"/>
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -354,6 +378,7 @@
                         android:background="@drawable/button_bg_rounded_corners">
 
                         <Spinner
+                            android:id="@+id/spin_d12"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
@@ -379,7 +404,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:text="Tuesday Opening Time"
-                        android:textColor="#9b9b9b" />
+                        android:textColor="#9b9b9b"
+                        android:layout_marginLeft="10dp"/>
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -389,6 +415,7 @@
                         android:background="@drawable/button_bg_rounded_corners">
 
                         <Spinner
+                            android:id="@+id/spin_d21"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
@@ -408,7 +435,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:text="Tuesday Close Time"
-                        android:textColor="#9b9b9b" />
+                        android:textColor="#9b9b9b"
+                        android:layout_marginLeft="10dp"/>
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -418,6 +446,7 @@
                         android:background="@drawable/button_bg_rounded_corners">
 
                         <Spinner
+                            android:id="@+id/spin_d22"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
@@ -443,7 +472,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:text="Wednesday Opening Time"
-                        android:textColor="#9b9b9b" />
+                        android:textColor="#9b9b9b"
+                        android:layout_marginLeft="10dp"/>
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -453,6 +483,7 @@
                         android:background="@drawable/button_bg_rounded_corners">
 
                         <Spinner
+                            android:id="@+id/spin_d31"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
@@ -472,7 +503,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:text="Wednesday Close Time"
-                        android:textColor="#9b9b9b" />
+                        android:textColor="#9b9b9b"
+                        android:layout_marginLeft="10dp"/>
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -482,6 +514,7 @@
                         android:background="@drawable/button_bg_rounded_corners">
 
                         <Spinner
+                            android:id="@+id/spin_d32"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
@@ -507,7 +540,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:text="Thursday Opening Time"
-                        android:textColor="#9b9b9b" />
+                        android:textColor="#9b9b9b"
+                        android:layout_marginLeft="10dp"/>
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -517,6 +551,7 @@
                         android:background="@drawable/button_bg_rounded_corners">
 
                         <Spinner
+                            android:id="@+id/spin_d41"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
@@ -536,7 +571,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:text="Thursday Close Time"
-                        android:textColor="#9b9b9b" />
+                        android:textColor="#9b9b9b"
+                        android:layout_marginLeft="10dp"/>
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -546,6 +582,7 @@
                         android:background="@drawable/button_bg_rounded_corners">
 
                         <Spinner
+                            android:id="@+id/spin_d42"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
@@ -571,7 +608,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:text="Friday Opening Time"
-                        android:textColor="#9b9b9b" />
+                        android:textColor="#9b9b9b"
+                        android:layout_marginLeft="10dp"/>
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -581,6 +619,7 @@
                         android:background="@drawable/button_bg_rounded_corners">
 
                         <Spinner
+                            android:id="@+id/spin_d51"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
@@ -600,7 +639,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:text="Friday Close Time"
-                        android:textColor="#9b9b9b" />
+                        android:textColor="#9b9b9b"
+                        android:layout_marginLeft="10dp"/>
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -610,6 +650,7 @@
                         android:background="@drawable/button_bg_rounded_corners">
 
                         <Spinner
+                            android:id="@+id/spin_d52"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
@@ -635,7 +676,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:text="Saturday Opening Time"
-                        android:textColor="#9b9b9b" />
+                        android:textColor="#9b9b9b"
+                        android:layout_marginLeft="10dp"/>
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -645,6 +687,7 @@
                         android:background="@drawable/button_bg_rounded_corners">
 
                         <Spinner
+                            android:id="@+id/spin_d61"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
@@ -664,7 +707,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:text="Saturday Close Time"
-                        android:textColor="#9b9b9b" />
+                        android:textColor="#9b9b9b"
+                        android:layout_marginLeft="10dp"/>
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -674,6 +718,7 @@
                         android:background="@drawable/button_bg_rounded_corners">
 
                         <Spinner
+                            android:id="@+id/spin_d62"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
@@ -699,7 +744,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:text="Sunday Opening Time"
-                        android:textColor="#9b9b9b" />
+                        android:textColor="#9b9b9b"
+                        android:layout_marginLeft="10dp"/>
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -709,6 +755,7 @@
                         android:background="@drawable/button_bg_rounded_corners">
 
                         <Spinner
+                            android:id="@+id/spin_d71"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
@@ -728,7 +775,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:text="Sunday Close Time"
-                        android:textColor="#9b9b9b" />
+                        android:textColor="#9b9b9b"
+                        android:layout_marginLeft="10dp"/>
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -738,6 +786,7 @@
                         android:background="@drawable/button_bg_rounded_corners">
 
                         <Spinner
+                            android:id="@+id/spin_d72"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
@@ -755,6 +804,7 @@
                 android:textColor="#9b9b9b" />
 
             <EditText
+                android:id="@+id/et_facebook"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -769,6 +819,7 @@
                 android:textColor="#9b9b9b" />
 
             <EditText
+                android:id="@+id/et_twitter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -783,12 +834,21 @@
                 android:textColor="#9b9b9b" />
 
             <EditText
+                android:id="@+id/et_google_plus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
+
                 android:layout_marginTop="5dp"
                 android:textColor="#000"
                 android:textColorHint="#9b9b9b" />
+            <Button
+                android:id="@+id/bt_submit"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SUBMIT"
+                android:background="@color/colorPrimary"
+                android:layout_marginBottom="15dp"/>
         </LinearLayout>
 
     </ScrollView>
