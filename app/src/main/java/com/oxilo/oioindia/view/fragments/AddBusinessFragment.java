@@ -19,7 +19,7 @@ import com.oxilo.oioindia.R;
  * Created by kamal on 02/15/2018.
  */
 
-public class AddBusinessFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class AddBusinessFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
 //    private static final String ARG_PARAM1 = "param1";
 //    private static final String ARG_PARAM2 = "param2";
@@ -67,7 +67,7 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
     private String m_spin_d62 = "";
     private String m_spin_d71 = "";
     private String m_spin_d72 = "";
-    private String[] sSl = {"OPEN", "CLOSE"};
+    private String[] sSl = {"","OPEN", "CLOSE"};
     private ArrayAdapter sLAdapter;
 
     private EditText et_company_name;
@@ -185,7 +185,7 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
         et_google_plus = (EditText) v.findViewById(R.id.et_google_plus);
 
         iv_image = (ImageView) v.findViewById(R.id.iv_image);
-
+        iv_image.setVisibility(View.GONE);
         bt_submit = (Button) v.findViewById(R.id.bt_submit);
         bt_choose_file = (Button) v.findViewById(R.id.bt_choose_file);
 
@@ -205,24 +205,208 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
         spin_d71.setAdapter(sLAdapter);
         spin_d72.setAdapter(sLAdapter);
 
-        spin_d11.setOnItemSelectedListener(this);
-        spin_d12.setOnItemSelectedListener(this);
-        spin_d21.setOnItemSelectedListener(this);
-        spin_d22.setOnItemSelectedListener(this);
-        spin_d31.setOnItemSelectedListener(this);
-        spin_d32.setOnItemSelectedListener(this);
-        spin_d41.setOnItemSelectedListener(this);
-        spin_d42.setOnItemSelectedListener(this);
-        spin_d51.setOnItemSelectedListener(this);
-        spin_d52.setOnItemSelectedListener(this);
-        spin_d61.setOnItemSelectedListener(this);
-        spin_d62.setOnItemSelectedListener(this);
-        spin_d71.setOnItemSelectedListener(this);
-        spin_d72.setOnItemSelectedListener(this);
+        spin_d11.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                m_spin_d11 = sSl[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spin_d12.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                m_spin_d12 = sSl[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spin_d21.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                m_spin_d21 = sSl[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spin_d22.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                m_spin_d22 = sSl[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spin_d31.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                m_spin_d31 = sSl[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spin_d32.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                m_spin_d32 = sSl[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spin_d41.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                m_spin_d41 = sSl[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spin_d42.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                m_spin_d42 = sSl[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spin_d51.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                m_spin_d51 = sSl[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spin_d52.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                m_spin_d52 = sSl[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spin_d61.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                m_spin_d61 = sSl[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spin_d62.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                m_spin_d62 = sSl[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spin_d71.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                m_spin_d71 = sSl[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spin_d72.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                m_spin_d72 = sSl[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         bt_submit.setOnClickListener(this);
         bt_choose_file.setOnClickListener(this);
         return v;
+
+    }
+
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.bt_submit:
+                getValue();
+                break;
+                case R.id.bt_choose_file:
+
+                break;
+//            case R.id.cardAboutUs:
+//                Intent in=new Intent(getActivity(), CommonActivity.class);
+//                in.putExtra("key","aboutUs");
+//                startActivity(in);
+//
+//                break;
+//            case R.id.cardHelpSupport:
+//                Intent in1=new Intent(getActivity(), CommonActivity.class);
+//                in1.putExtra("key","HelpSupport");
+//                startActivity(in1);
+//                break;
+//            case R.id.cardTramsCondition:
+//                Intent in2=new Intent(getActivity(), CommonActivity.class);
+//                in2.putExtra("key","TramsCondition");
+//                startActivity(in2);
+//                break;
+//            case R.id.cardPrivacyPolicy:
+//                Intent in3=new Intent(getActivity(), CommonActivity.class);
+//                in3.putExtra("key","PrivacyPolicy");
+//                startActivity(in3);
+//                break;
+//            case R.id.cardShare:
+//                Intent sendIntent = new Intent();
+//                sendIntent.setAction(Intent.ACTION_SEND);
+//                sendIntent.putExtra(Intent.EXTRA_PACKAGE_NAME,"https://www.oioindia.com");
+//                sendIntent.putExtra(Intent.EXTRA_TEXT, "OIO INDIA is a leading national online search directory that features listings for millions of businesses.");
+//                sendIntent.setType("text/plain");
+//                startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
+//                break;
+        }
 
     }
 
@@ -279,103 +463,6 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
         System.out.println("!!!m_spin_d71:="+m_spin_d71);
         System.out.println("!!!m_spin_d72:="+m_spin_d72);
 
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bt_submit:
-                getValue();
-                break;
-                case R.id.bt_choose_file:
-
-                break;
-//            case R.id.cardAboutUs:
-//                Intent in=new Intent(getActivity(), CommonActivity.class);
-//                in.putExtra("key","aboutUs");
-//                startActivity(in);
-//
-//                break;
-//            case R.id.cardHelpSupport:
-//                Intent in1=new Intent(getActivity(), CommonActivity.class);
-//                in1.putExtra("key","HelpSupport");
-//                startActivity(in1);
-//                break;
-//            case R.id.cardTramsCondition:
-//                Intent in2=new Intent(getActivity(), CommonActivity.class);
-//                in2.putExtra("key","TramsCondition");
-//                startActivity(in2);
-//                break;
-//            case R.id.cardPrivacyPolicy:
-//                Intent in3=new Intent(getActivity(), CommonActivity.class);
-//                in3.putExtra("key","PrivacyPolicy");
-//                startActivity(in3);
-//                break;
-//            case R.id.cardShare:
-//                Intent sendIntent = new Intent();
-//                sendIntent.setAction(Intent.ACTION_SEND);
-//                sendIntent.putExtra(Intent.EXTRA_PACKAGE_NAME,"https://www.oioindia.com");
-//                sendIntent.putExtra(Intent.EXTRA_TEXT, "OIO INDIA is a leading national online search directory that features listings for millions of businesses.");
-//                sendIntent.setType("text/plain");
-//                startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
-//                break;
-        }
-
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        switch (view.getId()) {
-            case R.id.spin_d11:
-                m_spin_d11 = sSl[position];
-                break;
-            case R.id.spin_d12:
-                m_spin_d12 = sSl[position];
-                break;
-            case R.id.spin_d21:
-                m_spin_d21 = sSl[position];
-                break;
-            case R.id.spin_d22:
-                m_spin_d22 = sSl[position];
-                break;
-            case R.id.spin_d31:
-                m_spin_d31 = sSl[position];
-                break;
-            case R.id.spin_d32:
-                m_spin_d32 = sSl[position];
-                break;
-            case R.id.spin_d41:
-                m_spin_d41 = sSl[position];
-                break;
-            case R.id.spin_d42:
-                m_spin_d42 = sSl[position];
-                break;
-            case R.id.spin_d51:
-                m_spin_d51 = sSl[position];
-                break;
-            case R.id.spin_d52:
-                m_spin_d52 = sSl[position];
-                break;
-            case R.id.spin_d61:
-                m_spin_d61 = sSl[position];
-                break;
-            case R.id.spin_d62:
-                m_spin_d62 = sSl[position];
-                break;
-            case R.id.spin_d71:
-                m_spin_d71 = sSl[position];
-                break;
-            case R.id.spin_d72:
-                m_spin_d72 = sSl[position];
-                break;
-
-
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 }
