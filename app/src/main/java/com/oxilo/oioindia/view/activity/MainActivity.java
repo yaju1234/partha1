@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
                 case R.id.navigation_home:
                     return true;
                 case R.id.navigation_dashboard:
+                    NavigationController navigationController1 = new NavigationController(MainActivity.this);
+                    navigationController1.navigateToAddBusiness();
                     return true;
                 case R.id.navigation_myaccuount:
                     NavigationController navigationController = new NavigationController(MainActivity.this);
