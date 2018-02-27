@@ -1,6 +1,8 @@
 package com.oxilo.oioindia.view.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -10,15 +12,25 @@ import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.oxilo.oioindia.R;
+import com.oxilo.oioindia.camera.GalleryImagePickerHelper;
+import com.oxilo.oioindia.camera.PhotoDetails;
+import com.oxilo.oioindia.even_bus.MessageEventContect;
+import com.oxilo.oioindia.event.EventPhotoChosenFromGallery;
+import com.oxilo.oioindia.event.EventPickImageViaGallery;
+import com.oxilo.oioindia.permission.PermissionConstant;
 import com.oxilo.oioindia.view.common.NavigationController;
 import com.oxilo.oioindia.view.fragments.AllFragment;
 import com.oxilo.oioindia.view.fragments.FaviouriteFragment;
 import com.oxilo.oioindia.view.fragments.MainFragment;
 
-public class MainActivity extends AppCompatActivity implements MainFragment.OnFragmentInteractionListener,AllFragment.OnFragmentInteractionListener,FaviouriteFragment.OnFragmentInteractionListener{
+import de.greenrobot.event.EventBus;
 
+public class MainActivity extends AppCompatActivity implements MainFragment.OnFragmentInteractionListener, AllFragment.OnFragmentInteractionListener, FaviouriteFragment.OnFragmentInteractionListener {
+    final int RC_PICK_IMAGE_FROM_GALLERY = 1;
+    private GalleryImagePickerHelper galleryImagePickerHelper;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -36,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
                     navigationController.navigateToMyAccout();
 
 
-
                     return true;
                 case R.id.business_list:
                     return true;
@@ -49,6 +60,9 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this);
+        }
         setContentView(R.layout.activity_main);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
@@ -57,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
             String city = getIntent().getStringExtra("CITY");
             String address = getIntent().getStringExtra("ADDRESS");
             NavigationController navigationController = new NavigationController(this);
-            navigationController.navigateToMain(city,address);
+            navigationController.navigateToMain(city, address);
         }
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) navigation.getChildAt(0);
@@ -67,7 +81,8 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
             itemView.setChecked(false);
         }
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
+        galleryImagePickerHelper = new GalleryImagePickerHelper();
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -75,4 +90,39 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            switch (requestCode) {
+                case PermissionConstant.MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE2:
+                    EventBus.getDefault().post(new MessageEventContect("pic_add"));
+                    break;
+            }
+
+        } else {
+            Toast.makeText(MainActivity.this, "Select permissions", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+    public void onEventMainThread(EventPickImageViaGallery e) {
+        Intent i = galleryImagePickerHelper.buildPickFileFromGalleryIntent(this);
+        startActivityForResult(i, RC_PICK_IMAGE_FROM_GALLERY);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+            switch (requestCode) {
+                case RC_PICK_IMAGE_FROM_GALLERY:
+                    if (resultCode == RESULT_CANCELED)
+                        return;
+                    PhotoDetails photoDetails = galleryImagePickerHelper.processOnActivityResult(this, data);
+                    EventBus.getDefault().post(new EventPhotoChosenFromGallery(photoDetails));
+                    break;
+
+        }
+    }
 }

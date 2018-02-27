@@ -1,8 +1,11 @@
 package com.oxilo.oioindia.view.fragments;
 
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,31 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.oxilo.oioindia.R;
+import com.oxilo.oioindia.camera.GetCameraInfo;
+import com.oxilo.oioindia.camera.PhotoDetails;
+import com.oxilo.oioindia.constant.Constant;
+import com.oxilo.oioindia.even_bus.MessageEventContect;
+import com.oxilo.oioindia.event.EventPhotoChosenFromGallery;
+import com.oxilo.oioindia.event.EventPickImageViaGallery;
+import com.oxilo.oioindia.permission.Permission;
+
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by kamal on 02/15/2018.
@@ -53,20 +81,20 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
     private Spinner spin_d62;
     private Spinner spin_d71;
     private Spinner spin_d72;
-    private String m_spin_d11 = "";
-    private String m_spin_d12 = "";
-    private String m_spin_d21 = "";
-    private String m_spin_d22 = "";
-    private String m_spin_d31 = "";
-    private String m_spin_d32 = "";
-    private String m_spin_d41 = "";
-    private String m_spin_d42 = "";
-    private String m_spin_d51 = "";
-    private String m_spin_d52 = "";
-    private String m_spin_d61 = "";
-    private String m_spin_d62 = "";
-    private String m_spin_d71 = "";
-    private String m_spin_d72 = "";
+    public String m_spin_d11 = "";
+    public String m_spin_d12 = "";
+    public String m_spin_d21 = "";
+    public String m_spin_d22 = "";
+    public String m_spin_d31 = "";
+    public String m_spin_d32 = "";
+    public String m_spin_d41 = "";
+    public String m_spin_d42 = "";
+    public String m_spin_d51 = "";
+    public String m_spin_d52 = "";
+    public String m_spin_d61 = "";
+    public String m_spin_d62 = "";
+    public String m_spin_d71 = "";
+    public String m_spin_d72 = "";
     private String[] sSl = {"","OPEN", "CLOSE"};
     private ArrayAdapter sLAdapter;
 
@@ -95,24 +123,29 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
     private Button bt_choose_file;
 
 
-    private String m_et_company_name = "";
-    private String m_et_city = "";
-    private String m_et_area = "";
-    private String m_et_address_1 = "";
-    private String m_et_address_2 = "";
-    private String m_et_zip_code = "";
-    private String m_et_landmark = "";
-    private String m_et_description = "";
-    private String m_et_phone_1 = "";
-    private String m_et_phone_2 = "";
-    private String m_et_landline_number = "";
-    private String m_et_conatct_person = "";
-    private String m_et_website = "";
-    private String m_et_e_mail = "";
-    private String m_et_facebook = "";
-    private String m_et_twitter = "";
-    private String m_et_google_plus = "";
+    public String m_et_company_name = "";
+    public String m_et_city = "";
+    public String m_et_area = "";
+    public String m_et_address_1 = "";
+    public String m_et_address_2 = "";
+    public String m_et_zip_code = "";
+    public String m_et_landmark = "";
+    public String m_et_description = "";
+    public String m_et_phone_1 = "";
+    public String m_et_phone_2 = "";
+    public String m_et_landline_number = "";
+    public String m_et_conatct_person = "";
+    public String m_et_website = "";
+    public String m_et_e_mail = "";
+    public String m_et_facebook = "";
+    public String m_et_twitter = "";
+    public String m_et_google_plus = "";
 
+    private GetCameraInfo getCameraInfo;
+    private Bitmap bitmap;
+    private static String picturePath = "";
+    private static String picturePath1 = "";
+    private HttpEntity resEntity;
     public AddBusinessFragment() {
     }
 
@@ -139,6 +172,9 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        if(!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this);
+        }
         View v = inflater.inflate(R.layout.fragment_my_add_business, null, false);
         Toolbar toolbar = (Toolbar) v.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -375,7 +411,11 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
                 getValue();
                 break;
                 case R.id.bt_choose_file:
+                    if (new Permission().check_WRITE_FolderPermission2(getContext())) {
+                        getCameraInfo = new GetCameraInfo();
+                        EventBus.getDefault().post(new EventPickImageViaGallery());
 
+                    }
                 break;
 //            case R.id.cardAboutUs:
 //                Intent in=new Intent(getActivity(), CommonActivity.class);
@@ -464,5 +504,107 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
         System.out.println("!!!m_spin_d72:="+m_spin_d72);
 
 
+    }
+    public void onEventMainThread(MessageEventContect event) {
+        if (event.getFlag().equals("pic_add")) {
+            System.out.println("pir......");
+            getCameraInfo = new GetCameraInfo();
+            EventBus.getDefault().post(new EventPickImageViaGallery());
+        }
+    }
+    public void onEventMainThread(EventPhotoChosenFromGallery e) {
+        PhotoDetails photoDetails = e.getPhotoDetails();
+        bitmap = getCameraInfo.getOrantationBitmap(photoDetails.getAbsolutePath());
+        picturePath = getCameraInfo.SaveBitmapToInternal(bitmap);
+        iv_image.setImageBitmap(bitmap);
+        bitmap = null;
+        profilePick(picturePath);
+    }
+    private void profilePick(final String picturePath) {
+        picturePath1 = picturePath;
+        System.out.println("Path:-" + picturePath);
+    }
+
+
+    class ProfileAdd extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+           // baseActivity.showProgressDailog();
+        }
+
+        @Override
+        protected String doInBackground(String... param) {
+            try {
+                HttpClient httpClient = new DefaultHttpClient();
+//                HttpContext localContext = new BasicHttpContext();
+                HttpPost httpPost = new HttpPost("");
+                String basicAuth = "Basic YWRtaW46MTIzNDU";
+                httpPost.setHeader("Authorization", basicAuth);
+                MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+
+                if (picturePath1.length() != 0)
+                    entity.addPart("image", new FileBody(new File(picturePath1)));
+
+                entity.addPart("name", new StringBody(m_et_company_name));
+                entity.addPart("address1", new StringBody(""));
+                entity.addPart("address2", new StringBody(""));
+                entity.addPart("description", new StringBody(""));
+                entity.addPart("email", new StringBody(""));
+                entity.addPart("phonenumber1", new StringBody("" ));
+                entity.addPart("phonenumber2", new StringBody("" ));
+                entity.addPart("city", new StringBody("" ));
+                entity.addPart("state", new StringBody("" ));
+                entity.addPart("longitude", new StringBody("" ));
+                entity.addPart("latitude", new StringBody("" ));
+                entity.addPart("contactperson", new StringBody("" ));
+                entity.addPart("landlinenumber", new StringBody("" ));
+                entity.addPart("website", new StringBody("" ));
+                entity.addPart("facebook", new StringBody("" ));
+                entity.addPart("google", new StringBody(""));
+                entity.addPart("twitter", new StringBody("" ));
+                entity.addPart("userid", new StringBody(""));
+                entity.addPart("d11", new StringBody("" ));
+                entity.addPart("d12", new StringBody("" ));
+                entity.addPart("d21", new StringBody("" ));
+                entity.addPart("d22", new StringBody("" ));
+                entity.addPart("d31", new StringBody("" ));
+                entity.addPart("d32", new StringBody("" ));
+                entity.addPart("d41", new StringBody(""  ));
+                entity.addPart("d42", new StringBody("" ));
+                entity.addPart("d51", new StringBody(""  ));
+                entity.addPart("d52", new StringBody(""  ));
+                entity.addPart("d61", new StringBody(""  ));
+                entity.addPart("d62", new StringBody(""  ));
+                entity.addPart("d71", new StringBody(""  ));
+                entity.addPart("d72", new StringBody(""  ));
+                httpPost.setEntity(entity);
+
+                HttpResponse response;
+                response = httpClient.execute(httpPost);
+                resEntity = response.getEntity();
+
+                final String response_str = EntityUtils.toString(resEntity);
+                Log.e("!!TAG12", "Response " + response_str);
+                return response_str;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+
+        @Override
+        protected void onPostExecute(String sResponse) {
+            //  baseActivity.dismissProgressDialog();
+            //  Toast.makeText(baseActivity,"sResponse:-"+sResponse,Toast.LENGTH_LONG).show();
+            JSONObject response;
+            try {
+                response = new JSONObject(sResponse);
+            } catch (Exception e) {
+
+            }
+        }
     }
 }

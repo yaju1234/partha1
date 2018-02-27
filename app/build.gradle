@@ -67,13 +67,15 @@ android {
 
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
+    compile 'com.squareup.okhttp:okhttp:2.2.0'
     implementation "com.android.support:appcompat-v7:$support_version"
     implementation "com.android.support:recyclerview-v7:$support_version"
     implementation "com.android.support:cardview-v7:$support_version"
     implementation "com.android.support:design:$support_version"
     implementation "com.android.support.constraint:constraint-layout:$constraint_layout_version"
-
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.android.support.constraint:constraint-layout:$constraint_layout_version"
@@ -88,12 +90,18 @@ dependencies {
     compile "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$retrofit_adapter_version"
     compile 'com.android.support:multidex:1.0.1'
     compile "com.google.android.gms:play-services-places:$location"
+
     //location
     compile "com.google.android.gms:play-services-location:$location"
-//    compile ('codes.titanium:locgetter:1.0.3',{
-//        transitive = false
-//    })
-//    compile 'com.github.florent37:rxgps:1.0.0'
+
+    //    compile ('codes.titanium:locgetter:1.0.3',{
+
+    //        transitive = false
+
+    //    })
+
+    //    compile 'com.github.florent37:rxgps:1.0.0'
+
     //jackson
     implementation(
             [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "$jackson_version"],
@@ -113,15 +121,22 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.architectureComponentsVersion"
     compile "android.arch.persistence.room:rxjava2:$rootProject.architectureComponentsVersion"
     compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
-//    implementation "com.google.dagger:dagger:$dagger_version"
-//    implementation "com.google.dagger:dagger-android:$dagger_version"
-//    implementation "com.google.dagger:dagger-android-support:$dagger_version"
-//
-//    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger_version"
-//    annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
-//
-//    implementation "com.jakewharton.timber:timber:$timber_version"
 
+    //    implementation "com.google.dagger:dagger:$dagger_version"
+
+    //    implementation "com.google.dagger:dagger-android:$dagger_version"
+
+    //    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+
+    //
+
+    //    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger_version"
+
+    //    annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
+
+    //
+
+    //    implementation "com.jakewharton.timber:timber:$timber_version"
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation("com.android.support.test.espresso:espresso-core:$espresso_version", {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -131,9 +146,9 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
     })
-
     androidTestImplementation "com.android.support:appcompat-v7:$support_version"
     androidTestImplementation "com.android.support:recyclerview-v7:$support_version"
     androidTestImplementation "com.android.support:support-v4:$support_version"
     androidTestImplementation "com.android.support:design:$support_version"
+    implementation files('libs/httpmime-4.1-beta1.jar')
 }
