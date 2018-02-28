@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         }
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         galleryImagePickerHelper = new GalleryImagePickerHelper();
-        EventBus.getDefault().register(this);
+
     }
 
     @Override

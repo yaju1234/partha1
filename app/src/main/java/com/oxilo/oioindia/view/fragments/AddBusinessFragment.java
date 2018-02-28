@@ -96,7 +96,7 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
     public String m_spin_d62 = "";
     public String m_spin_d71 = "";
     public String m_spin_d72 = "";
-    private String[] sSl = {"","OPEN", "CLOSE"};
+    private String[] sSl = { "CLOSE","1 AM","2 AM","3 AM","4 AM","5 AM","6 AM","7 AM","8 AM","9 AM","10 AM","11 AM","12 AM","1 PM","2 PM","3 PM","4 PM","5 PM","6 PM","7 PM","8 PM","9 PM","10 PM","11 PM","12 PM"};
     private ArrayAdapter sLAdapter;
 
     private EditText et_company_name;
@@ -504,7 +504,7 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
         System.out.println("!!!m_spin_d71:="+m_spin_d71);
         System.out.println("!!!m_spin_d72:="+m_spin_d72);
 
-
+        new ProfileAdd().execute();
     }
     public void onEventMainThread(MessageEventContect event) {
         if (event.getFlag().equals("pic_add")) {
@@ -518,6 +518,7 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
         bitmap = getCameraInfo.getOrantationBitmap(photoDetails.getAbsolutePath());
         picturePath = getCameraInfo.SaveBitmapToInternal(bitmap);
         iv_image.setImageBitmap(bitmap);
+        iv_image.setVisibility(View.VISIBLE);
         bitmap = null;
         profilePick(picturePath);
     }
@@ -565,7 +566,7 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
                 entity.addPart("facebook", new StringBody(m_et_facebook ));
                 entity.addPart("google", new StringBody(m_et_google_plus));
                 entity.addPart("twitter", new StringBody(m_et_twitter ));
-                entity.addPart("userid", new StringBody(AppController.getInstance().getAppPrefs().getObject("USER_ID",String.class)));
+                entity.addPart("userid", new StringBody("12"));
                 entity.addPart("d11", new StringBody(m_spin_d11 ));
                 entity.addPart("d12", new StringBody(m_spin_d12 ));
                 entity.addPart("d21", new StringBody(m_spin_d21 ));
