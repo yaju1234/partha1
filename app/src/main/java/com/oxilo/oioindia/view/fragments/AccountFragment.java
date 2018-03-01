@@ -85,14 +85,19 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
         tvName=(TextView)v.findViewById(R.id.tvName);
         tvNumber=(TextView)v.findViewById(R.id.tvNumber);
         tvEmail=(TextView)v.findViewById(R.id.tvEmail);
-        tvName.setText("Ajay Sodhi");
-        tvNumber.setText("(9087678899");
-        tvEmail.setText("test@gmail.com");
-     AppController.getInstance().getAppPrefs().getObject("USER_ID",String.class);
-        AppController.getInstance().getAppPrefs().getObject("FNAME", String.class);
-        AppController.getInstance().getAppPrefs().getObject("LNAME", String.class);
-        AppController.getInstance().getAppPrefs().getObject("EMAIL",String.class);
-        AppController.getInstance().getAppPrefs().getObject("MOBILE", String.class);
+
+       String userid = AppController.getInstance().getAppPrefs().getObject("USER_ID",String.class);
+       String fname =  AppController.getInstance().getAppPrefs().getObject("FNAME", String.class);
+       String lname =  AppController.getInstance().getAppPrefs().getObject("LNAME", String.class);
+
+       String name = fname+" "+lname;
+        String email = AppController.getInstance().getAppPrefs().getObject("EMAIL",String.class);
+       String mobile =  AppController.getInstance().getAppPrefs().getObject("MOBILE", String.class);
+
+
+        tvName.setText(name);
+        tvNumber.setText(mobile);
+        tvEmail.setText(email);
 
         cardAboutUs.setOnClickListener(this);
         cardHelpSupport.setOnClickListener(this);

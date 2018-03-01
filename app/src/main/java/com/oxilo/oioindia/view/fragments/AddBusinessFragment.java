@@ -659,7 +659,7 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
 //                        AppController.getInstance().getAppPrefs().putObject("LOGIN_DETAILS",mapping.toString());
                         AppController.getInstance().getAppPrefs().putObject("USER_ID", mapping.getString("userid"));
                         AppController.getInstance().getAppPrefs().putObject("FNAME", mapping.getString("first name"));
-                        AppController.getInstance().getAppPrefs().putObject("FNAME", mapping.getString("last nam"));
+                        AppController.getInstance().getAppPrefs().putObject("FNAME", mapping.getString("last name"));
                         AppController.getInstance().getAppPrefs().putObject("EMAIL", mapping.getString("email"));
                         AppController.getInstance().getAppPrefs().putObject("MOBILE", mapping.getString("mobileno"));
                         AppController.getInstance().getAppPrefs().putObject("ADDRESS", mapping.getString("address"));

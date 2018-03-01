@@ -119,8 +119,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardElevation="3dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
                     app:cardBackgroundColor="@color/cardview_light_background"
                     app:cardCornerRadius="0dp"
                     >
@@ -139,7 +139,7 @@
                     android:layout_height="wrap_content"
                     app:cardElevation="3dp"
                     android:id="@+id/cardPrivacyPolicy"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="4dp"
                     app:cardBackgroundColor="@color/cardview_light_background"
                     app:cardCornerRadius="0dp"
                     >
@@ -157,7 +157,7 @@
                     android:layout_height="wrap_content"
                     app:cardElevation="3dp"
                     android:id="@+id/cardTramsCondition"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="4dp"
                     app:cardBackgroundColor="@color/cardview_light_background"
                     app:cardCornerRadius="0dp"
                     >
@@ -177,7 +177,7 @@
                     android:layout_height="wrap_content"
                     app:cardElevation="3dp"
                     android:id="@+id/cardShare"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="4dp"
                     app:cardBackgroundColor="@color/cardview_light_background"
                     app:cardCornerRadius="0dp"
                     >
@@ -194,7 +194,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardElevation="3dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="4dp"
                     app:cardBackgroundColor="@color/cardview_light_background"
                     app:cardCornerRadius="0dp"
                     >
@@ -212,7 +212,7 @@
                         android:id="@+id/cardHelpSupport"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginBottom="4dp"
                         app:cardBackgroundColor="@color/cardview_light_background"
                         app:cardCornerRadius="0dp"
                         app:cardElevation="3dp">
@@ -232,7 +232,7 @@
                     android:layout_height="wrap_content"
                     app:cardElevation="3dp"
                     android:id="@+id/cardAboutUs"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="4dp"
                     app:cardBackgroundColor="@color/cardview_light_background"
                     app:cardCornerRadius="0dp"
                     >

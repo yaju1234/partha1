@@ -165,6 +165,19 @@ public class LoginActivity extends com.oxilo.oioindia.view.common.BaseActivity i
                     String id = object.getString("id");
                     String photourl =object.getJSONObject("picture").getJSONObject("data").getString("url");
 
+
+
+                    AppController.getInstance().getAppPrefs().putObject("USER_ID",id);
+                    AppController.getInstance().getAppPrefs().putObject("FNAME",name);
+                    AppController.getInstance().getAppPrefs().putObject("FNAME","");
+                    AppController.getInstance().getAppPrefs().putObject("EMAIL",email);
+                    AppController.getInstance().getAppPrefs().putObject("MOBILE","");
+                    AppController.getInstance().getAppPrefs().putObject("ADDRESS","");
+                    AppController.getInstance().getAppPrefs().putObject("PINCODE","");
+                    AppController.getInstance().getAppPrefs().putObject("CITY","");
+                    AppController.getInstance().getAppPrefs().putObject("STATE", "");
+
+
                     Intent i = new Intent(LoginActivity.this,MainActivity.class);
                     startActivity(i);
                     finish();
