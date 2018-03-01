@@ -128,6 +128,7 @@ public class NavigationController {
         AccountFragment accountFragment =  AccountFragment.newInstance("city","adress");
         fragmentManager.beginTransaction()
                 .replace(containerId, accountFragment,tag)
+                .addToBackStack(null)
                 .commitAllowingStateLoss();
     }
 

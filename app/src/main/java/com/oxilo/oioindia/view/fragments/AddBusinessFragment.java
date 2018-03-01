@@ -1,11 +1,13 @@
 package com.oxilo.oioindia.view.fragments;
 
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +23,17 @@ import com.oxilo.oioindia.R;
 import com.oxilo.oioindia.camera.GetCameraInfo;
 import com.oxilo.oioindia.camera.PhotoDetails;
 import com.oxilo.oioindia.constant.Constant;
+import com.oxilo.oioindia.dialog.LoginDlg;
 import com.oxilo.oioindia.even_bus.MessageEventContect;
 import com.oxilo.oioindia.event.EventPhotoChosenFromGallery;
 import com.oxilo.oioindia.event.EventPickImageViaGallery;
+import com.oxilo.oioindia.handlers.CustomSSLSocketFactory;
+import com.oxilo.oioindia.handlers.CustomX509TrustManager;
+import com.oxilo.oioindia.interfaces.Login_Interface;
 import com.oxilo.oioindia.permission.Permission;
+import com.oxilo.oioindia.retrofit.restservice.RestService;
+import com.oxilo.oioindia.view.activity.MainActivity;
+import com.oxilo.oioindia.view.common.NavigationController;
 
 
 import org.apache.http.HttpEntity;
@@ -41,14 +50,59 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import de.greenrobot.event.EventBus;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.SocketTimeoutException;
+import java.security.SecureRandom;
+import java.util.List;
+import java.util.zip.GZIPInputStream;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
 
 /**
  * Created by kamal on 02/15/2018.
  */
 
-public class AddBusinessFragment extends Fragment implements View.OnClickListener {
+public class AddBusinessFragment extends Fragment implements View.OnClickListener,Login_Interface {
     // TODO: Rename parameter arguments, choose names that match
 //    private static final String ARG_PARAM1 = "param1";
 //    private static final String ARG_PARAM2 = "param2";
@@ -147,6 +201,11 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
     private static String picturePath = "";
     private static String picturePath1 = "";
     private HttpEntity resEntity;
+    public ProgressDialog prsDlg;
+    LoginDlg loginDlg;
+    String user_id="";
+    private Map<String, String> param = new HashMap<>();
+
     public AddBusinessFragment() {
     }
 
@@ -184,7 +243,7 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });
-
+        user_id = AppController.getInstance().getAppPrefs().getObject("USER_ID", String.class);
         sLAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, sSl);
         sLAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -226,7 +285,7 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
         bt_submit = (Button) v.findViewById(R.id.bt_submit);
         bt_choose_file = (Button) v.findViewById(R.id.bt_choose_file);
 
-
+        prsDlg = new ProgressDialog(getContext());
         spin_d11.setAdapter(sLAdapter);
         spin_d12.setAdapter(sLAdapter);
         spin_d21.setAdapter(sLAdapter);
@@ -399,6 +458,16 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
 
         bt_submit.setOnClickListener(this);
         bt_choose_file.setOnClickListener(this);
+
+
+
+        if (user_id != null && user_id.trim().length() > 0) {
+
+        }else{
+            Display display = getActivity().getWindowManager().getDefaultDisplay();
+            loginDlg = new LoginDlg(display.getHeight(), display.getWidth(), AddBusinessFragment.this, getContext());
+            loginDlg.show();
+        }
         return v;
 
     }
@@ -527,6 +596,91 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
         System.out.println("Path:-" + picturePath);
     }
 
+    @Override
+    public void cancel() {
+        if (loginDlg != null) {
+            loginDlg.dismiss();
+            loginDlg = null;
+
+
+        }
+    }
+
+    @Override
+    public void login_details(String email, String password) {
+        if (loginDlg != null) {
+            loginDlg.dismiss();
+            loginDlg = null;
+        }
+        showProgressDailog();
+        login_api(email, password);
+
+    }
+
+    public void showProgressDailog() {
+       /* prsDlg = new ProgressDialog(this);*/
+        prsDlg.setMessage("Please wait...");
+        prsDlg.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        prsDlg.setIndeterminate(true);
+        prsDlg.setCancelable(false);
+        prsDlg.show();
+    }
+
+    public void dismissProgressDialog() {
+        try {
+            if (null != prsDlg) {
+                if (prsDlg.isShowing()) {
+                    prsDlg.dismiss();
+                }
+            }
+        }catch (Exception e){
+
+        }
+    }
+
+    public void login_api(String email, String password) {
+        param.clear();
+        param.put("email", email);
+        param.put("password", password);
+
+        Call<ResponseBody> getDepartment = RestService.getInstance().restInterface.login(param);
+        getDepartment.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+//                    System.out.println("#### login:=  " + response.body().string());
+                    JSONObject mapping = new JSONObject(response.body().string().trim());
+                    if (mapping.getString("message").equals("Success Login")) {
+                        AppController.getInstance().getAppPrefs().putObject("LOGIN", "1");
+//                        AppController.getInstance().getAppPrefs().putObject("LOGIN_DETAILS",mapping.toString());
+                        AppController.getInstance().getAppPrefs().putObject("USER_ID", mapping.getString("userid"));
+                        AppController.getInstance().getAppPrefs().putObject("FNAME", mapping.getString("first name"));
+                        AppController.getInstance().getAppPrefs().putObject("FNAME", mapping.getString("last nam"));
+                        AppController.getInstance().getAppPrefs().putObject("EMAIL", mapping.getString("email"));
+                        AppController.getInstance().getAppPrefs().putObject("MOBILE", mapping.getString("mobileno"));
+                        AppController.getInstance().getAppPrefs().putObject("ADDRESS", mapping.getString("address"));
+                        AppController.getInstance().getAppPrefs().putObject("PINCODE", mapping.getString("pincode"));
+                        AppController.getInstance().getAppPrefs().putObject("CITY", mapping.getString("city"));
+                        AppController.getInstance().getAppPrefs().putObject("STATE", mapping.getString("state"));
+                        AppController.getInstance().getAppPrefs().commit();
+
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                dismissProgressDialog();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+            }
+        });
+    }
+
 
     class ProfileAdd extends AsyncTask<String, Void, String> {
 
@@ -539,7 +693,20 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
         @Override
         protected String doInBackground(String... param) {
             try {
+
+                SSLContext ctx = SSLContext.getInstance("TLS");
+                ctx.init(null, new TrustManager[] { new CustomX509TrustManager() },
+                        new SecureRandom());
                 HttpClient httpClient = new DefaultHttpClient();
+
+                SSLSocketFactory ssf = new CustomSSLSocketFactory(ctx);
+                ssf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+                ClientConnectionManager ccm = httpClient.getConnectionManager();
+                SchemeRegistry sr = ccm.getSchemeRegistry();
+                sr.register(new Scheme("https", ssf, 443));
+                DefaultHttpClient sslClient = new DefaultHttpClient(ccm,
+                        httpClient.getParams());
+               // trustEveryone();
 //                HttpContext localContext = new BasicHttpContext();
                 HttpPost httpPost = new HttpPost("https://oioindia.com/api/add-business.php");
                 //String basicAuth = "Basic YWRtaW46MTIzNDU";
@@ -566,7 +733,7 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
                 entity.addPart("facebook", new StringBody(m_et_facebook ));
                 entity.addPart("google", new StringBody(m_et_google_plus));
                 entity.addPart("twitter", new StringBody(m_et_twitter ));
-                entity.addPart("userid", new StringBody("12"));
+                entity.addPart("userid", new StringBody(user_id));
                 entity.addPart("d11", new StringBody(m_spin_d11 ));
                 entity.addPart("d12", new StringBody(m_spin_d12 ));
                 entity.addPart("d21", new StringBody(m_spin_d21 ));
@@ -607,6 +774,28 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
             } catch (Exception e) {
 
             }
+        }
+    }
+
+    private void trustEveryone() {
+        try {
+            HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier(){
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }});
+            SSLContext context = SSLContext.getInstance("TLS");
+            context.init(null, new X509TrustManager[]{new X509TrustManager(){
+                public void checkClientTrusted(X509Certificate[] chain,
+                                               String authType) throws CertificateException {}
+                public void checkServerTrusted(X509Certificate[] chain,
+                                               String authType) throws CertificateException {}
+                public X509Certificate[] getAcceptedIssuers() {
+                    return new X509Certificate[0];
+                }}}, new SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(
+                    context.getSocketFactory());
+        } catch (Exception e) { // should never happen
+            e.printStackTrace();
         }
     }
 }
