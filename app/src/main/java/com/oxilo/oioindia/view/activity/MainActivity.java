@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
 
                     return true;
                 case R.id.business_list:
+                    NavigationController navigationController2 = new NavigationController(MainActivity.this);
+                    navigationController2.navigateToList();
                     return true;
             }
             return false;

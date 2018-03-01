@@ -26,6 +26,7 @@ import com.oxilo.oioindia.view.fragments.AccountFragment;
 import com.oxilo.oioindia.view.fragments.AddBusinessFragment;
 import com.oxilo.oioindia.view.fragments.BusinessDetailFragment;
 import com.oxilo.oioindia.view.fragments.BusinessListFragment;
+import com.oxilo.oioindia.view.fragments.ListFragment;
 import com.oxilo.oioindia.view.fragments.LocationFragment;
 import com.oxilo.oioindia.view.fragments.MainFragment;
 import com.oxilo.oioindia.view.fragments.RatingFragment;
@@ -135,6 +136,15 @@ public class NavigationController {
     public void navigateToAddBusiness() {
         String tag = "repo" + "/"  + "/" + "main";
         AddBusinessFragment accountFragment =  AddBusinessFragment.newInstance();
+        fragmentManager.beginTransaction()
+                .replace(containerId, accountFragment,tag)
+                .addToBackStack(null)
+                .commitAllowingStateLoss();
+    }
+
+    public void navigateToList() {
+        String tag = "repo" + "/"  + "/" + "main";
+        ListFragment accountFragment =  ListFragment.newInstance();
         fragmentManager.beginTransaction()
                 .replace(containerId, accountFragment,tag)
                 .addToBackStack(null)

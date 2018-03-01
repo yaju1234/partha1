@@ -321,6 +321,8 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
                         AppController.getInstance().getAppPrefs().putObject("LOGIN", "1");
 //                        AppController.getInstance().getAppPrefs().putObject("LOGIN_DETAILS",mapping.toString());
                         AppController.getInstance().getAppPrefs().putObject("USER_ID", mapping.getString("userid"));
+                      //  login = AppController.getInstance().getAppPrefs().getObject("LOGIN", String.class);
+                        user_id = AppController.getInstance().getAppPrefs().getObject("USER_ID", String.class);
                         AppController.getInstance().getAppPrefs().putObject("FNAME", mapping.getString("first name"));
                         AppController.getInstance().getAppPrefs().putObject("FNAME", mapping.getString("last nam"));
                         AppController.getInstance().getAppPrefs().putObject("EMAIL", mapping.getString("email"));

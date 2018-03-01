@@ -31,5 +31,9 @@ public interface RestInterface {
     @POST("api/getbusinessbysearch.php")
     Call<ResponseBody> search(@FieldMap Map<String, String> params);
 
+    @FormUrlEncoded
+    @POST("api/get-my-business.php")
+    Call<ResponseBody> get_list(@FieldMap Map<String, String> params);
+
 
 }

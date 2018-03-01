@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.oxilo.oioindia.AppController;
 import com.oxilo.oioindia.R;
@@ -572,8 +573,11 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
         System.out.println("!!!m_spin_d62:="+m_spin_d62);
         System.out.println("!!!m_spin_d71:="+m_spin_d71);
         System.out.println("!!!m_spin_d72:="+m_spin_d72);
+        if(isValid()){
+            new ProfileAdd().execute();
+        }
 
-        new ProfileAdd().execute();
+
     }
     public void onEventMainThread(MessageEventContect event) {
         if (event.getFlag().equals("pic_add")) {
@@ -687,6 +691,7 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            showProgressDailog();
            // baseActivity.showProgressDailog();
         }
 
@@ -719,6 +724,7 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
                 entity.addPart("name", new StringBody(m_et_company_name));
                 entity.addPart("address1", new StringBody(m_et_address_1));
                 entity.addPart("address2", new StringBody(m_et_address_2));
+                entity.addPart("slug", new StringBody(m_et_company_name.toLowerCase().replace(" ", "_")));
                 entity.addPart("description", new StringBody(m_et_description));
                 entity.addPart("email", new StringBody(m_et_e_mail));
                 entity.addPart("phonenumber1", new StringBody(m_et_phone_1 ));
@@ -768,6 +774,7 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
         protected void onPostExecute(String sResponse) {
             //  baseActivity.dismissProgressDialog();
             //  Toast.makeText(baseActivity,"sResponse:-"+sResponse,Toast.LENGTH_LONG).show();
+            dismissProgressDialog();
             JSONObject response;
             try {
                 response = new JSONObject(sResponse);
@@ -798,4 +805,18 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
             e.printStackTrace();
         }
     }
+
+    public boolean isValid(){
+        boolean f = true;
+        if(m_et_company_name.length() == 0){
+            Toast.makeText(getActivity(), "Please enter Name", Toast.LENGTH_LONG).show();
+            f = false;
+        }else if(picturePath1.length() == 0){
+            Toast.makeText(getActivity(), "Please chose image", Toast.LENGTH_LONG).show();
+            f = false;
+        }
+        return f;
+    }
+
+
 }
