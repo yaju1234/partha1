@@ -6,14 +6,18 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.oxilo.oioindia.AppController;
 import com.oxilo.oioindia.R;
 import com.oxilo.oioindia.databinding.FragmentBusinessDetailBinding;
+import com.oxilo.oioindia.dialog.LoginDlg;
+import com.oxilo.oioindia.dialog.ProfileEditDlg;
 import com.oxilo.oioindia.view.activity.CommonActivity;
 
 import java.util.HashMap;
@@ -42,6 +46,17 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
     private CardView cardTramsCondition;
     private CardView cardPrivacyPolicy;
     private CardView cardShare;
+    private Button btn_edit;
+    String userid;
+    String fname;
+    String lname ;
+
+    String name;
+    String email;
+    String mobile;
+
+    String address;
+    String pincode;
 
     public AccountFragment() {
     }
@@ -85,14 +100,20 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
         tvName=(TextView)v.findViewById(R.id.tvName);
         tvNumber=(TextView)v.findViewById(R.id.tvNumber);
         tvEmail=(TextView)v.findViewById(R.id.tvEmail);
+        btn_edit=(Button) v.findViewById(R.id.btn_edit);
 
-       String userid = AppController.getInstance().getAppPrefs().getObject("USER_ID",String.class);
-       String fname =  AppController.getInstance().getAppPrefs().getObject("FNAME", String.class);
-       String lname =  AppController.getInstance().getAppPrefs().getObject("LNAME", String.class);
+        userid = AppController.getInstance().getAppPrefs().getObject("USER_ID",String.class);
+        fname =  AppController.getInstance().getAppPrefs().getObject("FNAME", String.class);
+        lname =  AppController.getInstance().getAppPrefs().getObject("LNAME", String.class);
 
-       String name = fname+" "+lname;
-        String email = AppController.getInstance().getAppPrefs().getObject("EMAIL",String.class);
-       String mobile =  AppController.getInstance().getAppPrefs().getObject("MOBILE", String.class);
+        name = fname+" "+lname;
+         email = AppController.getInstance().getAppPrefs().getObject("EMAIL",String.class);
+        mobile =  AppController.getInstance().getAppPrefs().getObject("MOBILE", String.class);
+
+         address = AppController.getInstance().getAppPrefs().getObject("ADDRESS",String.class);
+         pincode =  AppController.getInstance().getAppPrefs().getObject("PINCODE", String.class);
+
+
 
 
         tvName.setText(name);
@@ -104,6 +125,41 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
         cardTramsCondition.setOnClickListener(this);
         cardPrivacyPolicy.setOnClickListener(this);
         cardShare.setOnClickListener(this);
+
+        btn_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Display display = getActivity().getWindowManager().getDefaultDisplay();
+             ProfileEditDlg pdlg = new ProfileEditDlg(display.getHeight(), display.getWidth(), getContext(),userid,fname, lname,address, pincode, new ProfileEditDlg.OnProfileUpdateListener() {
+                 @Override
+                 public void onProfileUpdateSuccess() {
+                     userid = AppController.getInstance().getAppPrefs().getObject("USER_ID",String.class);
+                     fname =  AppController.getInstance().getAppPrefs().getObject("FNAME", String.class);
+                     lname =  AppController.getInstance().getAppPrefs().getObject("LNAME", String.class);
+
+                     name = fname+" "+lname;
+                     email = AppController.getInstance().getAppPrefs().getObject("EMAIL",String.class);
+                     mobile =  AppController.getInstance().getAppPrefs().getObject("MOBILE", String.class);
+
+                     address = AppController.getInstance().getAppPrefs().getObject("ADDRESS",String.class);
+                     pincode =  AppController.getInstance().getAppPrefs().getObject("PINCODE", String.class);
+
+
+
+
+                     tvName.setText(name);
+                     tvNumber.setText(mobile);
+                     tvEmail.setText(email);
+                 }
+
+                 @Override
+                 public void onProfileUpdateFailure() {
+
+                 }
+             });
+                pdlg.show();
+            }
+        });
         //toolbar
         return v;
 

@@ -31,6 +31,7 @@ import de.greenrobot.event.EventBus;
 public class MainActivity extends AppCompatActivity implements MainFragment.OnFragmentInteractionListener, AllFragment.OnFragmentInteractionListener, FaviouriteFragment.OnFragmentInteractionListener {
     final int RC_PICK_IMAGE_FROM_GALLERY = 1;
     private GalleryImagePickerHelper galleryImagePickerHelper;
+    public BottomNavigationView navigation;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -38,6 +39,10 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    String city = getIntent().getStringExtra("CITY");
+                    String address = getIntent().getStringExtra("ADDRESS");
+                    NavigationController navigationController4 = new NavigationController(MainActivity.this);
+                    navigationController4.navigateToMain(city, address);
                     return true;
                 case R.id.navigation_dashboard:
                     NavigationController navigationController1 = new NavigationController(MainActivity.this);
@@ -58,6 +63,13 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         }
     };
 
+    public void callList(){
+        NavigationController navigationController2 = new NavigationController(MainActivity.this);
+        navigationController2.navigateToList();
+
+
+    }
+
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,14 +87,17 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
             NavigationController navigationController = new NavigationController(this);
             navigationController.navigateToMain(city, address);
         }
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        BottomNavigationMenuView menuView = (BottomNavigationMenuView) navigation.getChildAt(0);
+         navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        /*BottomNavigationMenuView menuView = (BottomNavigationMenuView) navigation.getChildAt(0);
         for (int i = 0; i < menuView.getChildCount(); i++) {
             BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(i);
             itemView.setShiftingMode(false);
             itemView.setChecked(false);
         }
+        navigation.enableS*/
+        BottomNavigationViewHelper.removeShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
         galleryImagePickerHelper = new GalleryImagePickerHelper();
 
     }

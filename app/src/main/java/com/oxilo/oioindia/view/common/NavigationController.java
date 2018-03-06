@@ -29,6 +29,7 @@ import com.oxilo.oioindia.view.fragments.BusinessListFragment;
 import com.oxilo.oioindia.view.fragments.ListFragment;
 import com.oxilo.oioindia.view.fragments.LocationFragment;
 import com.oxilo.oioindia.view.fragments.MainFragment;
+import com.oxilo.oioindia.view.fragments.MessageFragment;
 import com.oxilo.oioindia.view.fragments.RatingFragment;
 import com.oxilo.oioindia.view.fragments.SubCategorieFragment;
 import com.oxilo.oioindia.vo.Category;
@@ -123,13 +124,24 @@ public class NavigationController {
                 .commitAllowingStateLoss();
     }
 
+    public void navigateToMessage(String product_id,String product_name) {
+        MessageFragment fragment = MessageFragment.newInstance(product_id,product_name);
+        String tag = "repo" + "/"  + "/" + "detail";
+        String hide = "repo" + "/"  + "/" + "blist";
+        fragmentManager.beginTransaction()
+                //  .hide(fragmentManager.findFragmentByTag(hide))
+                .replace(containerId, fragment, tag)
+                .addToBackStack(null)
+                .commitAllowingStateLoss();
+    }
+
 
     public void navigateToMyAccout() {
         String tag = "repo" + "/"  + "/" + "main";
         AccountFragment accountFragment =  AccountFragment.newInstance("city","adress");
         fragmentManager.beginTransaction()
                 .replace(containerId, accountFragment,tag)
-                .addToBackStack(null)
+               // .addToBackStack(null)
                 .commitAllowingStateLoss();
     }
 
@@ -138,7 +150,7 @@ public class NavigationController {
         AddBusinessFragment accountFragment =  AddBusinessFragment.newInstance();
         fragmentManager.beginTransaction()
                 .replace(containerId, accountFragment,tag)
-                .addToBackStack(null)
+                //.addToBackStack(null)
                 .commitAllowingStateLoss();
     }
 
@@ -147,7 +159,7 @@ public class NavigationController {
         ListFragment accountFragment =  ListFragment.newInstance();
         fragmentManager.beginTransaction()
                 .replace(containerId, accountFragment,tag)
-                .addToBackStack(null)
+                //.addToBackStack(null)
                 .commitAllowingStateLoss();
     }
 //    public void navigateToUser(String login) {

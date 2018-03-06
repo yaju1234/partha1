@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -778,6 +779,17 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
             JSONObject response;
             try {
                 response = new JSONObject(sResponse);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        NavigationController navigationController2 = new NavigationController((MainActivity) getActivity());
+                        navigationController2.navigateToList();
+                        ((MainActivity) getActivity()).navigation.setSelectedItemId(R.id.business_list);
+                    }
+                }, 500);
+
+
+
             } catch (Exception e) {
 
             }

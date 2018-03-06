@@ -1,22 +1,14 @@
 package com.oxilo.oioindia.view.fragments;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,13 +18,8 @@ import android.widget.TextView;
 
 import com.oxilo.oioindia.AppController;
 import com.oxilo.oioindia.R;
-import com.oxilo.oioindia.dialog.LoginDlg;
 import com.oxilo.oioindia.handlers.CustomSSLSocketFactory;
 import com.oxilo.oioindia.handlers.CustomX509TrustManager;
-import com.oxilo.oioindia.interfaces.Login_Interface;
-import com.oxilo.oioindia.retrofit.restservice.RestService;
-import com.oxilo.oioindia.view.adapter.FaviouriteViewAdapter;
-import com.oxilo.oioindia.viewmodal.FaviouriteItem;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -47,26 +34,14 @@ import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.IOException;
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-
-public class RatingFragment extends Fragment implements View.OnClickListener {
+public class MessageFragment extends Fragment implements View.OnClickListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -74,22 +49,22 @@ public class RatingFragment extends Fragment implements View.OnClickListener {
     private String mParam1;
     private String mParam2;
     private TextView ll_top_header;
-    private RatingBar ll_rating_bar;
+   // private RatingBar ll_rating_bar;
     private EditText ll_comment_write;
     private AppCompatButton submit_btn;
     public ProgressDialog prsDlg;
     private HttpEntity resEntity;
 
 
-    public RatingFragment() {
+    public MessageFragment() {
         // Required empty public constructor
     }
 
 
     // TODO: Rename and change types and number of parameters
-    public static RatingFragment newInstance(String param1,String param2) {
+    public static MessageFragment newInstance(String param1, String param2) {
 
-        RatingFragment fragment = new RatingFragment();
+        MessageFragment fragment = new MessageFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -114,17 +89,17 @@ public class RatingFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_rating, container, false);
+        View v = inflater.inflate(R.layout.fragment_send_message, container, false);
         ll_top_header = (TextView)v.findViewById(R.id.ll_top_header);
-        ll_rating_bar = (RatingBar)v.findViewById(R.id.ll_rating_bar);
+       // ll_rating_bar = (RatingBar)v.findViewById(R.id.ll_rating_bar);
         ll_comment_write = (EditText)v.findViewById(R.id.ll_comment_write);
         submit_btn = (AppCompatButton)v.findViewById(R.id.submit_btn);
         submit_btn.setOnClickListener(this);
         ll_top_header.setText(mParam2);
 
         prsDlg = new ProgressDialog(getActivity());
-        LayerDrawable stars = (LayerDrawable) ll_rating_bar.getProgressDrawable();
-        stars.getDrawable(2).setColorFilter(Color.parseColor("#00BCD4"), PorterDuff.Mode.SRC_ATOP);
+        //LayerDrawable stars = (LayerDrawable) ll_rating_bar.getProgressDrawable();
+       // stars.getDrawable(2).setColorFilter(Color.parseColor("#00BCD4"), PorterDuff.Mode.SRC_ATOP);
 
         return v;
 
@@ -171,18 +146,19 @@ public class RatingFragment extends Fragment implements View.OnClickListener {
                         httpClient.getParams());
                 // trustEveryone();
 //                HttpContext localContext = new BasicHttpContext();
-                HttpPost httpPost = new HttpPost("https://oioindia.com/api/add-reviews.php");
+                HttpPost httpPost = new HttpPost("https://oioindia.com/api/send-message.php");
                 //String basicAuth = "Basic YWRtaW46MTIzNDU";
                 // httpPost.setHeader("Authorization", basicAuth);
                 MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
 
                 String userid = AppController.getInstance().getAppPrefs().getObject("USER_ID", String.class);
                 String email = AppController.getInstance().getAppPrefs().getObject("EMAIL", String.class);
+                String mobileno = AppController.getInstance().getAppPrefs().getObject("MOBILE", String.class);
 
                 entity.addPart("userid", new StringBody(userid));
-                entity.addPart("username", new StringBody(email));
-                entity.addPart("rating", new StringBody(""+(int)ll_rating_bar.getRating()));
-                entity.addPart("review", new StringBody(ll_comment_write.getText().toString().trim()));
+                entity.addPart("email", new StringBody(email));
+                entity.addPart("mobileno", new StringBody(mobileno));
+                entity.addPart("message", new StringBody(ll_comment_write.getText().toString().trim()));
                 entity.addPart("businessid", new StringBody(mParam1));
 
                 httpPost.setEntity(entity);

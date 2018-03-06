@@ -119,6 +119,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/txtRating"
                         style="@style/Base.TextAppearance.AppCompat.Medium"
                         android:layout_width="70dp"
                         android:layout_height="40dp"
@@ -133,7 +134,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:rating="4" />
+                        android:id="@+id/rating"
+                        android:rating="0" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -228,6 +230,7 @@
                             android:layout_height="wrap_content" />
                     </LinearLayout>
                     <LinearLayout
+                        android:id="@+id/llmessage"
                         android:layout_width="0dp"
                         android:orientation="vertical"
                         android:layout_weight="1"
@@ -237,11 +240,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:duplicateParentState="true"
                             app:srcCompat="@drawable/ic_message_grey_500_24dp" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:text="Message"
                             android:textSize="12sp"
+                            android:duplicateParentState="true"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
 
@@ -283,6 +288,7 @@
                             app:srcCompat="@drawable/ic_rate_review_grey_500_24dp" />
 
                         <TextView
+                            android:id="@+id/noofreview"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="43 Review" />

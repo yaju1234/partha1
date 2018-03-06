@@ -8,6 +8,8 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -34,15 +37,19 @@ import com.oxilo.oioindia.modal.Details;
 import com.oxilo.oioindia.retrofit.restservice.RestService;
 import com.oxilo.oioindia.view.activity.LoginActivity;
 import com.oxilo.oioindia.view.activity.MainActivity;
+import com.oxilo.oioindia.view.adapter.CustomPagerAdapter;
 import com.oxilo.oioindia.view.common.NavigationController;
 import com.oxilo.oioindia.viewmodal.BusinesDetailViewModal;
 import com.oxilo.oioindia.viewmodal.MainViewModal;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,6 +84,14 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
     private LinearLayout ll_rate_this;
     private TextView name;
     LoginDlg loginDlg;
+    RatingBar rating;
+    TextView txtRating;
+    TextView noofreview;
+    private LinearLayout llmessage;
+    private ImageView image;
+    ViewPager viewPager;
+    CustomPagerAdapter pagerAdapter;
+    ArrayList<String> setImag = new ArrayList<>();
     public BusinessDetailFragment() {
         // Required empty public constructor
     }
@@ -126,10 +141,19 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
 
         View v = binding.getRoot();
         iv_favorites = (ImageView) v.findViewById(R.id.iv_favorites);
+        image = (ImageView) v.findViewById(R.id.image);
+        viewPager = (ViewPager) v.findViewById(R.id.viewPager);
+        pagerAdapter = new CustomPagerAdapter(getActivity(),setImag);
+        viewPager.setAdapter(pagerAdapter);
         ll_rate_this = (LinearLayout) v.findViewById(R.id.ll_rate_this);
+        llmessage = (LinearLayout) v.findViewById(R.id.llmessage);
+        txtRating = (TextView) v.findViewById(R.id.txtRating);
         name = (TextView) v.findViewById(R.id.name);
+        noofreview = (TextView) v.findViewById(R.id.noofreview);
+        rating = (RatingBar) v.findViewById(R.id.rating);
         ll_rate_this.setOnClickListener(this);
         iv_favorites.setOnClickListener(this);
+        llmessage.setOnClickListener(this);
         user_id = AppController.getInstance().getAppPrefs().getObject("USER_ID", String.class);
         prsDlg = new ProgressDialog(getContext());
 
@@ -144,6 +168,9 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
                 try {
                     String sd = new String(responseBodyResponse.body().bytes());
                     JSONObject mapping = new JSONObject(sd);
+                    int evgrating  = mapping.getJSONArray("result1").getJSONObject(0).getInt("avgrating");
+                    txtRating.setText(""+evgrating);
+                    rating.setRating(evgrating);
                     b_Is_Favorites = mapping.getString("isfav").equalsIgnoreCase("false")?false:true;
 
                     if (b_Is_Favorites) {
@@ -157,20 +184,61 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
                     });
 //
                     Log.e("SIZE==", "" + businessDetailsList.size());
-                    if (businessDetailsList.get(0).getImage() == null)
-                        businessDetailsList.get(0).setImage("http://cumbrianrun.co.uk/wp-content/uploads/2014/02/default-placeholder-300x300.png");
+                    /*if (businessDetailsList.get(0).getImage() == null)
+                        businessDetailsList.get(0).setImage("http://cumbrianrun.co.uk/wp-content/uploads/2014/02/default-placeholder-300x300.png");*/
                     binding.setRepo(businessDetailsList.get(0));
                     binding.desc.setText(Html.fromHtml(businessDetailsList.get(0).getDescription()));
 
-                    String url = businessDetailsList.get(0).getImage();
+                   /* String url = businessDetailsList.get(0).getImage();
                     if (!url.equals("") && url != null) {
                         try {
-                            Picasso.with(getActivity()).load(url).placeholder(R.mipmap.ic_launcher_round).fit().centerCrop().into(binding.image);
+                            Picasso.with(getActivity()).load(url).placeholder(R.drawable.no_image).fit().centerCrop().into(binding.image);
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
 
+                    }*/
+
+                    JSONArray result2 = mapping.getJSONArray("result2");
+                    if(result2.length() == 0){
+                        image.setBackgroundResource(R.drawable.no_image);
+                        image.setVisibility(View.VISIBLE);
+                        viewPager.setVisibility(View.GONE);
+                    }else if(result2.length() > 0){
+                       // Picasso.with(getActivity()).load(result2.getJSONObject(0).getString("img_name")).placeholder(R.drawable.no_image).fit().centerCrop().into(image);
+                        String uuu = result2.getJSONObject(0).getString("img_name");
+                        Log.e("uuu", uuu);
+                        Picasso.with(getActivity())
+                                .load(result2.getJSONObject(0).getString("img_name"))
+                                .placeholder(R.drawable.no_image)
+                                .fit()
+                                .centerInside()
+                                .into(binding.image, new com.squareup.picasso.Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        Log.e("Error", "Error .......................");
+                                    }
+                                });
+
+                        image.setVisibility(View.VISIBLE);
+                        viewPager.setVisibility(View.GONE);
+                    }else{
+                        image.setVisibility(View.GONE);
+                        viewPager.setVisibility(View.VISIBLE);
+                        for(int i=0; i<result2.length(); i++){
+                            JSONObject c = result2.getJSONObject(i);
+                            setImag.add(c.getString("img_name"));
+                        }
+                        pagerAdapter.notifyDataSetChanged();
+
                     }
+
+                    int totalreviews = mapping.getJSONArray("result1").getJSONObject(0).getInt("totalreviews");
+                    noofreview.setText(""+totalreviews+" Review");
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -229,6 +297,18 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
 
 
 
+                break;
+
+            case R.id.llmessage:
+
+                if (user_id != null && user_id.trim().length() > 0) {
+                    NavigationController navigationController = new NavigationController((MainActivity) getActivity());
+                    navigationController.navigateToMessage(getArguments().getString(ARG_PARAM1),name.getText().toString());
+                }else{
+                    Display display = getActivity().getWindowManager().getDefaultDisplay();
+                    loginDlg = new LoginDlg(display.getHeight(), display.getWidth(), BusinessDetailFragment.this, getContext());
+                    loginDlg.show();
+                }
                 break;
         }
 

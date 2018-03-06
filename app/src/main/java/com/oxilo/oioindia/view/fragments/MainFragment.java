@@ -127,14 +127,15 @@ public class MainFragment extends Fragment implements Search_Interface {
                 final List<Fragment> fragments = new Vector<Fragment>();
                 final Bundle page = new Bundle();
                 page.putString("url", "d");
-                fragments.add(AllFragment.newInstance(directoryData.getAllCategory(), ""));
                 fragments.add(TopFragment.newInstance(directoryData.getTopCategory(), ""));
+                fragments.add(AllFragment.newInstance(directoryData.getAllCategory(), ""));
+
                 fragments.add(FaviouriteFragment.newInstance("", "", binding.viewpager));
 
                 List<String> strings = new ArrayList<>();
-                strings.add("All");
                 strings.add("Top");
-                strings.add("Favourites");
+                strings.add("All");
+                 strings.add("Favourites");
 
                 binding.setPagerAdapter(new MainSectionsAdapter(getActivity(), getChildFragmentManager(), fragments, strings));
                 binding.setPager(binding.viewpager);

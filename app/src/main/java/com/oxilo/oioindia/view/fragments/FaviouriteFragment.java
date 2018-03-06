@@ -246,7 +246,7 @@ public class FaviouriteFragment extends Fragment implements View.OnClickListener
                         login = AppController.getInstance().getAppPrefs().getObject("LOGIN", String.class);
                         user_id = AppController.getInstance().getAppPrefs().getObject("USER_ID", String.class);
                         AppController.getInstance().getAppPrefs().putObject("FNAME", mapping.getString("first name"));
-                        AppController.getInstance().getAppPrefs().putObject("FNAME", mapping.getString("last name"));
+                        AppController.getInstance().getAppPrefs().putObject("LNAME", mapping.getString("last name"));
                         AppController.getInstance().getAppPrefs().putObject("EMAIL", mapping.getString("email"));
                         AppController.getInstance().getAppPrefs().putObject("MOBILE", mapping.getString("mobileno"));
                         AppController.getInstance().getAppPrefs().putObject("ADDRESS", mapping.getString("address"));
