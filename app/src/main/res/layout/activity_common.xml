@@ -52,9 +52,11 @@
         android:fillViewport="true"
        >
 
-       <WebView
+       <TextView
            android:id="@+id/webView"
+           android:padding="5dp"
+           android:text="@string/termscondition"
            android:layout_width="match_parent"
-           android:layout_height="match_parent"></WebView>
+           android:layout_height="match_parent"></TextView>
     </ScrollView>
 </LinearLayout>

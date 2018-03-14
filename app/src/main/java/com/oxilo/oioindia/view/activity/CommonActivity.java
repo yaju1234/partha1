@@ -16,6 +16,9 @@ import com.oxilo.oioindia.R;
  */
 
 public class CommonActivity extends BaseActivity {
+    //https://www.oioindia.com/about-us
+    //https://www.oioindia.com/terms-conditions
+    //https://www.oioindia.com/privacy-policy
 
     ProgressDialog progDailog;
     private TextView title;
@@ -23,27 +26,30 @@ public class CommonActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_common);
-        WebView webView = (WebView) findViewById(R.id.webView);
+        TextView webView = (TextView) findViewById(R.id.webView);
         title = (TextView) findViewById(R.id.title);
-       progDailog=new ProgressDialog(CommonActivity.this);
-        progDailog.setMessage("Loading...");
+      // progDailog=new ProgressDialog(CommonActivity.this);
+        //progDailog.setMessage("Loading...");
 
         String val=getIntent().getStringExtra("key");
         if (val!=null){
             if (val.equalsIgnoreCase("aboutUs")){
                 title.setText("About Us");
-                webView.loadUrl("https://www.oioindia.com/about-us");
+                webView.setText(R.string.about_us);
+               // webView.loadUrl("https://www.oioindia.com/about-us");
 
               //  webView.loadUrl("https://www.oioindia.com/about-us");
             }else if(val.equalsIgnoreCase("TramsCondition")){
                 title.setText("Terms and Conditions");
-                webView.loadUrl("https://www.oioindia.com/terms-conditions");
+                webView.setText(R.string.termscondition);
+                //webView.loadUrl("https://www.oioindia.com/terms-conditions");
 
                 //webView.loadUrl("https://www.oioindia.com/terms-conditions");
             }else if(val.equalsIgnoreCase("PrivacyPolicy")){
-                title.setText("Privecy Policy");
+                title.setText("Privacy Policy");
               //  shouldOverrideUrlLoading(webView,"https://www.oioindia.com/privacy-policy");
-                webView.loadUrl("https://www.oioindia.com/privacy-policy");
+               //webView.loadUrl("https://www.oioindia.com/privacy-policy");
+                webView.setText(R.string.privecy_policy);
             }
 
         }

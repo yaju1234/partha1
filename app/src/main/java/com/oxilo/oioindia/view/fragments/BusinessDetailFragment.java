@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -92,6 +93,11 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
     ViewPager viewPager;
     CustomPagerAdapter pagerAdapter;
     ArrayList<String> setImag = new ArrayList<>();
+    private LinearLayout call;
+    String ph;
+    private LinearLayout llmap;
+    double lat = 22.5726;
+    double lng = 88.3639;
     public BusinessDetailFragment() {
         // Required empty public constructor
     }
@@ -147,6 +153,8 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         viewPager.setAdapter(pagerAdapter);
         ll_rate_this = (LinearLayout) v.findViewById(R.id.ll_rate_this);
         llmessage = (LinearLayout) v.findViewById(R.id.llmessage);
+        call = (LinearLayout) v.findViewById(R.id.call);
+        llmap = (LinearLayout) v.findViewById(R.id.llmap);
         txtRating = (TextView) v.findViewById(R.id.txtRating);
         name = (TextView) v.findViewById(R.id.name);
         noofreview = (TextView) v.findViewById(R.id.noofreview);
@@ -156,6 +164,22 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         llmessage.setOnClickListener(this);
         user_id = AppController.getInstance().getAppPrefs().getObject("USER_ID", String.class);
         prsDlg = new ProgressDialog(getContext());
+        llmap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavigationController navigationController = new NavigationController((MainActivity) getActivity());
+                navigationController.navigateToMap(lat, lng,name.getText().toString());
+            }
+        });
+//AIzaSyBC5tkJ579RY05RXMxUDTCrAqF0EAoM0hY
+
+        call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + ph));
+                startActivity(intent);
+            }
+        });
 
         String userid = "0";
                 if(AppController.getInstance().getAppPrefs().getObject("LOGIN", String.class)!=null && AppController.getInstance().getAppPrefs().getObject("LOGIN", String.class).equalsIgnoreCase("1")){
@@ -238,6 +262,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
                     }
 
                     int totalreviews = mapping.getJSONArray("result1").getJSONObject(0).getInt("totalreviews");
+                    ph = mapping.getJSONArray("result1").getJSONObject(0).getString("phonenumber1");
                     noofreview.setText(""+totalreviews+" Review");
                 } catch (Exception ex) {
                     ex.printStackTrace();

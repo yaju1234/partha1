@@ -91,7 +91,7 @@ public class ProfileEditDlg extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         setContentView(R.layout.dialog_update_profile);
-        setCancelable(false);
+       // setCancelable(false);
         prsDlg = new ProgressDialog(context);
         llMain = (LinearLayout) findViewById(R.id.llMain);
         iv_cancel = (ImageView) findViewById(R.id.iv_cancel);
@@ -100,8 +100,8 @@ public class ProfileEditDlg extends Dialog {
         lname = (EditText) findViewById(R.id.lname);
         address = (EditText) findViewById(R.id.address);
         pincode = (EditText) findViewById(R.id.pincode);
-        llMain.getLayoutParams().height = (int) (height * 0.95);
-        llMain.getLayoutParams().width = (int) (width * 0.95);
+        llMain.getLayoutParams().height = (int) (height * 1.0);
+        llMain.getLayoutParams().width = (int) (width * 1.0);
 
 
         fname.setText(s1!=null?s1:"");

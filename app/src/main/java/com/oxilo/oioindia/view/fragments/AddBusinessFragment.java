@@ -152,7 +152,7 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
     public String m_spin_d62 = "";
     public String m_spin_d71 = "";
     public String m_spin_d72 = "";
-    private String[] sSl = { "CLOSE","1 AM","2 AM","3 AM","4 AM","5 AM","6 AM","7 AM","8 AM","9 AM","10 AM","11 AM","12 AM","1 PM","2 PM","3 PM","4 PM","5 PM","6 PM","7 PM","8 PM","9 PM","10 PM","11 PM","12 PM"};
+    private String[] sSl = { "24 hrs. OPEN","CLOSE","1 AM","2 AM","3 AM","4 AM","5 AM","6 AM","7 AM","8 AM","9 AM","10 AM","11 AM","12 AM","1 PM","2 PM","3 PM","4 PM","5 PM","6 PM","7 PM","8 PM","9 PM","10 PM","11 PM","12 PM"};
     private ArrayAdapter sLAdapter;
 
     private EditText et_company_name;
@@ -206,6 +206,7 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
     public ProgressDialog prsDlg;
     LoginDlg loginDlg;
     String user_id="";
+    private double lat, lng;
     private Map<String, String> param = new HashMap<>();
 
     public AddBusinessFragment() {
@@ -248,6 +249,8 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
         user_id = AppController.getInstance().getAppPrefs().getObject("USER_ID", String.class);
         sLAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, sSl);
         sLAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        lat =  AppController.getInstance().getAppPrefs().getObject("LOCATION_LAT", Double.class);
+        lng =  AppController.getInstance().getAppPrefs().getObject("LOCATION_LON", Double.class);
 
         spin_d11 = (Spinner) v.findViewById(R.id.spin_d11);
         spin_d12 = (Spinner) v.findViewById(R.id.spin_d12);
@@ -732,8 +735,8 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
                 entity.addPart("phonenumber2", new StringBody(m_et_phone_2 ));
                 entity.addPart("city", new StringBody(m_et_city ));
                 entity.addPart("state", new StringBody(m_et_area ));
-                entity.addPart("longitude", new StringBody("" ));
-                entity.addPart("latitude", new StringBody("" ));
+                entity.addPart("longitude", new StringBody(String.valueOf(lat) ));
+                entity.addPart("latitude", new StringBody(String.valueOf(lng)  ));
                 entity.addPart("contactperson", new StringBody(m_et_conatct_person ));
                 entity.addPart("landlinenumber", new StringBody(m_et_landmark ));
                 entity.addPart("website", new StringBody(m_et_website ));

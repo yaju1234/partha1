@@ -196,15 +196,17 @@
                     android:gravity="center|left"
                     android:weightSum="3">
                     <LinearLayout
+                        android:id="@+id/call"
                         android:layout_width="0dp"
                         android:orientation="vertical"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:layout_height="wrap_content">
+
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                           android:layout_weight="1"
+                            android:layout_weight="1"
                             app:srcCompat="@drawable/ic_phone_grey_500_24dp" />
                         <TextView
                             android:layout_width="wrap_content"
@@ -213,6 +215,7 @@
                             android:layout_height="wrap_content" />
                     </LinearLayout>
                     <LinearLayout
+                        android:id="@+id/llmap"
                         android:layout_width="0dp"
                         android:orientation="vertical"
                         android:layout_weight="1"

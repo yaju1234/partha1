@@ -38,6 +38,178 @@
 
 
     <!--<string name="google_maps_key">AIzaSyDfs_EsGYuyK_D2H-gAdOl8uHJoTcCS4Dw</string>-->
-    <string name="google_maps_key">AIzaSyDcj3eNOAM_FGxsKHrZatDgnCC6Mz1XVGk</string>
+    <!--<string name="google_maps_key">AIzaSyDcj3eNOAM_FGxsKHrZatDgnCC6Mz1XVGk</string>-->
+    <string name="google_maps_key">AIzaSyAD4L0I0bwTJo32bFIlGgtbaDny8TH5Ifw</string>
     <string name="send_to">Send To</string>
+    <string name="privecy_policy">1. Terms\n\n
+
+  By accessing the website at http://oioindia.com, you are agreeing to be bound by these terms of service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws. If you do not agree with any of these terms, you are prohibited from using or accessing this site. The materials contained in this website are protected by applicable copyright and trademark law.
+\n\n
+2. Use License\n\n
+
+Permission is granted to temporarily download one copy of the materials (information or software) on oioindia\'s website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
+
+
+        modify or copy the materials;
+        use the materials for any commercial purpose, or for any public display (commercial or non-commercial);
+        attempt to decompile or reverse engineer any software contained on oioindia\'s website;
+        remove any copyright or other proprietary notations from the materials; or
+        transfer the materials to another person or "mirror" the materials on any other server.
+
+
+    \n\nThis license shall automatically terminate if you violate any of these restrictions and may be terminated by oioindia at any time. Upon terminating your viewing of these materials or upon the termination of this license, you must destroy any downloaded materials in your possession whether in electronic or printed format.
+
+
+3. Disclaimer\n\n
+
+
+    The materials on oioindia\'s website are provided on an \'as is\' basis. oioindia makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
+    Further, oioindia does not warrant or make any representations concerning the accuracy, likely results, or reliability of the use of the materials on its website or otherwise relating to such materials or on any sites linked to this site.
+
+
+4. Limitations\n\n
+
+  In no event shall oioindia or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on oioindia\'s website, even if oioindia or a oioindia authorized representative has been notified orally or in writing of the possibility of such damage. Because some jurisdictions do not allow limitations on implied warranties, or limitations of liability for consequential or incidental damages, these limitations may not apply to you.
+
+5. Accuracy of materials\n\n
+
+  The materials appearing on oioindia website could include technical, typographical, or photographic errors. oioindia does not warrant that any of the materials on its website are accurate, complete or current. oioindia may make changes to the materials contained on its website at any time without notice. However oioindia does not make any commitment to update the materials.
+
+6. Links\n\n
+
+  oioindia has not reviewed all of the sites linked to its website and is not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by oioindia of the site. Use of any such linked website is at the user\'s own risk.
+
+7. SECURITY\n\n
+
+To protect your personal information, we take reasonable precautions and follow industry best practices to make sure it is not inappropriately lost, misused, accessed, disclosed, altered or destroyed.
+
+If you provide us with your credit card information, the information is encrypted using secure socket layer technology (SSL) and stored with AES-256 encryption.  Although no method of transmission over the Internet or electronic storage is 100% secure, we follow all PCI-DSS requirements and implement additional generally accepted industry standards.
+
+8. COOKIES\n\n
+
+Here is a list of cookies that we use. We've listed them here so you that you can choose if you want to opt-out of cookies or not.
+_session_id, unique token, sessional, allows oioindia to store information about your session (referrer, landing page, etc).
+  _oioindia_visit, no data held, Persistent for 30 minutes from the last visit, used by our website provider's internal stats tracker to record the number of visits
+  _oioindia_uniq, no data held, expires midnight (relative to the visitor) of the next day, Counts the number of visits to a store by a single customer.
+  cart, unique token, persistent for 2 weeks, Stores information about the contents of your cart.
+  _secure_session_id, unique token, sessional
+  storefront_digest, unique token, indefinite If the shop has a password, this is used to determine if the current visitor has access.
+
+9. AGE OF CONSENT\n\n
+By using this site, you represent that you are at least the age of majority in your state or province of residence, or that you are the age of majority in your state or province of residence and you have given us your consent to allow any of your minor dependents to use this site.
+
+10. CHANGES TO THIS PRIVACY POLICY\n\n
+
+We reserve the right to modify this privacy policy at any time, so please review it frequently. Changes and clarifications will take effect immediately upon their posting on the website. If we make material changes to this policy, we will notify you here that it has been updated, so that you are aware of what information we collect, how we use it, and under what circumstances, if any, we use and/or disclose it.
+
+If our store is acquired or merged with another company, your information may be transferred to the new owners so that we may continue to sell products to you.
+
+11. Modifications\n\n
+
+oioindia may revise these terms of service for its website at any time without notice. By using this website, you are agreeing to be bound by the then current version of these terms of service.
+
+12. Governing Law\n\n
+
+  These terms and conditions are governed by and construed in accordance with the laws of Rajasthan and you irrevocably submit to the exclusive jurisdiction of the courts in that State or location.
+
+QUESTIONS AND CONTACT INFORMATION\n\n
+
+If you would like to: access, correct, amend or delete any personal information we have about you, register a complaint, or simply want more information contact our Privacy Compliance Officer at Email Address or by mail at Business Name
+[Re: Privacy Compliance Officer]
+Street Address City State Country Post Code</string>
+
+    <string name="termscondition"> Introduction.\n\n
+
+
+These Website Standard Terms and Conditions (these “Terms” or these “Website Standard Terms and Conditions”) contained herein on this webpage, shall govern your use of this website, including all pages within this website (collectively referred to herein below as this “Website”). These Terms apply in full force and effect to your use of this Website and by using this Website, you expressly accept all terms and conditions contained herein in full. You must not use this Website, if you have any objection to any of these Website Standard Terms and Conditions.
+
+Intellectual Property Rights.\n\n
+
+Other than content you own, which you may have opted to include on this Website, under these Terms, OIOINDIA Pvt. Ltd. and/or its licensors own all rights to the intellectual property and material contained in this Website, and all such rights are reserved.
+The content of the pages of this website is for your general information and use only. It is subject to change without notice.
+You are granted a limited license only, subject to the restrictions provided in these Terms, for purposes of viewing the material contained on this Website.\n\n
+
+Restrictions.\n
+
+You are expressly and emphatically restricted from all of the following:\n\n
+
+publishing any Website material in any media.
+selling, sublicensing and/or otherwise commercializing any Website material.
+publicly performing and/or showing any Website material.
+using this Website in any way that is, or may be, damaging to this Website.
+using this Website in any way that impacts user access to this Website.
+using this Website contrary to applicable laws and regulations, or in a way that causes, or may cause, harm to the Website, or to any person or business entity.
+engaging in any data mining, data harvesting, data extracting or any other similar activity in relation to this Website, or while using this Website.\n\n
+using this Website to engage in any advertising or marketing.
+use of any information or materials on this website is entirely at your own risk, for which we shall not be liable. It shall be your own responsibility to ensure that any products, services or information available through this website meet your specific requirements.\n\n
+
+Certain areas of this Website are restricted from access by you and OIOINDIA Pvt. Ltd. may further restrict access by you to any areas of this Website, at any time, in its sole and absolute discretion.  Any user ID and password you may have for this Website are confidential and you must maintain confidentiality of such information.\n\n
+
+Your Content.\n
+
+In these Website Standard Terms and Conditions, “Your Content” shall mean any audio, video, text, images or other material you choose to display on this Website. With respect to Your Content, by displaying it, you OIOINDIA Pvt. Ltd. a non-exclusive, worldwide, irrevocable, royalty-free, sublicensable license to use, reproduce, adapt, publish, translate and distribute it in any and all media.
+Your Content must be your own and must not be infringing on any third party’s rights. OIOINDIA Pvt. Ltd. reserves the right to remove any of Your Content from this Website at any time, and for any reason, without notice.\n\n
+
+No warranties.\n
+
+This Website is provided “as is,” with all faults, and OIOINDIA Pvt. Ltd. makes no express or implied representations or warranties, of any kind related to this Website or the materials contained on this Website. Additionally, nothing contained on this Website shall be construed as providing consult or advice to you.
+
+Limitation of liability.\n
+
+In no event shall OIOINDIA Pvt. Ltd., nor any of its officers, directors and employees, be liable to you for anything arising out of or in any way connected with your use of this Website, whether such liability is under contract, tort or otherwise, and OIOINDIA Pvt. Ltd., including its officers, directors and employees shall not be liable for any indirect, consequential or special liability arising out of or in any way related to your use of this Website.
+
+Indemnification.\n
+
+You hereby indemnify to the fullest extent OIOINDIA Pvt. Ltd.  from and against any and all liabilities, costs, demands, causes of action, damages and expenses (including reasonable attorney’s fees) arising out of or in any way related to your breach of any of the provisions of these Terms.
+
+Severability.\n
+
+Each provision of this Agreement is severable. If any provision of these Terms is found to be unenforceable or invalid under any applicable law, such unenforceability or invalidity shall not render these Terms unenforceable or invalid as a whole, and such provisions shall be deleted without affecting the remaining provisions herein.
+
+\n\nVariation of Terms.\n
+
+OIOINDIA Pvt. Ltd.  is permitted to revise these Terms at any time as it sees fit, and by using this Website you are expected to review such Terms on a regular basis to ensure you understand all terms and conditions governing use of this Website.
+
+\n\nAssignment.\n
+
+OIOINDIA Pvt. Ltd.  shall be permitted to assign, transfer, and subcontract its rights and/or obligations under these Terms without any notification or consent required. However, you shall not be permitted to assign, transfer, or subcontract any of your rights and/or obligations under these Terms. OIOINDIA Pvt. Ltd.  may freely assign or delegate all rights and obligations under this Agreement, fully or partially without notice to you. OIOINDIA Pvt. Ltd.  may also substitute, by way of unilateral novation, effective upon notice to you, OIOINDIA Pvt. Ltd. for any third party that assumes our rights and obligations under this Agreement.
+
+\n\nEntire Agreement.\n
+
+These Terms, including any legal notices and disclaimers contained on this Website, constitute the entire agreement between the parties with respect to the use of the Services and supersede any prior or inconsistent agreements, negotiations, representations, and promises, written or oral, with respect to the subject matter and is binding upon the parties and their permitted successors and assigns. In the event of any conflict between this Agreement and the terms of an Authorization Form, the provisions of the Authorization Form shall prevail. The terms of this Agreement will apply to all orders you submit to our website and shall supersede any additional terms, which may be incorporated in a purchase order form, or any other form you generate. Any such terms shall be null and void.
+
+\n\nGoverning Law  Jurisdiction.\n
+
+These Terms will be governed by and construed in accordance with the laws of the States of India, and you submit to the non-exclusive jurisdiction of the state and federal courts located in India for the resolution of any disputes. This Agreement and your relationship with OIOINDIA Pvt. Ltd. shall be governed exclusively by, and will be enforced, construed, and interpreted exclusively in accordance with, the laws applicable in the province of India and shall be considered to have been made and accepted in India without regard to its conflict of law provisions. All disputes under this Agreement will be resolved by the courts of India. In any action or proceeding to enforce rights under this Agreement, the prevailing party shall be entitled to recover costs and attorneys’ fees.
+
+\n\nExport Compliance and Use Restrictions.\n
+
+You shall not use or access the Services if you are located in any jurisdiction in which the provision of the Services is prohibited under India or other applicable laws or regulations (a “Prohibited Jurisdiction”) and you shall not provide access to the Services to any government, entity or individual located in any Prohibited Jurisdiction. You represent, warrant and covenant that (a) you are not named on any Indian list of persons or entities prohibited from transaction with any Indian; (b) you are not a national of, or a company registered in, any Prohibited Jurisdiction; (c) you shall not allow Authorized Users to access or use the Services in violation of any Indian or other applicable export embargoes, prohibitions or restrictions; and (d) you shall comply with all applicable laws regarding the transmission of data exported from the country in which you (or your Authorized Users) are located to India.
+
+\n\nNotices\n
+
+For purposes of service messages and notices about the Services, we may place a banner notice across our pages to alert you to certain changes such as modifications to this Agreement. Alternatively, notice may consist of an email from us to an email address associated with your account, even if we have other contact information. You also agree that we may communicate with you through your OIOINDIA account or through other means including email, mobile number, telephone, or delivery services including the postal service about your OIOINDIA account or services associated with us. You acknowledge and agree that we shall have no liability associated with or arising from your failure to maintain accurate contact or other information, including, but not limited to, your failure to receive critical information about the Services. You may provide legal notice to OIOINDIA Pvt. Ltd. via email with a duplicate copy sent via registered mail to OIOINDIA Pvt. Ltd., (Address)
+
+\n\nWaivers\n\n
+
+No waiver of any provision of this Agreement is binding unless it is in writing and signed by all parties to this Agreement, except that any provision which does not give rights or benefits to particular parties may be waived in writing, signed only by those parties who have rights under, or hold the benefit of, the provision being waived if those parties promptly send a copy of the executed waiver to all other parties. No failure to exercise, and no delay in exercising, any right or remedy under this Agreement will be deemed to be a waiver of that right or remedy. No waiver of any breach of any provision of this Agreement will be deemed to be a waiver of any subsequent breach of that provision or of any similar provision.
+
+\n\nNature of Relationship\n\n
+
+No agency, partnership, joint venture, or employment relationship is created as a result of this Agreement and neither party has any authority of any kind to bind the other in any respect.
+
+\n\nForce Majeure\n\n
+
+Except for payment obligations, neither party shall be liable for any failure to perform its obligations hereunder where such failure results from any cause beyond such party’s reasonable control, including the elements; fire; flood; severe weather; earthquake; vandalism; accidents; sabotage; power failure; denial of service attacks or similar attacks; Internet failure; acts of God and the public enemy; acts of war; acts of terrorism; riots; civil or public disturbances; strikes, lock-outs, or labour disruptions; and any laws, orders, rules, regulations, acts, or restraints of any government or governmental body or authority, civil or military, including the orders and judgments of courts.
+
+Attention: Legal Affairs. The email address provided may be updated as part of any update to these Terms of Service.</string>
+
+    <string name="about_us">OIO INDIA is a leading national online search directory that features listings for millions of businesses.
+
+The OIO INDIA is committed to providing business and services on their local searches. We strive to guide users to the information they need to find local businesses quickly and easily.
+
+As a result, merchants benefit from prime, targeted exposure to thousands of potential customers.Whether you’re looking for a great local business or looking to increase your customer traffic, OIO INDIA has the tools to deliver.
+
+In other words, we can say that OIO INDIA is a leader in helping thousands of business locations manage their local-social content across internet directories, social networks and search engines.
+We make your online presence very easy! OIO INDIA manages and grows your business's digital presence with no charges that's right for you.</string>
 </resources>

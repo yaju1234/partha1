@@ -223,7 +223,9 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
                         android:layout_gravity="center"
-                        android:layout_marginTop="25dp"
+                        android:padding="5dp"
+                        android:background="@drawable/rounded_green_border1"
+                        android:layout_marginTop="20dp"
                         android:onClick="@{() -> viewModel.skip()}"
                         style="@style/Base.TextAppearance.AppCompat.Headline"
                         android:text="Continue As Guest"/>

@@ -26,9 +26,11 @@ import com.oxilo.oioindia.view.fragments.AccountFragment;
 import com.oxilo.oioindia.view.fragments.AddBusinessFragment;
 import com.oxilo.oioindia.view.fragments.BusinessDetailFragment;
 import com.oxilo.oioindia.view.fragments.BusinessListFragment;
+import com.oxilo.oioindia.view.fragments.HelpFragment;
 import com.oxilo.oioindia.view.fragments.ListFragment;
 import com.oxilo.oioindia.view.fragments.LocationFragment;
 import com.oxilo.oioindia.view.fragments.MainFragment;
+import com.oxilo.oioindia.view.fragments.MapFragment;
 import com.oxilo.oioindia.view.fragments.MessageFragment;
 import com.oxilo.oioindia.view.fragments.RatingFragment;
 import com.oxilo.oioindia.view.fragments.SubCategorieFragment;
@@ -160,6 +162,30 @@ public class NavigationController {
         fragmentManager.beginTransaction()
                 .replace(containerId, accountFragment,tag)
                 //.addToBackStack(null)
+                .commitAllowingStateLoss();
+    }
+
+
+    public void navigateToHelp() {
+        HelpFragment fragment = HelpFragment.newInstance();
+        String tag = "repo" + "/"  + "/" + "detail";
+        String hide = "repo" + "/"  + "/" + "blist";
+        fragmentManager.beginTransaction()
+                //  .hide(fragmentManager.findFragmentByTag(hide))
+                .replace(containerId, fragment, tag)
+                .addToBackStack(null)
+                .commitAllowingStateLoss();
+    }
+
+
+    public void navigateToMap(double lat, double lng, String name) {
+        MapFragment fragment = MapFragment.newInstance( lat,  lng,  name);
+        String tag = "repo" + "/"  + "/" + "detail";
+        String hide = "repo" + "/"  + "/" + "blist";
+        fragmentManager.beginTransaction()
+                //  .hide(fragmentManager.findFragmentByTag(hide))
+                .replace(containerId, fragment, tag)
+                .addToBackStack(null)
                 .commitAllowingStateLoss();
     }
 //    public void navigateToUser(String login) {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.oxilo.oioindia.AppController;
@@ -19,6 +21,9 @@ import com.oxilo.oioindia.databinding.FragmentBusinessDetailBinding;
 import com.oxilo.oioindia.dialog.LoginDlg;
 import com.oxilo.oioindia.dialog.ProfileEditDlg;
 import com.oxilo.oioindia.view.activity.CommonActivity;
+import com.oxilo.oioindia.view.activity.LoginActivity;
+import com.oxilo.oioindia.view.activity.MainActivity;
+import com.oxilo.oioindia.view.common.NavigationController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -57,6 +62,12 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
 
     String address;
     String pincode;
+
+    private LinearLayout ll_login;
+    private LinearLayout ll_edit;
+    private LinearLayout llNotLogin;
+    private AppCompatButton register_btn;
+    private TextView help;
 
     public AccountFragment() {
     }
@@ -101,6 +112,28 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
         tvNumber=(TextView)v.findViewById(R.id.tvNumber);
         tvEmail=(TextView)v.findViewById(R.id.tvEmail);
         btn_edit=(Button) v.findViewById(R.id.btn_edit);
+        ll_login=(LinearLayout) v.findViewById(R.id.ll_login);
+        ll_edit=(LinearLayout) v.findViewById(R.id.ll_edit);
+        llNotLogin=(LinearLayout) v.findViewById(R.id.llNotLogin);
+        register_btn=(AppCompatButton) v.findViewById(R.id.register_btn);
+        help=(TextView) v.findViewById(R.id.help);
+
+        register_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                getActivity().startActivity(intent);
+                getActivity().finish();
+
+            }
+        });
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavigationController navigationController4 = new NavigationController((MainActivity) getActivity());
+                navigationController4.navigateToHelp();
+            }
+        });
 
         userid = AppController.getInstance().getAppPrefs().getObject("USER_ID",String.class);
         fname =  AppController.getInstance().getAppPrefs().getObject("FNAME", String.class);
@@ -112,6 +145,18 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
 
          address = AppController.getInstance().getAppPrefs().getObject("ADDRESS",String.class);
          pincode =  AppController.getInstance().getAppPrefs().getObject("PINCODE", String.class);
+
+         if(userid !=null && userid.length()>0){
+             ll_login.setVisibility(View.VISIBLE);
+             ll_edit.setVisibility(View.VISIBLE);
+             llNotLogin.setVisibility(View.GONE);
+             register_btn.setVisibility(View.GONE);
+         }else{
+             ll_login.setVisibility(View.GONE);
+             ll_edit.setVisibility(View.GONE);
+             llNotLogin.setVisibility(View.VISIBLE);
+             register_btn.setVisibility(View.VISIBLE);
+         }
 
 
 
