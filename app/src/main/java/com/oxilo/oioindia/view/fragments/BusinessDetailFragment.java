@@ -98,6 +98,9 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
     private LinearLayout llmap;
     double lat = 22.5726;
     double lng = 88.3639;
+    private LinearLayout ll_all_review;
+    private TextView tv_all_review;
+    private TextView tv_rating_count;
     public BusinessDetailFragment() {
         // Required empty public constructor
     }
@@ -154,8 +157,11 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         ll_rate_this = (LinearLayout) v.findViewById(R.id.ll_rate_this);
         llmessage = (LinearLayout) v.findViewById(R.id.llmessage);
         call = (LinearLayout) v.findViewById(R.id.call);
+        ll_all_review = (LinearLayout) v.findViewById(R.id.ll_all_review);
         llmap = (LinearLayout) v.findViewById(R.id.llmap);
+        tv_rating_count = (TextView) v.findViewById(R.id.tv_rating_count);
         txtRating = (TextView) v.findViewById(R.id.txtRating);
+        tv_all_review = (TextView) v.findViewById(R.id.tv_all_review);
         name = (TextView) v.findViewById(R.id.name);
         noofreview = (TextView) v.findViewById(R.id.noofreview);
         rating = (RatingBar) v.findViewById(R.id.rating);
@@ -264,6 +270,14 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
                     int totalreviews = mapping.getJSONArray("result1").getJSONObject(0).getInt("totalreviews");
                     ph = mapping.getJSONArray("result1").getJSONObject(0).getString("phonenumber1");
                     noofreview.setText(""+totalreviews+" Review");
+                    tv_rating_count.setText(""+totalreviews+" Ratings");
+                    if(totalreviews>=1){
+                        tv_all_review.setText("View All Reviews");
+                       //ll_all_review.setVisibility(View.VISIBLE);
+                    }else{
+                        tv_all_review.setText("No Reviews");
+                      //  ll_all_review.setVisibility(View.GONE);
+                    }
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }

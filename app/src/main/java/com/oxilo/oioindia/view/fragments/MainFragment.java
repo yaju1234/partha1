@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,6 +75,7 @@ public class MainFragment extends Fragment implements Search_Interface {
 
     FragmentMainBinding binding;
     SearchDlg  searchDlg = null;
+    private ImageView iv_edit,iv_arrow;
 //    private static TextView city_name;
 
 //    EditText et_search;
@@ -119,7 +121,7 @@ public class MainFragment extends Fragment implements Search_Interface {
         MainViewModal viewModal = ViewModelProviders.of(this, factory).get(MainViewModal.class);
         binding.setVm(viewModal);
 
-
+//
 //        binding.cityName.setText(city);
         viewModal.getCombineData().subscribe(new Consumer<DirectoryData>() {
             @Override
@@ -163,6 +165,20 @@ public class MainFragment extends Fragment implements Search_Interface {
                 new NavigationController((MainActivity) getActivity()).navigateToLocation(address, city);
             }
         });
+
+        binding.ivEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new NavigationController((MainActivity) getActivity()).navigateToLocation(address, city);
+            }
+        });
+        binding.ivArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new NavigationController((MainActivity) getActivity()).navigateToLocation(address, city);
+            }
+        });
+
         View v = binding.getRoot();
         Constant.locaTextView = v.findViewById(R.id.city_name);
         v_view = (View) v.findViewById(R.id.v_view);
