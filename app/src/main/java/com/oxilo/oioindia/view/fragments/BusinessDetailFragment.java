@@ -44,6 +44,7 @@ import com.oxilo.oioindia.viewmodal.BusinesDetailViewModal;
 import com.oxilo.oioindia.viewmodal.MainViewModal;
 import com.squareup.picasso.Picasso;
 
+import org.apache.http.entity.mime.content.StringBody;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -202,7 +203,8 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
                     txtRating.setText(""+evgrating);
                     rating.setRating(evgrating);
                     b_Is_Favorites = mapping.getString("isfav").equalsIgnoreCase("false")?false:true;
-
+//  entity.addPart("longitude", new StringBody(String.valueOf(lat) ));
+   //                 entity.addPart("latitude", new StringBody(String.valueOf(lng)  ));
                     if (b_Is_Favorites) {
                         iv_favorites.setImageResource(R.drawable.favorite);
                     } else {
@@ -277,6 +279,15 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
                     }else{
                         tv_all_review.setText("No Reviews");
                       //  ll_all_review.setVisibility(View.GONE);
+                    }
+
+                    JSONObject jobj =  mapping.getJSONArray("result1").getJSONObject(0);
+                    if(jobj.has("latitude")){
+                        lat = Double.parseDouble(jobj.getString("latitude"));
+                    }
+
+                    if(jobj.has("longitude")){
+                        lng = Double.parseDouble(jobj.getString("longitude"));
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
