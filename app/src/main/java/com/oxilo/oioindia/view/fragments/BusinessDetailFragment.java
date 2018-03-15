@@ -32,6 +32,7 @@ import com.oxilo.oioindia.R;
 import com.oxilo.oioindia.data.DataManager;
 import com.oxilo.oioindia.databinding.FragmentBusinessDetailBinding;
 import com.oxilo.oioindia.dialog.LoginDlg;
+import com.oxilo.oioindia.dialog.ReviewDlg;
 import com.oxilo.oioindia.interfaces.Login_Interface;
 import com.oxilo.oioindia.modal.BusinessDetails;
 import com.oxilo.oioindia.modal.Details;
@@ -302,7 +303,14 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         });
 
 
-
+        ll_all_review.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Display display = getActivity().getWindowManager().getDefaultDisplay();
+              ReviewDlg loginDlg = new ReviewDlg(display.getHeight(), display.getWidth(), getContext(), getArguments().getString(ARG_PARAM1));
+                loginDlg.show();
+            }
+        });
 
 
         return v;

@@ -728,7 +728,7 @@ public class AddBusinessFragment extends Fragment implements View.OnClickListene
                 entity.addPart("name", new StringBody(m_et_company_name));
                 entity.addPart("address1", new StringBody(m_et_address_1));
                 entity.addPart("address2", new StringBody(m_et_address_2));
-                entity.addPart("slug", new StringBody(m_et_company_name.toLowerCase().replace(" ", "_")));
+                entity.addPart("slug", new StringBody(m_et_company_name.toLowerCase().replace(" ", "-")));
                 entity.addPart("description", new StringBody(m_et_description));
                 entity.addPart("email", new StringBody(m_et_e_mail));
                 entity.addPart("phonenumber1", new StringBody(m_et_phone_1 ));
