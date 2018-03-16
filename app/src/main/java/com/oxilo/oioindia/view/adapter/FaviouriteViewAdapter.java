@@ -65,7 +65,7 @@ public class FaviouriteViewAdapter extends RecyclerView.Adapter<FaviouriteViewAd
         String image = item.getImage();
         Picasso.with(mContext)
                 .load(item.getImage())
-                .error(R.drawable.ic_launcher)
+                .error(R.drawable.no_image)
                 .into(holder.imageView2);
         holder.ll_main.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -297,6 +297,12 @@ public class FaviouriteFragment extends Fragment implements View.OnClickListener
                             String phonenumber1 = (jsonObject1.getString("phonenumber1"));
                             String phonenumber2 = (jsonObject1.getString("phonenumber2"));
                             String image = (jsonObject1.getString("image"));
+                            if(!image.contains("product")){
+                                if(image.contains("category")){
+                                    image = image.replace("category","product");
+                                }
+
+                            }
                             FaviouriteItem faviouriteItem = new FaviouriteItem(product_id, name, address1, address2, phonenumber1, phonenumber2, image);
                             faviouriteItems.add(faviouriteItem);
                         }

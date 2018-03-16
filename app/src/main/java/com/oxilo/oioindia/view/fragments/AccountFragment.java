@@ -96,13 +96,13 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_my_account, null, false);
-        Toolbar toolbar=(Toolbar)v.findViewById(R.id.toolbar);
+        /*Toolbar toolbar=(Toolbar)v.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getActivity().getSupportFragmentManager().popBackStack();
             }
-        });
+        });*/
         cardAboutUs=(CardView)v.findViewById(R.id.cardAboutUs);
         cardHelpSupport=(CardView)v.findViewById(R.id.cardHelpSupport);
         cardTramsCondition=(CardView)v.findViewById(R.id.cardTramsCondition);
