@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.oxilo.oioindia.AppController;
 import com.oxilo.oioindia.R;
@@ -51,6 +52,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
     private CardView cardTramsCondition;
     private CardView cardPrivacyPolicy;
     private CardView cardShare;
+    private CardView logout;
     private Button btn_edit;
     String userid;
     String fname;
@@ -108,6 +110,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
         cardTramsCondition=(CardView)v.findViewById(R.id.cardTramsCondition);
         cardPrivacyPolicy=(CardView)v.findViewById(R.id.cardPrivacyPolicy);
         cardShare=(CardView)v.findViewById(R.id.cardShare);
+        logout=(CardView)v.findViewById(R.id.logout);
         tvName=(TextView)v.findViewById(R.id.tvName);
         tvNumber=(TextView)v.findViewById(R.id.tvNumber);
         tvEmail=(TextView)v.findViewById(R.id.tvEmail);
@@ -135,6 +138,8 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
             }
         });
 
+
+
         userid = AppController.getInstance().getAppPrefs().getObject("USER_ID",String.class);
         fname =  AppController.getInstance().getAppPrefs().getObject("FNAME", String.class);
         lname =  AppController.getInstance().getAppPrefs().getObject("LNAME", String.class);
@@ -147,6 +152,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
          pincode =  AppController.getInstance().getAppPrefs().getObject("PINCODE", String.class);
 
          if(userid !=null && userid.length()>0){
+             logout.setVisibility(View.VISIBLE);
              ll_login.setVisibility(View.VISIBLE);
              ll_edit.setVisibility(View.VISIBLE);
              llNotLogin.setVisibility(View.GONE);
@@ -156,6 +162,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
              ll_edit.setVisibility(View.GONE);
              llNotLogin.setVisibility(View.VISIBLE);
              register_btn.setVisibility(View.VISIBLE);
+             logout.setVisibility(View.GONE);
          }
 
 
@@ -170,6 +177,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
         cardTramsCondition.setOnClickListener(this);
         cardPrivacyPolicy.setOnClickListener(this);
         cardShare.setOnClickListener(this);
+        logout.setOnClickListener(this);
 
         btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,6 +219,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
     }
 
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -242,6 +251,12 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
                 sendIntent.putExtra(Intent.EXTRA_TEXT, "OIO INDIA is a leading national online search directory that features listings for millions of businesses.");
                 sendIntent.setType("text/plain");
                 startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
+                break;
+            case R.id.logout:
+                 AppController.getInstance().getAppPrefs().putObject("LOGIN","0");
+                AppController.getInstance().getAppPrefs().putObject("USER_ID", "");
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+                getActivity().finish();
                 break;
         }
 

@@ -103,6 +103,10 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
     private LinearLayout ll_all_review;
     private TextView tv_all_review;
     private TextView tv_rating_count;
+
+    private LinearLayout ll1,ll2,ll3;
+    RatingBar rating1,rating2,rating3;
+    TextView name1,name2,name3,review1,review2,review3;
     public BusinessDetailFragment() {
         // Required empty public constructor
     }
@@ -160,6 +164,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         llmessage = (LinearLayout) v.findViewById(R.id.llmessage);
         call = (LinearLayout) v.findViewById(R.id.call);
         ll_all_review = (LinearLayout) v.findViewById(R.id.ll_all_review);
+        ll_all_review.setVisibility(View.GONE);
         llmap = (LinearLayout) v.findViewById(R.id.llmap);
         tv_rating_count = (TextView) v.findViewById(R.id.tv_rating_count);
         txtRating = (TextView) v.findViewById(R.id.txtRating);
@@ -167,6 +172,26 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         name = (TextView) v.findViewById(R.id.name);
         noofreview = (TextView) v.findViewById(R.id.noofreview);
         rating = (RatingBar) v.findViewById(R.id.rating);
+
+
+
+        ll1 = (LinearLayout)v.findViewById(R.id.ll1);
+        ll2 = (LinearLayout)v.findViewById(R.id.ll2);
+        ll3 = (LinearLayout)v.findViewById(R.id.ll3);
+        rating1 = (RatingBar) v.findViewById(R.id.rating1);
+        rating2 = (RatingBar)v.findViewById(R.id.rating2);
+        rating3 = (RatingBar)v.findViewById(R.id.rating3);
+        name1 = (TextView)v.findViewById(R.id.name1);
+        name2 = (TextView)v.findViewById(R.id.name2);
+        name3 = (TextView)v.findViewById(R.id.name3);
+        review1 = (TextView)v.findViewById(R.id.review1);
+        review2 = (TextView)v.findViewById(R.id.review2);
+        review3 = (TextView)v.findViewById(R.id.review3);
+        ll1.setVisibility(View.GONE);
+        ll2.setVisibility(View.GONE);
+        ll3.setVisibility(View.GONE);
+
+
         ll_rate_this.setOnClickListener(this);
         iv_favorites.setOnClickListener(this);
         llmessage.setOnClickListener(this);
@@ -274,21 +299,56 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
                     ph = mapping.getJSONArray("result1").getJSONObject(0).getString("phonenumber1");
                     noofreview.setText(""+totalreviews+" Review");
                     tv_rating_count.setText(""+totalreviews+" Ratings");
-                    if(totalreviews>=1){
-                        tv_all_review.setText("View All Reviews");
-                       //ll_all_review.setVisibility(View.VISIBLE);
-                    }else{
+                    tv_all_review.setVisibility(View.GONE);
+                    ll_all_review.setVisibility(View.GONE);
+                    if(totalreviews == 0){
+                        tv_all_review.setVisibility(View.VISIBLE);
+                        ll_all_review.setVisibility(View.VISIBLE);
                         tv_all_review.setText("No Reviews");
-                      //  ll_all_review.setVisibility(View.GONE);
+
+
+                    }else{
+                        if(totalreviews>3){
+                            tv_all_review.setText("View All Reviews");
+                            tv_all_review.setVisibility(View.VISIBLE);
+                            ll_all_review.setVisibility(View.VISIBLE);
+                        }else{
+                            if(totalreviews == 1){
+                                ll1.setVisibility(View.VISIBLE);
+
+
+
+
+                            }else if(totalreviews == 2){
+                                ll1.setVisibility(View.VISIBLE);
+                                ll2.setVisibility(View.VISIBLE);
+
+                            }else if(totalreviews == 3){
+                                ll1.setVisibility(View.VISIBLE);
+                                ll2.setVisibility(View.VISIBLE);
+                                ll3.setVisibility(View.VISIBLE);
+
+                            }
+                        }
+
                     }
 
                     JSONObject jobj =  mapping.getJSONArray("result1").getJSONObject(0);
                     if(jobj.has("latitude")){
-                        lat = Double.parseDouble(jobj.getString("latitude"));
+
+                        String latitude = jobj.getString("latitude");
+                        if(latitude.length()>0){
+                            lat = Double.parseDouble(jobj.getString("latitude"));
+                        }
+
                     }
 
                     if(jobj.has("longitude")){
-                        lng = Double.parseDouble(jobj.getString("longitude"));
+                        String longitude = jobj.getString("longitude");
+                        if(longitude.length()>0){
+                            lng = Double.parseDouble(jobj.getString("longitude"));
+                        }
+
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();

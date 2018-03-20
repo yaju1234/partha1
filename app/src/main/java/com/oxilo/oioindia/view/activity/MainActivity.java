@@ -1,6 +1,7 @@
 package com.oxilo.oioindia.view.activity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -10,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ import com.oxilo.oioindia.even_bus.MessageEventContect;
 import com.oxilo.oioindia.event.EventPhotoChosenFromGallery;
 import com.oxilo.oioindia.event.EventPickImageViaGallery;
 import com.oxilo.oioindia.permission.PermissionConstant;
+import com.oxilo.oioindia.utils.Utility;
 import com.oxilo.oioindia.view.common.NavigationController;
 import com.oxilo.oioindia.view.fragments.AllFragment;
 import com.oxilo.oioindia.view.fragments.FaviouriteFragment;
@@ -78,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
             EventBus.getDefault().register(this);
         }
         setContentView(R.layout.activity_main);
+
+        internetCheck();
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
@@ -141,5 +146,23 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
                     break;
 
         }
+    }
+
+    public void internetCheck(){
+
+        if(!Utility.isOnline(MainActivity.this)){
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("Alert")
+                    .setMessage("No internet connection. Please check your network connection.")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                            MainActivity.this.finish();
+                        }
+                    })
+                    .show();
+        }
+
     }
 }
