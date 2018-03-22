@@ -384,6 +384,9 @@
                     android:layout_marginRight="10dp">
 
                 </android.support.v7.widget.RecyclerView>
+                <include layout="@layout/recycler_review1"/>
+                <include layout="@layout/recycler_review2"/>
+                <include layout="@layout/recycler_review3"/>
 
                 <LinearLayout
                     android:id="@+id/ll_all_review"

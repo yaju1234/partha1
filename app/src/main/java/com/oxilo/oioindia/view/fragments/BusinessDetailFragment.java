@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -33,6 +34,8 @@ import com.oxilo.oioindia.data.DataManager;
 import com.oxilo.oioindia.databinding.FragmentBusinessDetailBinding;
 import com.oxilo.oioindia.dialog.LoginDlg;
 import com.oxilo.oioindia.dialog.ReviewDlg;
+import com.oxilo.oioindia.handlers.CustomSSLSocketFactory;
+import com.oxilo.oioindia.handlers.CustomX509TrustManager;
 import com.oxilo.oioindia.interfaces.Login_Interface;
 import com.oxilo.oioindia.modal.BusinessDetails;
 import com.oxilo.oioindia.modal.Details;
@@ -43,19 +46,36 @@ import com.oxilo.oioindia.view.adapter.CustomPagerAdapter;
 import com.oxilo.oioindia.view.common.NavigationController;
 import com.oxilo.oioindia.viewmodal.BusinesDetailViewModal;
 import com.oxilo.oioindia.viewmodal.MainViewModal;
+import com.oxilo.oioindia.viewmodal.Review;
 import com.squareup.picasso.Picasso;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
 
 import io.reactivex.functions.Consumer;
 import okhttp3.ResponseBody;
@@ -107,6 +127,9 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
     private LinearLayout ll1,ll2,ll3;
     RatingBar rating1,rating2,rating3;
     TextView name1,name2,name3,review1,review2,review3;
+    int totalreviews;
+    private HttpEntity resEntity;
+
     public BusinessDetailFragment() {
         // Required empty public constructor
     }
@@ -295,43 +318,15 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
 
                     }
 
-                    int totalreviews = mapping.getJSONArray("result1").getJSONObject(0).getInt("totalreviews");
+                    totalreviews = mapping.getJSONArray("result1").getJSONObject(0).getInt("totalreviews");
                     ph = mapping.getJSONArray("result1").getJSONObject(0).getString("phonenumber1");
                     noofreview.setText(""+totalreviews+" Review");
                     tv_rating_count.setText(""+totalreviews+" Ratings");
                     tv_all_review.setVisibility(View.GONE);
                     ll_all_review.setVisibility(View.GONE);
-                    if(totalreviews == 0){
-                        tv_all_review.setVisibility(View.VISIBLE);
-                        ll_all_review.setVisibility(View.VISIBLE);
-                        tv_all_review.setText("No Reviews");
-
-
-                    }else{
-                        if(totalreviews>3){
-                            tv_all_review.setText("View All Reviews");
-                            tv_all_review.setVisibility(View.VISIBLE);
-                            ll_all_review.setVisibility(View.VISIBLE);
-                        }else{
-                            if(totalreviews == 1){
-                                ll1.setVisibility(View.VISIBLE);
 
 
 
-
-                            }else if(totalreviews == 2){
-                                ll1.setVisibility(View.VISIBLE);
-                                ll2.setVisibility(View.VISIBLE);
-
-                            }else if(totalreviews == 3){
-                                ll1.setVisibility(View.VISIBLE);
-                                ll2.setVisibility(View.VISIBLE);
-                                ll3.setVisibility(View.VISIBLE);
-
-                            }
-                        }
-
-                    }
 
                     JSONObject jobj =  mapping.getJSONArray("result1").getJSONObject(0);
                     if(jobj.has("latitude")){
@@ -350,6 +345,9 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
                         }
 
                     }
+
+                    new ProfileAdd().execute();
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -546,5 +544,143 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
                 dismissProgressDialog();
             }
         });
+    }
+
+
+
+    class ProfileAdd extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+
+        }
+
+        @Override
+        protected String doInBackground(String... param) {
+            try {
+
+                SSLContext ctx = SSLContext.getInstance("TLS");
+                ctx.init(null, new TrustManager[] { new CustomX509TrustManager() },
+                        new SecureRandom());
+                HttpClient httpClient = new DefaultHttpClient();
+
+                SSLSocketFactory ssf = new CustomSSLSocketFactory(ctx);
+                ssf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+                ClientConnectionManager ccm = httpClient.getConnectionManager();
+                SchemeRegistry sr = ccm.getSchemeRegistry();
+                sr.register(new Scheme("https", ssf, 443));
+                DefaultHttpClient sslClient = new DefaultHttpClient(ccm,
+                        httpClient.getParams());
+                // trustEveryone();
+//                HttpContext localContext = new BasicHttpContext();
+                HttpPost httpPost = new HttpPost("https://oioindia.com/api/get-reviews.php");
+                //String basicAuth = "Basic YWRtaW46MTIzNDU";
+                // httpPost.setHeader("Authorization", basicAuth);
+                MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+
+
+
+                entity.addPart("businessid", new StringBody(getArguments().getString(ARG_PARAM1)));
+
+                httpPost.setEntity(entity);
+
+                HttpResponse response;
+                response = httpClient.execute(httpPost);
+                resEntity = response.getEntity();
+
+                final String response_str = EntityUtils.toString(resEntity);
+                Log.e("!!TAG12", "Response " + response_str);
+                return response_str;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+
+        @Override
+        protected void onPostExecute(String sResponse) {
+
+
+            try {
+                JSONObject jsonObject = new JSONObject(sResponse);
+                JSONArray jsonArray = jsonObject.getJSONArray("result");
+                for(int i=0; i<jsonArray.length(); i++){
+                    JSONObject c = jsonArray.getJSONObject(i);
+                    String review = c.getString("review");
+                    String rating = c.getString("rating");
+                    String image = c.getString("image");
+                    String user_id = c.getString("user_id");
+                    String username = c.getString("username");
+                 //   faviouriteItems.add(new Review(review,rating,image,user_id,username));
+
+                }
+
+
+                if(totalreviews == 0){
+                    tv_all_review.setVisibility(View.VISIBLE);
+                    ll_all_review.setVisibility(View.VISIBLE);
+                    tv_all_review.setText("No Reviews");
+
+
+                }else{
+                    if(totalreviews>3){
+                        tv_all_review.setText("View All Reviews");
+                        tv_all_review.setVisibility(View.VISIBLE);
+                        ll_all_review.setVisibility(View.VISIBLE);
+                    }
+
+                    {
+                        if(totalreviews  >= 1){
+                            ll1.setVisibility(View.VISIBLE);
+                            JSONObject c = jsonArray.getJSONObject(0);
+                            String review = c.getString("review");
+                            String rating = c.getString("rating");
+                            String username = c.getString("username");
+                           name1.setText(username);
+                           review1.setText(review);
+                            rating1.setRating(Float.parseFloat(rating));
+
+
+                        }
+
+                        if(totalreviews  >= 2){
+                            ll2.setVisibility(View.VISIBLE);
+                            JSONObject c = jsonArray.getJSONObject(1);
+                            String review = c.getString("review");
+                            String rating = c.getString("rating");
+                            String username = c.getString("username");
+                            name2.setText(username);
+                            review2.setText(review);
+                            rating2.setRating(Float.parseFloat(rating));
+
+                        }
+
+                        if(totalreviews >= 3){
+                            ll3.setVisibility(View.VISIBLE);
+
+                            JSONObject c = jsonArray.getJSONObject(2);
+                            String review = c.getString("review");
+                            String rating = c.getString("rating");
+                            String username = c.getString("username");
+                            name3.setText(username);
+                            review3.setText(review);
+                            rating3.setRating(Float.parseFloat(rating));
+
+                        }
+                    }
+
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+
+
+        }
     }
 }
