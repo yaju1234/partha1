@@ -41,6 +41,8 @@
     <!--<string name="google_maps_key">AIzaSyDcj3eNOAM_FGxsKHrZatDgnCC6Mz1XVGk</string>-->
     <string name="google_maps_key">AIzaSyAD4L0I0bwTJo32bFIlGgtbaDny8TH5Ifw</string>
     <string name="send_to">Send To</string>
+    <string name="double_tap_to_exit">Please click BACK again to exit</string>
+
     <string name="privecy_policy">1. Terms\n\n
 
   By accessing the website at http://oioindia.com, you are agreeing to be bound by these terms of service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws. If you do not agree with any of these terms, you are prohibited from using or accessing this site. The materials contained in this website are protected by applicable copyright and trademark law.
