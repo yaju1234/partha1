@@ -20,4 +20,5 @@ public class PermissionConstant {
     public static final int MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1200;
     public static final int MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE1 = 1300;
     public static final int MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE2 = 1400;
+    public static final int MY_PERMISSIONS_CALL_PHONE = 899;
 }

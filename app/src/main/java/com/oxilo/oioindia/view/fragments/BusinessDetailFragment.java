@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -39,6 +40,7 @@ import com.oxilo.oioindia.handlers.CustomX509TrustManager;
 import com.oxilo.oioindia.interfaces.Login_Interface;
 import com.oxilo.oioindia.modal.BusinessDetails;
 import com.oxilo.oioindia.modal.Details;
+import com.oxilo.oioindia.permission.Permission;
 import com.oxilo.oioindia.retrofit.restservice.RestService;
 import com.oxilo.oioindia.view.activity.LoginActivity;
 import com.oxilo.oioindia.view.activity.MainActivity;
@@ -232,8 +234,10 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + ph));
-                startActivity(intent);
+                if (new Permission().checkPhoneCallPermission(getContext())) {
+                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + ph));
+                    startActivity(intent);
+                }
             }
         });
 
@@ -387,12 +391,15 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
                         param.put("action", "delete");
                         iv_favorites.setImageResource(R.drawable.un_favorite);
                         b_Is_Favorites = false;
+                        Toast.makeText(getActivity(), "Business removed from wishlist.", Toast.LENGTH_SHORT).show();
+
                     } else {
                         param.put("action", "add");
                         iv_favorites.setImageResource(R.drawable.favorite);
                         b_Is_Favorites = true;
+                        Toast.makeText(getActivity(), "Business saved to wishlist.", Toast.LENGTH_SHORT).show();
                     }
-                    showProgressDailog();
+                   // showProgressDailog();
                     feb_Api();
                 }else{
                     getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -436,15 +443,24 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     System.out.println("#### response:=  "+response.body().string());
+                   // JSONObject jsonObject = new JSONObject(response.body().string());
+                   // String st = response.body().string();
+                    /*if(st.contains("saved")){
+                        Toast.makeText(getActivity(), "Business saved to wishlist.", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getActivity(), "Business removed from wishlist.", Toast.LENGTH_SHORT).show();
+                    }*/
+
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                dismissProgressDialog();
+              //  dismissProgressDialog();
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                dismissProgressDialog();
+               // dismissProgressDialog();
             }
         });
 
