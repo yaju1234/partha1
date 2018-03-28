@@ -394,13 +394,15 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
                         param.put("action", "delete");
                         iv_favorites.setImageResource(R.drawable.un_favorite);
                         b_Is_Favorites = false;
-                        Toast.makeText(getActivity(), "Business removed from wishlist.", Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(getActivity(), "Your business is removed from favourite list.", Toast.LENGTH_SHORT).show();
 
                     } else {
                         param.put("action", "add");
                         iv_favorites.setImageResource(R.drawable.favorite);
                         b_Is_Favorites = true;
-                        Toast.makeText(getActivity(), "Business saved to wishlist.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Your business is added in favourite list.", Toast.LENGTH_SHORT).show();
+
                     }
                    // showProgressDailog();
                     feb_Api();
