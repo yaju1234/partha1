@@ -368,9 +368,12 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         ll_all_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Display display = getActivity().getWindowManager().getDefaultDisplay();
-              ReviewDlg loginDlg = new ReviewDlg(display.getHeight(), display.getWidth(), getContext(), getArguments().getString(ARG_PARAM1));
-                loginDlg.show();
+                if(!tv_all_review.getText().toString().contains("No")){
+                    Display display = getActivity().getWindowManager().getDefaultDisplay();
+                    ReviewDlg loginDlg = new ReviewDlg(display.getHeight(), display.getWidth(), getContext(), getArguments().getString(ARG_PARAM1));
+                    loginDlg.show();
+                }
+
             }
         });
 
@@ -622,17 +625,8 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
 
             try {
                 JSONObject jsonObject = new JSONObject(sResponse);
-                JSONArray jsonArray = jsonObject.getJSONArray("result");
-                for(int i=0; i<jsonArray.length(); i++){
-                    JSONObject c = jsonArray.getJSONObject(i);
-                    String review = c.getString("review");
-                    String rating = c.getString("rating");
-                    String image = c.getString("image");
-                    String user_id = c.getString("user_id");
-                    String username = c.getString("username");
-                 //   faviouriteItems.add(new Review(review,rating,image,user_id,username));
 
-                }
+
 
 
                 if(totalreviews == 0){
@@ -642,6 +636,18 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
 
 
                 }else{
+                    JSONArray jsonArray = jsonObject.getJSONArray("result");
+                    for(int i=0; i<jsonArray.length(); i++){
+                        JSONObject c = jsonArray.getJSONObject(i);
+                        String review = c.getString("review");
+                        String rating = c.getString("rating");
+                        String image = c.getString("image");
+                        String user_id = c.getString("user_id");
+                        String username = c.getString("username");
+                        //   faviouriteItems.add(new Review(review,rating,image,user_id,username));
+
+                    }
+
                     if(totalreviews>3){
                         tv_all_review.setText("View All Reviews");
                         tv_all_review.setVisibility(View.VISIBLE);

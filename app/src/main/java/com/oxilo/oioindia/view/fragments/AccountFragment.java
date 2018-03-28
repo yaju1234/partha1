@@ -255,6 +255,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
             case R.id.logout:
                  AppController.getInstance().getAppPrefs().putObject("LOGIN","0");
                 AppController.getInstance().getAppPrefs().putObject("USER_ID", "");
+                AppController.getInstance().getAppPrefs().commit();
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 getActivity().finish();
                 break;
