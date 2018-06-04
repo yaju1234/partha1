@@ -5,6 +5,8 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 
 import com.facebook.FacebookSdk;
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by nikk on 29/12/17.
@@ -17,6 +19,7 @@ public class AppController extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         FacebookSdk.sdkInitialize(this);
         mInstance = this;
         appPrefs = AppPrefs.getComplexPreferences(getBaseContext(), "ipif prefs", MODE_PRIVATE);

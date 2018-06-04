@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.oxilo.oioindia.AppController;
 import com.oxilo.oioindia.R;
+import com.oxilo.oioindia.constant.Constant;
 import com.oxilo.oioindia.handlers.CustomSSLSocketFactory;
 import com.oxilo.oioindia.handlers.CustomX509TrustManager;
 
@@ -104,6 +105,7 @@ public class MessageFragment extends Fragment implements View.OnClickListener {
         submit_btn = (AppCompatButton)v.findViewById(R.id.submit_btn);
         submit_btn.setOnClickListener(this);
         ll_top_header.setText(mParam2);
+       // ll_comment_write.setText(Constant.fbhashkey);
 
         prsDlg = new ProgressDialog(getActivity());
         //LayerDrawable stars = (LayerDrawable) ll_rating_bar.getProgressDrawable();

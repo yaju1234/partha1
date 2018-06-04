@@ -1,4 +1,19 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 
 android {
     compileSdkVersion 26
@@ -8,14 +23,14 @@ android {
         applicationId "com.oxilo.oioindia"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 9
-        versionName "1.8"
+        versionCode 10
+        versionName "1.9"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        externalNativeBuild {
+       /* externalNativeBuild {
             cmake {
                 cppFlags "-frtti -fexceptions"
             }
-        }
+        }*/
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
@@ -28,11 +43,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    externalNativeBuild {
+    /*externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
         }
-    }
+    }*/
 
     dataBinding {
         enabled = true
@@ -68,9 +83,9 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
-    compile 'com.squareup.okhttp:okhttp:2.2.0'
+    implementation 'de.greenrobot:eventbus:2.4.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.2.0'
+    implementation 'com.squareup.okhttp:okhttp:2.2.0'
     implementation "com.android.support:appcompat-v7:$support_version"
     implementation "com.android.support:recyclerview-v7:$support_version"
     implementation "com.android.support:cardview-v7:$support_version"
@@ -85,15 +100,15 @@ dependencies {
     implementation "com.squareup.picasso:picasso:$picassoVersion"
     implementation 'com.android.support:support-v4:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.facebook.android:facebook-android-sdk:4.26.0'
-    compile "com.squareup.retrofit2:adapter-rxjava:$retrofit_version"
-    compile "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$retrofit_adapter_version"
-    compile 'com.android.support:multidex:1.0.1'
-    compile "com.google.android.gms:play-services-places:$location"
+    implementation 'com.facebook.android:facebook-android-sdk:4.26.0'
+    implementation "com.squareup.retrofit2:adapter-rxjava:$retrofit_version"
+    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$retrofit_adapter_version"
+    implementation 'com.android.support:multidex:1.0.1'
+    implementation "com.google.android.gms:play-services-places:$location"
 
     //location
-    compile "com.google.android.gms:play-services-location:$location"
-    compile 'org.jsoup:jsoup:1.8.3'
+    implementation "com.google.android.gms:play-services-location:$location"
+    implementation 'org.jsoup:jsoup:1.8.3'
 
     //    compile ('codes.titanium:locgetter:1.0.3',{
 
@@ -115,13 +130,13 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjavaVersion"
 
     // Architecture components
-    compile "android.arch.lifecycle:runtime:$rootProject.architectureComponentsVersion"
-    compile "android.arch.lifecycle:extensions:$rootProject.architectureComponentsVersion"
+    implementation "android.arch.lifecycle:runtime:$rootProject.architectureComponentsVersion"
+    implementation "android.arch.lifecycle:extensions:$rootProject.architectureComponentsVersion"
     annotationProcessor "android.arch.lifecycle:compiler:$rootProject.architectureComponentsVersion"
-    compile "android.arch.persistence.room:runtime:$rootProject.architectureComponentsVersion"
+    implementation "android.arch.persistence.room:runtime:$rootProject.architectureComponentsVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.architectureComponentsVersion"
-    compile "android.arch.persistence.room:rxjava2:$rootProject.architectureComponentsVersion"
-    compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
+    implementation "android.arch.persistence.room:rxjava2:$rootProject.architectureComponentsVersion"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.2.0'
 
     //    implementation "com.google.dagger:dagger:$dagger_version"
 
@@ -152,4 +167,7 @@ dependencies {
     androidTestImplementation "com.android.support:support-v4:$support_version"
     androidTestImplementation "com.android.support:design:$support_version"
     implementation files('libs/httpmime-4.1-beta1.jar')
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
+        transitive = true;
+    }
 }

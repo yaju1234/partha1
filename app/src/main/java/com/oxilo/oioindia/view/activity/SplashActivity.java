@@ -2,6 +2,9 @@ package com.oxilo.oioindia.view.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.databinding.DataBindingUtil;
 import android.location.Address;
 import android.location.Location;
@@ -9,22 +12,27 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.oxilo.oioindia.AppController;
 import com.oxilo.oioindia.GeoSearchModel;
 import com.oxilo.oioindia.R;
+import com.oxilo.oioindia.constant.Constant;
 import com.oxilo.oioindia.databinding.ActivitySplashBinding;
 import com.oxilo.oioindia.view.common.*;
 import com.oxilo.oioindia.vo.Splash;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class SplashActivity extends BaseLocationActivity {
 
     // Used to load the 'native-lib' library on application startup.
-    static {
+   /* static {
         System.loadLibrary("native-lib");
-    }
+    }*/
 
     ActivitySplashBinding binding;
 
@@ -44,6 +52,25 @@ public class SplashActivity extends BaseLocationActivity {
             AppController.getInstance().getAppPrefs().putObject("LOCATION", "");
             AppController.getInstance().getAppPrefs().commit();
         }
+
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.oxilo.oioindia",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+                Constant.fbhashkey =  Base64.encodeToString(md.digest(), Base64.DEFAULT);
+
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
+
+
         binding.setSplash(new Splash(this));
 
 //        if (Build.VERSION.SDK_INT< Build.VERSION_CODES.M) {

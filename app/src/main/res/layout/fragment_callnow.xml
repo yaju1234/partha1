@@ -19,7 +19,27 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@android:color/transparent"
+                    app:layout_collapseMode="pin"
+                    app:navigationIcon="?attr/homeAsUpIndicator"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+                <TextView
+                    style="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Call Now"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -38,10 +58,11 @@
             android:layout_marginTop="120dp"
             >
 
-          <RelativeLayout
+          <LinearLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_margin="30dp"
+              android:orientation="vertical"
               android:background="#FFFFFF">
 
               <TextView
@@ -64,12 +85,11 @@
                   android:background="@color/cardview_shadow_start_color"/>
 
               <TextView
-                  android:id="@+id/ll_number1"
+                  android:id="@+id/tv_number1"
                   android:layout_width="match_parent"
-                  android:layout_height="match_parent"
+                  android:layout_height="40dp"
                   android:layout_below="@+id/ll_top_header"
                   android:gravity="center"
-                  android:layout_marginTop="20dp"
                   android:text="+919999999999"
                   android:textSize="20dp"
                   />
@@ -77,63 +97,29 @@
               <View
                   android:layout_width="match_parent"
                   android:layout_height="2dp"
-                  android:layout_below="@+id/ll_number1"
                   android:layout_marginTop="10dp"
+                  android:layout_below="@+id/ll_top_header"
                   android:background="@color/cardview_shadow_start_color"/>
               <TextView
-                  android:id="@+id/ll_number2"
+                  android:id="@+id/tv_number2"
                   android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:layout_alignParentStart="true"
+                  android:layout_height="40dp"
+                  android:layout_below="@+id/ll_top_header"
                   android:gravity="center"
-                  android:layout_marginTop="20dp"
-                  android:layout_below="@+id/ll_number1"
-                  android:text="+91-9441333333"
-                  android:textSize="20dp"
-                  />
-              <View
-                  android:layout_width="match_parent"
-                  android:layout_height="2dp"
-                  android:layout_below="@+id/ll_number2"
-                  android:layout_marginTop="10dp"
-                  android:background="@color/cardview_shadow_start_color"/>
-              <TextView
-                  android:id="@+id/ll_number3"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:layout_alignParentStart="true"
-                  android:gravity="center"
-                  android:layout_marginTop="20dp"
-                  android:layout_below="@+id/ll_number2"
-                  android:text="+91-9441355541"
-                  android:textSize="20dp"
-                  />
-              <View
-                  android:layout_width="match_parent"
-                  android:layout_height="2dp"
-                  android:layout_below="@+id/ll_number3"
-                  android:layout_marginTop="10dp"
-                  android:background="@color/cardview_shadow_start_color"/>
-              <TextView
-                  android:id="@+id/ll_number4"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:layout_alignParentStart="true"
-                  android:gravity="center"
-                  android:layout_margin="20dp"
-                  android:layout_below="@+id/ll_number3"
-                  android:text="+91-94413363625"
+                  android:text="+919999999999"
                   android:textSize="20dp"
                   />
 
               <View
+                  android:id="@+id/view_number2"
                   android:layout_width="match_parent"
                   android:layout_height="2dp"
-                  android:layout_below="@+id/ll_number4"
+                  android:layout_marginTop="10dp"
+                  android:layout_below="@+id/ll_top_header"
                   android:background="@color/cardview_shadow_start_color"/>
 
 
-          </RelativeLayout>
+          </LinearLayout>
         </RelativeLayout>
 
 

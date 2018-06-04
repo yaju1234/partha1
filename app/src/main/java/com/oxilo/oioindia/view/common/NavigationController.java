@@ -26,6 +26,7 @@ import com.oxilo.oioindia.view.fragments.AccountFragment;
 import com.oxilo.oioindia.view.fragments.AddBusinessFragment;
 import com.oxilo.oioindia.view.fragments.BusinessDetailFragment;
 import com.oxilo.oioindia.view.fragments.BusinessListFragment;
+import com.oxilo.oioindia.view.fragments.CallNowFragment;
 import com.oxilo.oioindia.view.fragments.HelpFragment;
 import com.oxilo.oioindia.view.fragments.ListFragment;
 import com.oxilo.oioindia.view.fragments.LocationFragment;
@@ -180,6 +181,17 @@ public class NavigationController {
 
     public void navigateToMap(double lat, double lng, String name) {
         MapFragment fragment = MapFragment.newInstance( lat,  lng,  name);
+        String tag = "repo" + "/"  + "/" + "detail";
+        String hide = "repo" + "/"  + "/" + "blist";
+        fragmentManager.beginTransaction()
+                //  .hide(fragmentManager.findFragmentByTag(hide))
+                .replace(containerId, fragment, tag)
+                .addToBackStack(null)
+                .commitAllowingStateLoss();
+    }
+
+    public void navigateToCall(String ph1,String ph2) {
+        CallNowFragment fragment = CallNowFragment.newInstance( ph1,  ph2);
         String tag = "repo" + "/"  + "/" + "detail";
         String hide = "repo" + "/"  + "/" + "blist";
         fragmentManager.beginTransaction()

@@ -118,7 +118,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
     CustomPagerAdapter pagerAdapter;
     ArrayList<String> setImag = new ArrayList<>();
     private LinearLayout call;
-    String ph;
+    String ph1,ph2;
     private LinearLayout llmap;
     double lat = 22.5726;
     double lng = 88.3639;
@@ -234,9 +234,15 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (new Permission().checkPhoneCallPermission(getContext())) {
+                /*if (new Permission().checkPhoneCallPermission(getContext())) {
                     Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + ph));
                     startActivity(intent);
+                }*/
+                if(ph1.trim().length() == 0 && ph1.trim().length() == 0){
+                    Toast.makeText(getActivity(), "No phone number available.", Toast.LENGTH_SHORT).show();
+                }else{
+                    NavigationController navigationController = new NavigationController((MainActivity) getActivity());
+                    navigationController.navigateToCall(ph1, ph2);
                 }
             }
         });
@@ -323,7 +329,8 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
                     }
 
                     totalreviews = mapping.getJSONArray("result1").getJSONObject(0).getInt("totalreviews");
-                    ph = mapping.getJSONArray("result1").getJSONObject(0).getString("phonenumber1");
+                    ph1 = mapping.getJSONArray("result1").getJSONObject(0).getString("phonenumber1");
+                    ph2 = mapping.getJSONArray("result1").getJSONObject(0).getString("phonenumber2");
                     noofreview.setText(""+totalreviews+" Review");
                     tv_rating_count.setText(""+totalreviews+" Ratings");
                     tv_all_review.setVisibility(View.GONE);

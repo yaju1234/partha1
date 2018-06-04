@@ -28,7 +28,7 @@ public class RegisterActivity extends com.oxilo.oioindia.view.common.BaseActivit
         RegitrationViewModal regitrationViewModal = ViewModelProviders.of(this,factory).get(RegitrationViewModal.class);
         binding.setViewModel(regitrationViewModal);
 
-        RxUtils.toObservable(regitrationViewModal.name).map(s -> FormUtils.checkPassword(s) ? null : "Name must not br empty")
+        RxUtils.toObservable(regitrationViewModal.name).map(s -> FormUtils.checkPassword(s) ? null : "Name can't be empty")
                 .subscribe(s -> binding.name.setError(s), throwable -> throwable.printStackTrace());
         RxUtils.toObservable(regitrationViewModal.email).map(s -> FormUtils.checkEmail(s) ? null : "Invalid Email")
                 .subscribe(s -> binding.email.setError(s), throwable -> throwable.printStackTrace());
