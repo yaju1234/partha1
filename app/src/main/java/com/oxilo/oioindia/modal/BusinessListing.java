@@ -44,7 +44,7 @@ public class BusinessListing implements Parcelable
     @JsonProperty("address2")
     private String address2;
     @JsonProperty("avgrating")
-    private int avgrating;
+    private float avgrating;
     @JsonProperty("totalreviews")
     private int totalreviews;
     public final static Parcelable.Creator<BusinessListing> CREATOR = new Creator<BusinessListing>() {
@@ -161,12 +161,12 @@ public class BusinessListing implements Parcelable
     }
 
     @JsonProperty("avgrating")
-    public void setAvgrating(int avgrating) {
+    public void setAvgrating(float avgrating) {
         this.avgrating = avgrating;
     }
 
     @JsonProperty("avgrating")
-    public int getAvgrating() {
+    public float getAvgrating() {
         return avgrating;
     }
 
