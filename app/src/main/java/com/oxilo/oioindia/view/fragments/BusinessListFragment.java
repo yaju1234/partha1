@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.oxilo.oioindia.AppController;
 import com.oxilo.oioindia.R;
 import com.oxilo.oioindia.binding.FragmentDataBindingComponent;
 import com.oxilo.oioindia.databinding.FragmentBusinessListBinding;
@@ -126,7 +127,9 @@ public class BusinessListFragment extends Fragment {
 
 
     private void initCategory(){
-        viewModal.getBusinessListing(mParam1,"2").subscribe(new Consumer<Business>() {
+        String city_id =  AppController.getInstance().getAppPrefs().getObject("LOCATION", String.class);
+
+        viewModal.getBusinessListing(mParam1,city_id).subscribe(new Consumer<Business>() {
             @Override
             public void accept(Business repos) throws Exception {
                 if (repos == null) {
